@@ -1,0 +1,52 @@
+{
+  "name": "trpc-sveltekit",
+  "version": "1.0.1",
+  "description": "SvelteKit adapter for trpc.io",
+  "repository": "icflorescu/trpc-sveltekit",
+  "bugs": {
+    "url": "https://github.com/icflorescu/trpc-sveltekit/issues"
+  },
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "test": "tsc"
+  },
+  "keywords": [
+    "trpc",
+    "svelte",
+    "sveltekit",
+    "adapter",
+    "handle",
+    "typescript",
+    "rpc"
+  ],
+  "author": {
+    "name": "Ionut-Cristian Florescu",
+    "email": "ionut.florescu@gmail.com",
+    "url": "https://github.com/icflorescu"
+  },
+  "license": "ISC",
+  "peerDependencies": {
+    "@sveltejs/kit": "^1.0.0-next",
+    "@trpc/server": "^9.18.0"
+  },
+  "devDependencies": {
+    "@sveltejs/kit": "^1.0.0-next",
+    "@trpc/server": "^9.18.0",
+    "microbundle": "^0.14.2",
+    "typescript": "^4.5.5"
+  }
+}
