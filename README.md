@@ -82,7 +82,7 @@ console.log(greeting); // => 👈 world
 
 ### Usage with Prisma
 
-When you're building your SvelteKit app for production, you must instantiate your [Prisma](https://www.prisma.io/) client **like this**:
+When you're building your SvelteKit app for production, you must instantiate your [Prisma](https://www.prisma.io/) client ✔️ **like this**:
 
 ```ts
 // $lib/prismaClient.ts
@@ -93,7 +93,7 @@ const prismaClient = new PrismaClient();
 export default prismaClient;
 ```
 
-This will **not** work:
+This ❌ will **not** work:
 
 ```ts
 // $lib/prismaClient.ts
@@ -105,7 +105,7 @@ export default prismaClient;
 
 ### Configure [superjson](https://github.com/blitz-js/superjson) to correctly handle [Decimal.js](https://mikemcl.github.io/decimal.js/) / Prisma.Decimal
 
-If you don't know why you'd want to use [superjson](https://github.com/blitz-js/superjson), learn more about tRPC data transformers [here](https://trpc.io/docs/data-transformers).
+❓ If you don't know why you'd want to use [superjson](https://github.com/blitz-js/superjson), learn more about tRPC data transformers [here](https://trpc.io/docs/data-transformers).
 
 By default, superjson only supports built-in data types to keep the bundle-size as small as possible. Here's how you could extend it with Decimal.js / Prisma.Decimal support:
 
@@ -156,7 +156,7 @@ export default trpc.createTRPCClient<Router>({
 });
 ```
 
-You'll also have to use this custom `svelte.config.js` in order to be able to build your application for production with `adapter-node`:
+🛎️ You'll also have to use this custom `svelte.config.js` in order to be able to build your application for production with `adapter-node`:
 
 ```js
 // svelte.config.js
@@ -202,8 +202,7 @@ export default trpc.createTRPCClient<Router>({
 type Query = keyof Router['_def']['queries'];
 type Mutation = keyof Router['_def']['mutations'];
 
-// Useful types:
-
+// Useful types 👇👇👇
 export type InferQueryOutput<RouteKey extends Query> = inferProcedureOutput<Router['_def']['queries'][RouteKey]>;
 export type InferQueryInput<RouteKey extends Query> = inferProcedureInput<Router['_def']['queries'][RouteKey]>;
 export type InferMutationOutput<RouteKey extends Mutation> = inferProcedureOutput<
@@ -214,7 +213,7 @@ export type InferMutationInput<RouteKey extends Mutation> = inferProcedureInput<
 
 ## Example
 
-See [icflorescu/trpc-sveltekit-example](https://github.com/icflorescu/trpc-sveltekit-example) for a working example with Prisma and superjson.
+See ✨ [icflorescu/trpc-sveltekit-example](https://github.com/icflorescu/trpc-sveltekit-example) for a working example with Prisma and superjson.
 
 ## License
 
