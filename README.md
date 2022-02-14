@@ -12,6 +12,14 @@ End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https:/
 
 ...
 
+## Caveats
+
+...
+
+## Example
+
+...
+
 ## Why this exists
 
 ...
