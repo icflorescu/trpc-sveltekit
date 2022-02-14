@@ -28,6 +28,7 @@
     "trpc",
     "svelte",
     "sveltekit",
+    "kit",
     "adapter",
     "handle",
     "typescript",
