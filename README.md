@@ -10,6 +10,18 @@ End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https:/
 
 ✔️ Tested with `@sveltejs/adapter-node`.
 
+## TL;DR
+
+Add this in your SvelteKit app [hooks](https://kit.svelte.dev/docs/hooks):
+
+```ts
+// src/hooks.ts
+import { createTRPCHandle } from 'trpc-sveltekit';
+// create your tRPC router & context builder...
+
+export const handle = createTRPCHandle({ url: '/trpc', router, createContext }); // 👈 add this handle
+```
+
 ## How to use
 
 1. Install this package
