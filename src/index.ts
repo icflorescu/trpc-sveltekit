@@ -1,17 +1,19 @@
 import type { Handle } from '@sveltejs/kit';
-import type { MaybePromise } from '@sveltejs/kit/types/helper';
-import type { AnyRouter, Dict, inferRouterContext } from '@trpc/server';
+import type { AnyRouter, Dict } from '@trpc/server';
 import { resolveHTTPResponse } from '@trpc/server';
+import { CreateContextFn, ResponseMetaFn } from './types';
 
 export function createTRPCHandle<Router extends AnyRouter>({
   url = '/trpc',
   router,
   createContext,
+  responseMeta,
 }: {
   /** @default '/trpc' */
   url?: string;
   router: Router;
-  createContext?: (req: Request) => MaybePromise<inferRouterContext<Router>>;
+  createContext?: CreateContextFn<Router>;
+  responseMeta?: ResponseMetaFn<Router>;
 }): Handle {
   return async function ({ event, resolve }) {
     if (event.url.pathname.startsWith(`${url}/`)) {
@@ -29,6 +31,7 @@ export function createTRPCHandle<Router extends AnyRouter>({
         req,
         path: event.url.pathname.substring(url.length + 1),
         createContext: () => createContext?.(event.request),
+        responseMeta,
       });
 
       const { status, headers, body } = httpResponse as {
