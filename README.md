@@ -10,6 +10,7 @@ End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https:/
 
 ✅ Works with `@sveltejs/adapter-node`  
 ✅ Works with SSR  
+👉 [Example application](https://github.com/icflorescu/trpc-sveltekit-example) with Prisma & superjson
 
 ## TL;DR
 
@@ -95,7 +96,7 @@ console.log(greeting); // => 👈 world
 
 ### Usage with Prisma
 
-When you're building your SvelteKit app for production, you must instantiate your [Prisma](https://www.prisma.io/) client ✔️ **like this**:
+When you're building your SvelteKit app for production, you must instantiate your [Prisma](https://www.prisma.io/) client **like this**: ✔️
 
 ```ts
 // $lib/prismaClient.ts
@@ -106,7 +107,7 @@ const prismaClient = new PrismaClient();
 export default prismaClient;
 ```
 
-This ❌ will **not** work:
+This will **not** work: ❌
 
 ```ts
 // $lib/prismaClient.ts
