@@ -244,7 +244,9 @@ const client = trpc.createTRPCClient<Router>({
 
 ## Example
 
-See ✨ [icflorescu/trpc-sveltekit-example](https://github.com/icflorescu/trpc-sveltekit-example) for a working example with Prisma and superjson.
+See an example with Prisma & superjson: ✨
+- [Code](https://github.com/icflorescu/trpc-sveltekit-example)
+- [Sandbox](https://githubbox.com/icflorescu/trpc-sveltekit-example)
 
 ## License
 
