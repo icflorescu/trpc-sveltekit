@@ -8,7 +8,8 @@
 
 End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https://kit.svelte.dev/) applications.
 
-✔️ Tested with `@sveltejs/adapter-node`.
+✅ Works with `@sveltejs/adapter-node`  
+✅ Works with SSR  
 
 ## TL;DR
 
