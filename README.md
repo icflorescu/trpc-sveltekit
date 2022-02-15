@@ -9,7 +9,7 @@
 End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https://kit.svelte.dev/) applications.
 
 ✅ Works with `@sveltejs/adapter-node`  
-✅ Works with SSR  
+✅ Works with SvelteKit's `load()` function for SSR  
 👉 [Example application](https://github.com/icflorescu/trpc-sveltekit-example) with Prisma & superjson
 
 ## TL;DR
@@ -227,7 +227,7 @@ export type InferMutationInput<RouteKey extends Mutation> = inferProcedureInput<
 
 ### Server-Side Rendering
 
-If you need to use SSR, make sure to initialize your tRPC client like so:
+If you need to use the tRPC client in SvelteKit's `load()` function for SSR, make sure to initialize it like so:
 
 ```ts
 // $lib/trpcClient.ts
