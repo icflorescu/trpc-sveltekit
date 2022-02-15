@@ -211,6 +211,23 @@ export type InferMutationOutput<RouteKey extends Mutation> = inferProcedureOutpu
 export type InferMutationInput<RouteKey extends Mutation> = inferProcedureInput<Router['_def']['mutations'][RouteKey]>;
 ```
 
+### Server-Side Rendering
+
+If you need to use SSR, make sure to initialize your tRPC client like so:
+
+```ts
+// $lib/trpcClient.ts
+import { browser } from '$app/env';
+import type { Router } from '$lib/server/trpc';
+import trpcTransformer from '$lib/trcpTransformer';
+import * as trpc from '@trpc/client';
+
+const client = trpc.createTRPCClient<Router>({
+  url: browser ? '/trpc' : 'http://localhost:3000/trpc', // 👈
+  transformer: trpcTransformer,
+});
+```
+
 ## Example
 
 See ✨ [icflorescu/trpc-sveltekit-example](https://github.com/icflorescu/trpc-sveltekit-example) for a working example with Prisma and superjson.
