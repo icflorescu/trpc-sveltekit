@@ -203,8 +203,8 @@ It is often useful to wrap the functionality of your `@trpc/client` api within o
 
 ```ts
 // $lib/trpcClient.ts
-import type { Router } from '$lib/server/trpc';
-import trpcTransformer from '$lib/trcpTransformer';
+import type { Router } from '$lib/trpcServer';
+import trpcTransformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
 import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 
@@ -232,8 +232,8 @@ If you need to use the tRPC client in SvelteKit's `load()` function for SSR, mak
 ```ts
 // $lib/trpcClient.ts
 import { browser } from '$app/env';
-import type { Router } from '$lib/server/trpc';
-import trpcTransformer from '$lib/trcpTransformer';
+import type { Router } from '$lib/trpcServer';
+import trpcTransformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
 
 const client = trpc.createTRPCClient<Router>({
