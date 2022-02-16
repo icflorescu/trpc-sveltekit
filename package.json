@@ -22,7 +22,7 @@
   "scripts": {
     "build": "microbundle",
     "dev": "microbundle watch",
-    "test": "tsc"
+    "test": "jest"
   },
   "keywords": [
     "trpc",
@@ -47,7 +47,10 @@
   "devDependencies": {
     "@sveltejs/kit": "^1.0.0-next.272",
     "@trpc/server": "^9.18.0",
+    "@types/jest": "^27.4.0",
+    "jest": "^27.5.1",
     "microbundle": "^0.14.2",
+    "ts-jest": "^27.1.3",
     "typescript": "^4.5.5"
   }
 }
