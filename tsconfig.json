@@ -9,5 +9,6 @@
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "esModuleInterop": true
-  }
+  },
+  "files": ["src/types.ts"]
 }
