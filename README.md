@@ -8,7 +8,7 @@
 
 End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https://kit.svelte.dev/) applications.
 
-✅ Works with `@sveltejs/adapter-node`  
+✅ Works with `@sveltejs/adapter-node` & `@sveltejs/adapter-vercel`  
 ✅ Works with SvelteKit's `load()` function for SSR  
 👉 [Example application](https://github.com/icflorescu/trpc-sveltekit-example) with Prisma & superjson
 
@@ -19,16 +19,16 @@ Add this in your SvelteKit app [hooks](https://kit.svelte.dev/docs/hooks):
 ```ts
 // src/hooks.ts
 import { createTRPCHandle } from 'trpc-sveltekit';
-// create your tRPC router & context builder...
+// create your tRPC router...
 
-export const handle = createTRPCHandle({ url: '/trpc', router, createContext }); // 👈 add this handle
+export const handle = createTRPCHandle({ url: '/trpc', router }); // 👈 add this handle
 ```
 
 ## How to use
 
 1. Install this package
 
-`npm install trpc-sveltekit` or `yarn add trpc-sveltekit`
+`npm install trpc-sveltekit`/`yarn add trpc-sveltekit`
 
 2. Create your tRPC [routes](https://trpc.io/docs/router), [context](https://trpc.io/docs/context) and type exports:
 
@@ -37,10 +37,19 @@ export const handle = createTRPCHandle({ url: '/trpc', router, createContext });
 import type { inferAsyncReturnType } from '@trpc/server';
 import * as trpc from '@trpc/server';
 
+// optional
 export const createContext = () => {
   // ...
   return {
     /** context data */
+  };
+};
+
+// optional
+export const responseMeta = () => {
+  // ...
+  return {
+    // { headers: ... }
   };
 };
 
@@ -58,13 +67,14 @@ export type Router = typeof router;
 
 ```ts
 // src/hooks.ts or src/hooks/index.ts
-import { createContext, router } from '$lib/trpcServer';
+import { createContext, responseMeta, router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
 export const handle = createTRPCHandle({
-  url: '/trpc' // this is optional and defaults to '/trpc'
+  url: '/trpc', // optional; defaults to '/trpc'
   router,
-  createContext // this is optional
+  createContext, // optional
+  reponseMeta,
 });
 ```
 
@@ -75,7 +85,7 @@ Learn more about SvelteKit hooks [here](https://kit.svelte.dev/docs/hooks).
 ```ts
 // $lib/trpcClient.ts
 import type { Router } from '$lib/trpcServer'; // 👈 only the types are imported from the server
-import trpcTransformer from '$lib/trcpTransformer';
+import trpcTransformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
 import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 
@@ -170,11 +180,11 @@ export default trpc.createTRPCClient<Router>({
 });
 ```
 
-🛎️ You'll also have to use this custom `svelte.config.js` in order to be able to build your application for production with `adapter-node`:
+🛎️ You'll also have to use this custom `svelte.config.js` in order to be able to build your application for production with `adapter-node`/`adapter-vercel`:
 
 ```js
 // svelte.config.js
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-node'; // or Vercel 
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -239,6 +249,32 @@ import * as trpc from '@trpc/client';
 const client = trpc.createTRPCClient<Router>({
   url: browser ? '/trpc' : 'http://localhost:3000/trpc', // 👈
   transformer: trpcTransformer,
+});
+```
+
+### Vercel's Edge Cache for Serverless Functions
+
+Your server responses must [satisfy some criteria](https://vercel.com/docs/concepts/functions/edge-caching) in order for them to be cached Verced Edge Network, and here's where tRPC's `responseMeta()` comes in handy. You could initialize your handle in `src/hooks.ts` like so: 
+
+```ts
+// src/hooks.ts or src/hooks/index.ts
+import { router } from '$lib/trpcServer';
+import { createTRPCHandle } from 'trpc-sveltekit';
+
+export const handle = createTRPCHandle({
+  url: '/trpc',
+  router,
+  responseMeta({ type, errors }) {
+    if (type === 'query' && errors.length === 0) {
+      const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+      return {
+        headers: {
+          'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`
+        }
+      };
+    }
+    return {};
+  }
 });
 ```
 
