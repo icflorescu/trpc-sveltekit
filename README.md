@@ -159,8 +159,8 @@ export type Router = typeof router;
 
 ```ts
 // $lib/trpcClient.ts
-import type { Router } from '$lib/server/trpc';
-import trpcTransformer from '$lib/trcpTransformer';
+import type { Router } from '$lib/trpcServer';
+import trpcTransformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
 import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 
