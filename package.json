@@ -1,6 +1,6 @@
 {
   "name": "trpc-sveltekit",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "SvelteKit adapter for trpc.io",
   "repository": "icflorescu/trpc-sveltekit",
   "bugs": {
