@@ -1,10 +1,12 @@
-# ✨ tRPC-SvelteKit
-
-[![NPM version][npm-image]][npm-url]
-[![License][license-image]][license-url]
-[![Downloads][downloads-image]][downloads-url]
-
+<p align="center">
 <img src="https://user-images.githubusercontent.com/581999/153954565-61b219ee-c352-41b4-b8ff-3eba955b9b7d.png" alt="tRPC-SvelteKit" />
+</p>
+<h1 align="center">✨ tRPC-SvelteKit</h1>
+<p align="center">
+  <a href="https://npmjs.org/package/trpc-sveltekit" rel="nofollow"><img src="https://camo.githubusercontent.com/15164b516d0466063103a27a37826389261572dd7b161824f72b7bd56df6693d/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f747270632d7376656c74656b69742e7376673f7374796c653d666c61742d737175617265" alt="NPM version" data-canonical-src="https://img.shields.io/npm/v/trpc-sveltekit.svg?style=flat-square" style="max-width: 100%;"></a>
+  <a href="/icflorescu/trpc-sveltekit/blob/main/LICENSE"><img src="https://camo.githubusercontent.com/1b976548249903e3712a1080a614dd52f33d04786e3063d8f993bee108e71a2a/687474703a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f747270632d7376656c74656b69742e7376673f7374796c653d666c61742d737175617265" alt="License" data-canonical-src="http://img.shields.io/npm/l/trpc-sveltekit.svg?style=flat-square" style="max-width: 100%;"></a>
+  <a href="https://npmjs.org/package/trpc-sveltekit" rel="nofollow"><img src="https://camo.githubusercontent.com/9d3cc90f6595181e6aa4c068994609b72f56ca5874c8dafb8e79c7bef4e8e7a1/687474703a2f2f696d672e736869656c64732e696f2f6e706d2f646d2f747270632d7376656c74656b69742e7376673f7374796c653d666c61742d737175617265" alt="Downloads" data-canonical-src="http://img.shields.io/npm/dm/trpc-sveltekit.svg?style=flat-square" style="max-width: 100%;"></a>
+</p>
 
 End-to-end typesafe APIs with [tRPC.io](https://trpc.io/) in [SvelteKit](https://kit.svelte.dev/) applications.
 
