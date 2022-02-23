@@ -14,7 +14,11 @@
   </a>
 </p>
 
-<p align="center">End-to-end typesafe APIs with <a href="https://trpc.io">tRPC.io</a> in <a href="https://kit.svelte.dev">SvelteKit</a> applications.</p>
+<p align="center">
+  End-to-end typesafe APIs with <a href="https://trpc.io">tRPC.io</a> in <a href="https://kit.svelte.dev">SvelteKit</a> applications.
+  <br />
+  No code generation, run-time bloat, or build pipeline.
+</p>
 
 ## Key features
 
