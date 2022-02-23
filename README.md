@@ -25,7 +25,7 @@
 ✅ Works with `@sveltejs/adapter-node` & `@sveltejs/adapter-vercel`  
 ✅ Works with SvelteKit's `load()` function for SSR  
 
-## Example application with Prisma & spuerjson
+## Example application with Prisma & superjson
 
 👉 [tRPC-Sveltekit-Example](https://github.com/icflorescu/trpc-sveltekit-example)
 
