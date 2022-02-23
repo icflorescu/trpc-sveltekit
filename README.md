@@ -87,7 +87,7 @@ export const handle = createTRPCHandle({
   url: '/trpc', // optional; defaults to '/trpc'
   router,
   createContext, // optional
-  reponseMeta,
+  reponseMeta, // optional
 });
 ```
 
@@ -98,9 +98,7 @@ Learn more about SvelteKit hooks [here](https://kit.svelte.dev/docs/hooks).
 ```ts
 // $lib/trpcClient.ts
 import type { Router } from '$lib/trpcServer'; // 👈 only the types are imported from the server
-import trpcTransformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
-import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 
 export default trpc.createTRPCClient<Router>({ url: '/trpc' });
 ```
@@ -183,13 +181,12 @@ export type Router = typeof router;
 ```ts
 // $lib/trpcClient.ts
 import type { Router } from '$lib/trpcServer';
-import trpcTransformer from '$lib/trpcTransformer';
+import transformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
-import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
 
 export default trpc.createTRPCClient<Router>({
   url: '/trpc',
-  transformer: trpcTransformer, // 👈
+  transformer, // 👈
 });
 ```
 
@@ -248,6 +245,19 @@ export type InferMutationOutput<RouteKey extends Mutation> = inferProcedureOutpu
 export type InferMutationInput<RouteKey extends Mutation> = inferProcedureInput<Router['_def']['mutations'][RouteKey]>;
 ```
 
+Then, you could use the inferred types like so:
+
+```ts
+// authors.svelte
+<script lang="ts">
+  let authors: InferQueryOutput<'authors:browse'> = [];
+
+  const loadAuthors = async () => {
+    authors = await trpc.query('authors:browse', { genre: 'fantasy' });
+  };
+</script>
+```
+
 ### Server-Side Rendering
 
 If you need to use the tRPC client in SvelteKit's `load()` function for SSR, make sure to initialize it like so:
@@ -256,12 +266,10 @@ If you need to use the tRPC client in SvelteKit's `load()` function for SSR, mak
 // $lib/trpcClient.ts
 import { browser } from '$app/env';
 import type { Router } from '$lib/trpcServer';
-import trpcTransformer from '$lib/trpcTransformer';
 import * as trpc from '@trpc/client';
 
 const client = trpc.createTRPCClient<Router>({
   url: browser ? '/trpc' : 'http://localhost:3000/trpc', // 👈
-  transformer: trpcTransformer,
 });
 ```
 
