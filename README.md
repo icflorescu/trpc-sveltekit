@@ -22,7 +22,7 @@
 
 ## ❤️🇺🇦
 
-See below.
+See [below](#stand-with-ukraine).
 
 ## Key features
 
@@ -313,10 +313,10 @@ See an example with Prisma & superjson: ✨
 - [Code](https://github.com/icflorescu/trpc-sveltekit-example)
 - [Sandbox](https://githubbox.com/icflorescu/trpc-sveltekit-example)
 
-## License
-
 ## Stand with Ukraine 
 
 On 24th of February 2022 [Russia unlawfully invaded Ukraine](https://en.wikipedia.org/wiki/Russo-Ukrainian_War). This is an unjustified, unprovoked attack on the sovereignty of a neighboring country, but also an open affront to international peace and stability that has the potential to degenerate into a nuclear event threatening the very existence of humanity. I am an EU (Romanian) citizen, but I am doing everything in my power to stop this madness. I stand with Ukraine. The entire Svelte community ❤️🇺🇦. Here's [how you can show your support](https://www.stopputin.net/).
+
+## License
 
 The [ISC License](https://github.com/icflorescu/trpc-sveltekit/blob/master/LICENSE).
