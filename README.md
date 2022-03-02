@@ -95,7 +95,7 @@ export const handle = createTRPCHandle({
   url: '/trpc', // optional; defaults to '/trpc'
   router,
   createContext, // optional
-  reponseMeta, // optional
+  responseMeta, // optional
 });
 ```
 
