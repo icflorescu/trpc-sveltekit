@@ -276,9 +276,24 @@ import { browser } from '$app/env';
 import type { Router } from '$lib/trpcServer';
 import * as trpc from '@trpc/client';
 
-const client = trpc.createTRPCClient<Router>({
-  url: browser ? '/trpc' : 'http://localhost:3000/trpc', // 👈
+const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
+const client = (loadFetch?: typeof fetch) =>
+	trpc.createTRPCClient<Router>({
+		url: loadFetch ? '/trpc' : url,
+		...(loadFetch && { fetch: loadFetch }),
 });
+```
+
+Then use it like so:
+
+```ts
+// index.svelte
+export const load: Load = async ({ fetch }) => { // 👈 make sure to pass in this fetch, not the global fetch
+	const authors = await trpc(fetch).query('authors:browse', {
+		genre: 'fantasy',
+	});
+	return { props: { authors } };
+};
 ```
 
 ### Vercel's Edge Cache for Serverless Functions
