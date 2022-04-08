@@ -276,18 +276,13 @@ import { browser } from '$app/env';
 import type { Router } from '$lib/trpcServer';
 import * as trpc from '@trpc/client';
 
-let client: TRPCClient<Router>;
-export default (loadFetch?: typeof fetch) => {
-  if (!client) {
-    const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
-    client = trpc.createTRPCClient<Router>({
-      url: loadFetch ? '/trpc' : url,
-      transformer: trpcTransformer,
-      ...(loadFetch && { fetch: loadFetch })
-    });
-  }
-  return client;
-};
+const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
+export default (loadFetch?: typeof fetch) =>
+  trpc.createTRPCClient<Router>({
+    url: loadFetch ? '/trpc' : url,
+    transformer: trpcTransformer,
+    ...(loadFetch && { fetch: loadFetch })
+  });
 ```
 
 Then use it like so:
