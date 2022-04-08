@@ -276,20 +276,29 @@ import { browser } from '$app/env';
 import type { Router } from '$lib/trpcServer';
 import * as trpc from '@trpc/client';
 
-const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
-const client = (loadFetch?: typeof fetch) =>
-	trpc.createTRPCClient<Router>({
-		url: loadFetch ? '/trpc' : url,
-		...(loadFetch && { fetch: loadFetch }),
-});
+let client: TRPCClient<Router>;
+export default (loadFetch?: typeof fetch) => {
+  if (!client) {
+    const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
+    client = trpc.createTRPCClient<Router>({
+      url: loadFetch ? '/trpc' : url,
+      transformer: trpcTransformer,
+      ...(loadFetch && { fetch: loadFetch })
+    });
+  }
+  return client;
+};
 ```
 
 Then use it like so:
 
 ```ts
 // index.svelte
+import trpcClient from '$lib/trpcClient';
+import type { Load } from '@sveltejs/kit';
+
 export const load: Load = async ({ fetch }) => { // 👈 make sure to pass in this fetch, not the global fetch
-	const authors = await trpc(fetch).query('authors:browse', {
+	const authors = await trpcClient(fetch).query('authors:browse', {
 		genre: 'fantasy',
 	});
 	return { props: { authors } };
