@@ -1,6 +1,6 @@
 {
   "name": "trpc-sveltekit",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "SvelteKit adapter for trpc.io",
   "repository": "icflorescu/trpc-sveltekit",
   "bugs": {
@@ -45,7 +45,7 @@
     "@trpc/server": "^9.18.0"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.0.0-next.308",
+    "@sveltejs/kit": "^1.0.0-next.312",
     "@trpc/server": "^9.22.0",
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",
