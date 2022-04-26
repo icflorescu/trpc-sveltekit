@@ -45,8 +45,8 @@
     "@trpc/server": "^9.18.0"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.0.0-next.312",
-    "@trpc/server": "^9.22.0",
+    "@sveltejs/kit": "^1.0.0-next.321",
+    "@trpc/server": "^9.23.0",
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",
     "microbundle": "^0.14.2",
