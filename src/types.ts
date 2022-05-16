@@ -1,4 +1,4 @@
-import { MaybePromise } from '@sveltejs/kit/types/helper';
+import { MaybePromise } from '@sveltejs/kit/types/private';
 import type {
   AnyRouter,
   inferRouterContext,
