@@ -26,8 +26,8 @@ See [below](#stand-with-ukraine).
 
 ## Key features
 
-✅ Works with `@sveltejs/adapter-node` & `@sveltejs/adapter-vercel`  
-✅ Works with SvelteKit's `load()` function for SSR  
+✅ Works with `@sveltejs/adapter-node`, `@sveltejs/adapter-vercel` & `@sveltejs/adapter-netlify`
+✅ Works with SvelteKit's `load()` function for SSR
 
 ## Example application with Prisma & superjson
 
