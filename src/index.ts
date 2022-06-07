@@ -1,4 +1,4 @@
-import type { Handle } from '@sveltejs/kit';
+import type { Handle, RequestEvent } from '@sveltejs/kit';
 import type { AnyRouter, Dict } from '@trpc/server';
 import { resolveHTTPResponse } from '@trpc/server';
 import { CreateContextFn, ResponseMetaFn } from './types';
@@ -7,11 +7,13 @@ import { CreateContextFn, ResponseMetaFn } from './types';
  * A function that creates a tRPC handle.
  * @see https://kit.svelte.dev/docs/hooks
  */
-export function createTRPCHandle<Router extends AnyRouter>({
+export async function createTRPCHandle<Router extends AnyRouter>({
   url = '/trpc',
   router,
   createContext,
   responseMeta,
+  event,
+  resolve
 }: {
   /**
    * The URL prefix of tRPC routes.
@@ -37,39 +39,49 @@ export function createTRPCHandle<Router extends AnyRouter>({
    * (i.e. to control caching).
    * @see https://trpc.io/docs/caching */
   responseMeta?: ResponseMetaFn<Router>;
-}): Handle {
+
+  /**
+   * The event object passed to the `handle` function.
+   * @see https://kit.svelte.dev/docs/hooks#handle */
+  event: RequestEvent;
+
+  /**
+   * The resolve object passed to the `handle` function.
+   * @see https://kit.svelte.dev/docs/hooks#handle */
+  resolve: Parameters<Handle>[0]['resolve'];
+}): Promise<Response> {
   if (!url.startsWith('/') || url.endsWith('/')) {
     throw new Error("The tRPC url must start with '/' and NOT end with '/'");
   }
 
-  return async function ({ event, resolve }) {
-    if (event.url.pathname.startsWith(`${url}/`)) {
-      const request = event.request as Request & { headers: Dict<string | string[]> };
+  if (event.url.pathname.startsWith(`${url}/`)) {
+    const request = event.request as Request & {
+      headers: Dict<string | string[]>;
+    };
 
-      const req = {
-        method: request.method,
-        headers: request.headers,
-        query: event.url.searchParams,
-        body: await request.text(),
-      };
+    const req = {
+      method: request.method,
+      headers: request.headers,
+      query: event.url.searchParams,
+      body: await request.text()
+    };
 
-      const httpResponse = await resolveHTTPResponse({
-        router,
-        req,
-        path: event.url.pathname.substring(url.length + 1),
-        createContext: () => createContext?.(event.request),
-        responseMeta,
-      });
+    const httpResponse = await resolveHTTPResponse({
+      router,
+      req,
+      path: event.url.pathname.substring(url.length + 1),
+      createContext: () => createContext?.(event.request),
+      responseMeta
+    });
 
-      const { status, headers, body } = httpResponse as {
-        status: number;
-        headers: Record<string, string>;
-        body: string;
-      };
+    const { status, headers, body } = httpResponse as {
+      status: number;
+      headers: Record<string, string>;
+      body: string;
+    };
 
-      return new Response(body, { status, headers });
-    } else {
-      return await resolve(event);
-    }
-  };
+    return new Response(body, { status, headers });
+  } else {
+    return await resolve(event);
+  }
 }
