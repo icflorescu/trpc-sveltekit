@@ -91,12 +91,18 @@ export type Router = typeof router;
 import { createContext, responseMeta, router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
-export const handle = createTRPCHandle({
-  url: '/trpc', // optional; defaults to '/trpc'
-  router,
-  createContext, // optional
-  responseMeta, // optional
-});
+export const handle = async ({ event, resolve }) => {
+  const response = await createTRPCHandle({
+    url: '/trpc', // optional; defaults to '/trpc'
+    router,
+    createContext, // optional
+    responseMeta, // optional
+    event,
+    resolve
+  });
+
+  return response;
+};
 ```
 
 Learn more about SvelteKit hooks [here](https://kit.svelte.dev/docs/hooks).
@@ -264,21 +270,26 @@ Your server responses must [satisfy some criteria](https://vercel.com/docs/conce
 import { router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
-export const handle = createTRPCHandle({
-  url: '/trpc',
-  router,
-  responseMeta({ type, errors }) {
-    if (type === 'query' && errors.length === 0) {
-      const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
-      return {
-        headers: {
-          'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`
-        }
-      };
+export const handle = async ({ event, resolve }) => {
+  const response = await createTRPCHandle({
+    url: '/trpc',
+    event,
+    resolve,
+    responseMeta({ type, errors }) {
+      if (type === 'query' && errors.length === 0) {
+        const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+        return {
+          headers: {
+            'cache-control': `s-maxage=1, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`
+          }
+        };
+      }
+      return {};
     }
-    return {};
-  }
-});
+  });
+
+  return response;
+};
 ```
 
 ## Example
