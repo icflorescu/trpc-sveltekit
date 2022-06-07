@@ -42,7 +42,7 @@ Add this in your SvelteKit app [hooks](https://kit.svelte.dev/docs/hooks):
 import { createTRPCHandle } from 'trpc-sveltekit';
 // create your tRPC router...
 
-export const handle = ({ event, resolve }) => {
+export const handle = async ({ event, resolve }) => {
   const response = await createTRPCHandle({ // 👈 add this handle
     url: '/trpc',
     router,
