@@ -1,4 +1,3 @@
-import { MaybePromise } from '@sveltejs/kit/types/private';
 import type {
   AnyRouter,
   inferRouterContext,
@@ -9,7 +8,7 @@ import type {
 } from '@trpc/server';
 import type { TRPCResponse } from '@trpc/server/dist/declarations/src/rpc';
 
-export type CreateContextFn<TRouter extends AnyRouter> = (req: Request) => MaybePromise<inferRouterContext<TRouter>>;
+export type CreateContextFn<TRouter extends AnyRouter> = (req: Request) => Promise<inferRouterContext<TRouter>>;
 
 export type ResponseMetaFn<TRouter extends AnyRouter> = (opts: {
   data: TRPCResponse<unknown, inferRouterError<TRouter>>[];

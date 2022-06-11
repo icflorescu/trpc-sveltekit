@@ -13,7 +13,7 @@ export async function createTRPCHandle<Router extends AnyRouter>({
   createContext,
   responseMeta,
   event,
-  resolve
+  resolve,
 }: {
   /**
    * The URL prefix of tRPC routes.
@@ -63,15 +63,15 @@ export async function createTRPCHandle<Router extends AnyRouter>({
       method: request.method,
       headers: request.headers,
       query: event.url.searchParams,
-      body: await request.text()
+      body: await request.text(),
     };
 
     const httpResponse = await resolveHTTPResponse({
       router,
       req,
       path: event.url.pathname.substring(url.length + 1),
-      createContext: () => createContext?.(event.request),
-      responseMeta
+      createContext: async () => createContext?.(event.request),
+      responseMeta,
     });
 
     const { status, headers, body } = httpResponse as {
