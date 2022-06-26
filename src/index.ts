@@ -70,7 +70,7 @@ export async function createTRPCHandle<Router extends AnyRouter>({
       router,
       req,
       path: event.url.pathname.substring(url.length + 1),
-      createContext: async () => createContext?.(event.request),
+      createContext: async () => createContext?.(event),
       responseMeta,
     });
 
