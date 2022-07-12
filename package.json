@@ -41,7 +41,6 @@
   },
   "license": "ISC",
   "peerDependencies": {
-    "@sveltejs/kit": "^1.0.0-next",
     "@trpc/server": "^9.25.3"
   },
   "devDependencies": {
