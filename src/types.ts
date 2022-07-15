@@ -9,7 +9,7 @@ import type {
 } from '@trpc/server';
 import type { TRPCResponse } from '@trpc/server/dist/declarations/src/rpc';
 
-export type CreateContextFn<TRouter extends AnyRouter> = (event: RequestEvent) => Promise<inferRouterContext<TRouter>>;
+export type CreateContextFn<TRouter extends AnyRouter> = (event: RequestEvent) => inferRouterContext<TRouter> | Promise<inferRouterContext<TRouter>>;
 
 export type ResponseMetaFn<TRouter extends AnyRouter> = (opts: {
   data: TRPCResponse<unknown, inferRouterError<TRouter>>[];
