@@ -245,14 +245,16 @@ If you need to use the tRPC client in SvelteKit's `load()` function for SSR, mak
 import { browser } from '$app/env';
 import type { Router } from '$lib/trpcServer';
 import * as trpc from '@trpc/client';
+import type { LoadEvent } from "@sveltejs/kit";
 
 const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
-export default (loadFetch?: typeof fetch) =>
+export default (loadFetch?: LoadEvent['fetch']) =>
   trpc.createTRPCClient<Router>({
     url: loadFetch ? '/trpc' : url,
     transformer: trpcTransformer,
     ...(loadFetch && { fetch: loadFetch })
   });
+  
 ```
 
 Then use it like so:
