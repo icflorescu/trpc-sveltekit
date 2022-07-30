@@ -252,7 +252,7 @@ export default (loadFetch?: LoadEvent['fetch']) =>
   trpc.createTRPCClient<Router>({
     url: loadFetch ? '/trpc' : url,
     transformer: trpcTransformer,
-    ...(loadFetch && { fetch: loadFetch })
+    ...(loadFetch && { fetch: loadFetch as typeof fetch })
   });
   
 ```
