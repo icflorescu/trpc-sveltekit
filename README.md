@@ -119,8 +119,6 @@ Learn more about SvelteKit hooks [here](https://kit.svelte.dev/docs/hooks).
 
 4. Create a [tRPC client](https://trpc.io/docs/vanilla):
 
-Install trpc client: `npm install @trpc/client`/`yarn add @trpc/client`
-
 ```ts
 // $lib/trpcClient.ts
 import type { Router } from '$lib/trpcServer'; // 👈 only the types are imported from the server
@@ -128,6 +126,8 @@ import * as trpc from '@trpc/client';
 
 export default trpc.createTRPCClient<Router>({ url: '/trpc' });
 ```
+
+*Note*: You also need to install the trpc client package with `npm install @trpc/client`/`yarn add @trpc/client`.
 
 5. Use the client like so:
 
