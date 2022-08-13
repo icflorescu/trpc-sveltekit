@@ -97,10 +97,11 @@ export type Router = typeof router;
 
 ```ts
 // src/hooks.ts or src/hooks/index.ts
+import type { Handle } from '@sveltejs/kit';
 import { createContext, responseMeta, router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
-export const handle = async ({ event, resolve }) => {
+export const handle: Handle = async ({ event, resolve }) => {
   const response = await createTRPCHandle({
     url: '/trpc', // optional; defaults to '/trpc'
     router,
