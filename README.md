@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/581999/153954565-61b219ee-c352-41b4-b8ff-3eba955b9b7d.png" alt="tRPC-SvelteKit" />
 </p>
-<h1 align="center">✨ tRPC-SvelteKit</h1>
+<h1 align="center">✨tRPC-SvelteKit</h1>
 <p align="center">
   <a href="https://npmjs.org/package/trpc-sveltekit">
     <img src="https://img.shields.io/npm/v/trpc-sveltekit.svg?style=flat-square" alt="NPM version" style="max-width: 100%;" />
