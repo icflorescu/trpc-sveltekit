@@ -9,6 +9,9 @@
   <a href="/icflorescu/trpc-sveltekit/blob/main/LICENSE">
     <img src="http://img.shields.io/npm/l/trpc-sveltekit.svg?style=flat-square" alt="License" style="max-width: 100%;" />
   </a>
+  <a href="https://github.com/icflorescu/trpc-sveltekit">
+    <img src="https://img.shields.io/github/stars/icflorescu/trpc-sveltekit?style=flat-square" alt="Stars" style="max-width: 100%;" />
+  </a>
   <a href="https://npmjs.org/package/trpc-sveltekit">
     <img src="http://img.shields.io/npm/dm/trpc-sveltekit.svg?style=flat-square" alt="Downloads" style="max-width: 100%;" />
   </a>
