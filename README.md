@@ -23,10 +23,6 @@
   No code generation, run-time bloat, or build pipeline.
 </p>
 
-## ❤️🇺🇦
-
-See [below](#stand-with-ukraine).
-
 ## Key features
 
 ✅ Works with `@sveltejs/adapter-node`, `@sveltejs/adapter-vercel` & `@sveltejs/adapter-netlify`  
