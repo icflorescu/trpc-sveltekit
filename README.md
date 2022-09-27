@@ -37,7 +37,7 @@
 Add this in your SvelteKit app [hooks](https://kit.svelte.dev/docs/hooks):
 
 ```ts
-// src/hooks.ts
+// src/hooks.server.ts or src/hooks.ts on older SvelteKit versions
 import { createTRPCHandle } from 'trpc-sveltekit';
 // create your tRPC router...
 
@@ -92,10 +92,10 @@ export const router = trpc
 export type Router = typeof router;
 ```
 
-3. Add this handle to your application hooks (`src/hooks.ts` or `src/hooks/index.ts`):
+1. Add this handle to your application hooks (`src/hooks.server.ts` or `src/hooks.ts` on older SvelteKit versions):
 
 ```ts
-// src/hooks.ts or src/hooks/index.ts
+// src/hooks.server.ts or src/hooks.ts on older SvelteKit versions
 import type { Handle } from '@sveltejs/kit';
 import { createContext, responseMeta, router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
@@ -276,10 +276,10 @@ export const load: Load = async ({ fetch }) => { // 👈 make sure to pass in th
 
 ### Vercel's Edge Cache for Serverless Functions
 
-Your server responses must [satisfy some criteria](https://vercel.com/docs/concepts/functions/edge-caching) in order for them to be cached Verced Edge Network, and here's where tRPC's `responseMeta()` comes in handy. You could initialize your handle in `src/hooks.ts` like so: 
+Your server responses must [satisfy some criteria](https://vercel.com/docs/concepts/functions/edge-caching) in order for them to be cached Verced Edge Network, and here's where tRPC's `responseMeta()` comes in handy. You could initialize your handle in `src/hooks.server.ts` like so: 
 
 ```ts
-// src/hooks.ts or src/hooks/index.ts
+// src/hooks.server.ts or src/hooks.ts on older SvelteKit versions
 import { router } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
