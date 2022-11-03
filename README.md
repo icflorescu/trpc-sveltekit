@@ -44,7 +44,7 @@ import { createTRPCHandle } from 'trpc-sveltekit';
 export const handle = async ({ event, resolve }) => {
   const response = await createTRPCHandle({ // 👈 add this handle
     url: '/trpc',
-    router,
+    router: appRouter,
     event,
     resolve
   });
@@ -63,33 +63,25 @@ export const handle = async ({ event, resolve }) => {
 
 ```ts
 // $lib/trpcServer.ts
-import type { inferAsyncReturnType } from '@trpc/server';
-import * as trpc from '@trpc/server';
+import { initTRPC } from '@trpc/server';
 
-// optional
-export const createContext = () => {
-  // ...
-  return {
-    /** context data */
-  };
-};
+const t = initTRPC
+  .context<Context>() // optional
+  .meta<Meta>() // optional
+  .create({ /* [...] */});
+ 
+// We explicitly export the methods we use here
+// This allows us to create reusable & protected base procedures
+export const middleware = t.middleware;
+export const router = t.router;
+export const publicProcedure = t.procedure;
 
-// optional
-export const responseMeta = () => {
-  // ...
-  return {
-    // { headers: ... }
-  };
-};
+export const appRouter = router({
+  // procedures...
+  hello: publicProcedure.query(() => 'world'),
+});
 
-export const router = trpc
-  .router<inferAsyncReturnType<typeof createContext>>()
-  // queries and mutations...
-  .query('hello', {
-    resolve: () => 'world',
-  });
-
-export type Router = typeof router;
+export type AppRouter = typeof appRouter;
 ```
 
 1. Add this handle to your application hooks (`src/hooks.server.ts` or `src/hooks.ts` on older SvelteKit versions):
@@ -97,13 +89,13 @@ export type Router = typeof router;
 ```ts
 // src/hooks.server.ts or src/hooks.ts on older SvelteKit versions
 import type { Handle } from '@sveltejs/kit';
-import { createContext, responseMeta, router } from '$lib/trpcServer';
+import { createContext, responseMeta, appRouter } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
 export const handle: Handle = async ({ event, resolve }) => {
   const response = await createTRPCHandle({
     url: '/trpc', // optional; defaults to '/trpc'
-    router,
+    router: appRouter,
     createContext, // optional
     responseMeta, // optional
     event,
@@ -120,10 +112,16 @@ Learn more about SvelteKit hooks [here](https://kit.svelte.dev/docs/hooks).
 
 ```ts
 // $lib/trpcClient.ts
-import type { Router } from '$lib/trpcServer'; // 👈 only the types are imported from the server
-import * as trpc from '@trpc/client';
+import type { AppRouter } from '$lib/trpcServer'; // 👈 only the types are imported from the server
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 
-export default trpc.createTRPCClient<Router>({ url: '/trpc' });
+export default createTRPCProxyClient<AppRouter>({ 
+  links: [
+    httpBatchLink({ 
+      url: '/trpc' 
+    }),
+  ],
+});
 ```
 
 *Note*: You also need to install the trpc client package with `npm install @trpc/client`/`yarn add @trpc/client`.
@@ -134,7 +132,7 @@ export default trpc.createTRPCClient<Router>({ url: '/trpc' });
 // page.svelte
 import trpcClient from '$lib/trpcClient';
 
-const greeting = await trpcClient.query('hello');
+const greeting = await trpcClient.hello.query();
 console.log(greeting); // => 👈 world
 ```
 
@@ -169,19 +167,18 @@ export default prismaClient;
 
 Install [`trpc-transformer`](https://github.com/icflorescu/trpc-transformer):
 
-Then, configure your tRPC router like so:
+Then, configure tRPC like so:
 
 ```ts
 // $lib/trpcServer.ts
 import trpcTransformer from 'trpc-transformer';
 import * as trpc from '@trpc/server';
 
-export const router = trpc
-  .router()
-  // .merge, .query, .mutation, etc.
-  .transformer(trpcTransformer); // 👈
-
-export type Router = typeof router;
+const t = initTrpc
+  // .context(), .meta(), etc.
+  .create({
+    transformer: trpcTransformer // 👈
+  })
 ```
 
 ...and don't forget to configure your tRPC client:
@@ -190,10 +187,15 @@ export type Router = typeof router;
 // $lib/trpcClient.ts
 import type { Router } from '$lib/trpcServer';
 import transformer from 'trpc-transformer';
-import * as trpc from '@trpc/client';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 
-export default trpc.createTRPCClient<Router>({
-  url: '/trpc',
+
+export default createTRPCProxyClient<AppRouter>({ 
+  links: [
+    httpBatchLink({ 
+      url: '/trpc' 
+    }),
+  ],
   transformer, // 👈
 });
 ```
@@ -203,26 +205,22 @@ It is often useful to wrap the functionality of your `@trpc/client` api within o
 
 ```ts
 // $lib/trpcClient.ts
-import type { Router } from '$lib/trpcServer';
+import type { AppRouter } from '$lib/trpcServer';
 import trpcTransformer from '$lib/trpcTransformer';
-import * as trpc from '@trpc/client';
-import type { inferProcedureInput, inferProcedureOutput } from '@trpc/server';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
+import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 
-export default trpc.createTRPCClient<Router>({
-  url: '/trpc',
+export default createTRPCProxyClient<AppRouter>({ 
+  links: [
+    httpBatchLink({ 
+      url: '/trpc' 
+    }),
+  ],
   transformer: trpcTransformer,
 });
 
-type Query = keyof Router['_def']['queries'];
-type Mutation = keyof Router['_def']['mutations'];
-
-// Useful types 👇👇👇
-export type InferQueryOutput<RouteKey extends Query> = inferProcedureOutput<Router['_def']['queries'][RouteKey]>;
-export type InferQueryInput<RouteKey extends Query> = inferProcedureInput<Router['_def']['queries'][RouteKey]>;
-export type InferMutationOutput<RouteKey extends Mutation> = inferProcedureOutput<
-  Router['_def']['mutations'][RouteKey]
->;
-export type InferMutationInput<RouteKey extends Mutation> = inferProcedureInput<Router['_def']['mutations'][RouteKey]>;
+export type RouterInput = inferRouterInputs<AppRouter>;
+export type RouterOutput = inferRouterOutputs<AppRouter>;
 ```
 
 Then, you could use the inferred types like so:
@@ -230,10 +228,10 @@ Then, you could use the inferred types like so:
 ```ts
 // authors.svelte
 <script lang="ts">
-  let authors: InferQueryOutput<'authors:browse'> = [];
+  let authors: RouterOutput['authors']['browse'] = [];
 
   const loadAuthors = async () => {
-    authors = await trpc.query('authors:browse', { genre: 'fantasy' });
+    authors = await trpcClient.authors.browse.query({ genre: 'fantasy' });
   };
 </script>
 ```
@@ -246,15 +244,19 @@ If you need to use the tRPC client in SvelteKit's `load()` function for SSR, mak
 // $lib/trpcClient.ts
 import { browser } from '$app/env';
 import type { Router } from '$lib/trpcServer';
-import * as trpc from '@trpc/client';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { LoadEvent } from "@sveltejs/kit";
 
 const url = browser ? '/trpc' : 'http://localhost:3000/trpc';
 export default (loadFetch?: LoadEvent['fetch']) =>
-  trpc.createTRPCClient<Router>({
-    url: loadFetch ? '/trpc' : url,
+  createTRPCProxyClient<AppRouter>({ 
+    links: [
+      httpBatchLink({ 
+        url: loadFetch ? '/trpc' : url,
+        ...(loadFetch && { fetch: loadFetch as typeof fetch })
+      }),
+    ],
     transformer: trpcTransformer,
-    ...(loadFetch && { fetch: loadFetch as typeof fetch })
   });
   
 ```
@@ -267,7 +269,7 @@ import trpcClient from '$lib/trpcClient';
 import type { Load } from '@sveltejs/kit';
 
 export const load: Load = async ({ fetch }) => { // 👈 make sure to pass in this fetch, not the global fetch
-	const authors = await trpcClient(fetch).query('authors:browse', {
+	const authors = await trpcClient(fetch).authors.browse.query({
 		genre: 'fantasy',
 	});
 	return { props: { authors } };
@@ -280,7 +282,7 @@ Your server responses must [satisfy some criteria](https://vercel.com/docs/conce
 
 ```ts
 // src/hooks.server.ts or src/hooks.ts on older SvelteKit versions
-import { router } from '$lib/trpcServer';
+import { appRouter } from '$lib/trpcServer';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
 export const handle = async ({ event, resolve }) => {
