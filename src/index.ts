@@ -1,6 +1,6 @@
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import type { AnyRouter, Dict } from '@trpc/server';
-import { resolveHTTPResponse } from '@trpc/server';
+import { resolveHTTPResponse } from '@trpc/server/http';
 import { CreateContextFn, ResponseMetaFn } from './types';
 
 /**

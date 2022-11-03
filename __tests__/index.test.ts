@@ -1,20 +1,21 @@
 import { Handle, RequestEvent } from '@sveltejs/kit';
-import * as trpc from '@trpc/server';
+import { initTRPC } from '@trpc/server';
 import { createTRPCHandle } from '../src';
 
-const router = trpc.router();
+const t = initTRPC.create();
+const router = t.router({});
 const event: RequestEvent = {} as unknown as RequestEvent;
 const resolve: Parameters<Handle>[0]['resolve'] =
-	{} as unknown as Parameters<Handle>[0]['resolve'];
+  {} as unknown as Parameters<Handle>[0]['resolve'];
 
 test("Should throw when url doesn't starts with `/`", () => {
-	return expect(
-		createTRPCHandle({ url: 'trpc', router, event, resolve })
-	).rejects.toThrow();
+  return expect(
+    createTRPCHandle({ url: 'trpc', router, event, resolve })
+  ).rejects.toThrow();
 });
 
 test('Should throw when url ends with `/`', () => {
-	return expect(
-		createTRPCHandle({ url: '/trpc/', router, event, resolve })
-	).rejects.toThrow();
+  return expect(
+    createTRPCHandle({ url: '/trpc/', router, event, resolve })
+  ).rejects.toThrow();
 });
