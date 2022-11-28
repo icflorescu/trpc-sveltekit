@@ -1,6 +1,6 @@
 {
   "name": "trpc-sveltekit",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "SvelteKit adapter for trpc.io",
   "keywords": [
     "trpc",
@@ -40,7 +40,7 @@
     "@trpc/server": "^10.4.1"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.0.0-next.565",
+    "@sveltejs/kit": "^1.0.0-next.567",
     "@trpc/client": "^10.4.1",
     "@trpc/server": "^10.4.1",
     "typescript": "^4.9.3"
