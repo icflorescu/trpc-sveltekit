@@ -2,7 +2,7 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import Logo from '$lib/components/Logo.svelte';
-  import { REPO_URL } from '$lib/constants';
+  import { BASE_PATH, REPO_URL } from '$lib/constants';
   import IconGitHub from '$lib/icons/IconGitHub.svelte';
   import IconMenu from '$lib/icons/IconMenu.svelte';
   import { menuVisible } from '$lib/menuStore';
@@ -27,7 +27,7 @@
   <div class="menu-button" aria-label="Show menu" on:click={showMenu}>
     <IconMenu size="1.25em" />
   </div>
-  <a href="/" class="home-link" class:hidden={$menuVisible}>
+  <a href={BASE_PATH} class="home-link" class:hidden={$menuVisible}>
     <h1>
       <span class="logo"><Logo /></span>tRPC-SvelteKit
       <code class="version">v{$page.data.version}</code>
