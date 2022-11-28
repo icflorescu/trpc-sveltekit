@@ -3,12 +3,12 @@
   "short_name": "tRPC-SvelteKit",
   "icons": [
     {
-      "src": "https://github.com/icflorescu/trpc-sveltekit/android-chrome-192x192.png",
+      "src": "https://icflorescu.github.io/trpc-sveltekit/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://github.com/icflorescu/trpc-sveltekit/android-chrome-512x512.png",
+      "src": "https://icflorescu.github.io/trpc-sveltekit/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
