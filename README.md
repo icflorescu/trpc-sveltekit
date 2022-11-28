@@ -7,6 +7,8 @@
 [![Downloads][downloads-image]][npm-url]
 [![Language][language-image]][repo-url]
 
+[![tRPC-SvelteKit](https://user-images.githubusercontent.com/581999/204399415-18fddfb9-acdf-4e15-a945-a27f816e354e.png)](https://icflorescu.github.io/trpc-sveltekit/)
+
 > Move fast and break nothing.  
 > End-to-end typesafe APIs for your  
 > SvelteKit applications.
@@ -25,8 +27,6 @@ If you're using tRPC v9, use tRPC-SvelteKit v2.x.x. The old source code is avail
 ## Documentation
 
 The documentation is available at [icflorescu.github.io/trpc-sveltekit/](https://icflorescu.github.io/trpc-sveltekit/).
-
-[![tRPC-SvelteKit](https://user-images.githubusercontent.com/581999/204399415-18fddfb9-acdf-4e15-a945-a27f816e354e.png)](https://icflorescu.github.io/trpc-sveltekit/)
 
 ## Quickstart
 
