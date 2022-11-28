@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { page } from '$app/stores';
   import Footer from '$lib/components/layout/Footer.svelte';
   import Header from '$lib/components/layout/Header.svelte';
@@ -7,7 +8,10 @@
   import { PAGES } from '$lib/constants';
   import '../app.scss';
 
-  $: currentPageIndex = PAGES.findIndex((p) => p.path === $page.url.pathname);
+  $: currentPageIndex =
+    $page.url.pathname === base
+      ? 0
+      : PAGES.findIndex((p) => `${base}${p.path}` === $page.url.pathname);
   $: currentPage = PAGES[currentPageIndex];
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import Highlight from '$lib/components/Highlight.svelte';
-  import { BASE_PATH } from '$lib/constants';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -10,7 +10,7 @@
 
 <p>
   Assuming you createad a <code>trpc()</code> helper function as described in the
-  <a href={`${BASE_PATH}/getting-started`}>getting started</a>
+  <a href="{base}/getting-started">getting started</a>
   section, you can call tRPC procedures in your SvelteKit
   <a href="https://kit.svelte.dev/docs/load" target="_blank" rel="noreferrer">page load functions</a
   >:

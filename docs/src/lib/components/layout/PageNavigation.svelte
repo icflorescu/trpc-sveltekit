@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { PAGES } from '$lib/constants';
   import IconArrowLeft from '$lib/icons/IconArrowLeft.svelte';
   import IconArrowRight from '$lib/icons/IconArrowRight.svelte';
@@ -10,7 +11,7 @@
 </script>
 
 <div class="root">
-  <a class="prev" href={previousPage.path}>
+  <a class="prev" class:without-next={!nextPage} href="{base}{previousPage.path}">
     <IconArrowLeft size="1.25em" />
     <div>
       <div class="dir">Go back</div>
@@ -18,7 +19,7 @@
     </div>
   </a>
   {#if nextPage}
-    <a href={nextPage.path}>
+    <a href="{base}{nextPage.path}">
       <div>
         <div class="dir">Up next</div>
         <div>{nextPage.title}</div>
@@ -63,6 +64,9 @@
     }
     @media (min-width: 512px) {
       width: calc(50% - (var(--spacing) * 0.75));
+      &.without-next {
+        width: 100%;
+      }
     }
   }
 

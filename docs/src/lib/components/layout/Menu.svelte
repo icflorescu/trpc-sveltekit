@@ -1,5 +1,6 @@
 <script lang="ts">
   import { browser } from '$app/environment';
+  import { base } from '$app/paths';
   import Logo from '$lib/components/Logo.svelte';
   import { PAGES } from '$lib/constants';
   import { menuVisible } from '$lib/menuStore';
@@ -31,7 +32,7 @@
   </header>
   <nav>
     {#each PAGES as { path, title, icon: Icon } (path)}
-      <MenuLink to={path} {title}><Icon slot="icon" /></MenuLink>
+      <MenuLink to="{base}{path}" {title}><Icon slot="icon" /></MenuLink>
     {/each}
   </nav>
 </aside>

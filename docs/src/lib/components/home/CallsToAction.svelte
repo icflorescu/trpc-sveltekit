@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { PAGES, REPO_URL } from '$lib/constants';
   import IconGitHub from '$lib/icons/IconGitHub.svelte';
 
@@ -7,7 +8,7 @@
 </script>
 
 <div>
-  <a role="button" href={gettingStartedPage.path}>
+  <a role="button" href="{base}{gettingStartedPage.path}">
     <GettingStartedPageIcon size="1.25em" />
     Get started
   </a>
