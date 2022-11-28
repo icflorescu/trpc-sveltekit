@@ -7,15 +7,21 @@
 [![Downloads][downloads-image]][npm-url]
 [![Language][language-image]][repo-url]
 
-> Move fast and break nothing.
+> Move fast and break nothing.  
 > End-to-end typesafe APIs for your  
 > SvelteKit applications.
 
 ## Works with
 
-✅ `@sveltejs/adapter-node`
-✅ `@sveltejs/adapter-vercel`
+✅ `@sveltejs/adapter-node`  
+✅ `@sveltejs/adapter-vercel`  
 ✅ `@sveltejs/adapter-netlify`  
+
+## Important
+
+tRPC-SvelteKit v3.x.x is compatible with tRPC v10.
+
+If you're using tRPC v9, use tRPC-SvelteKit v2.x.x. The old source code is available in the [trpc-v9](https://github.com/icflorescu/trpc-sveltekit/tree/trpc-v9) branch.
 
 ## Contributors
 
