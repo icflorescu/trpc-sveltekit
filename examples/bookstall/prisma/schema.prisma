@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./bookstall.db"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  updatedAt    DateTime @updatedAt
+
+  updatedAuthors Author[]
+  updatedBooks   Book[]
+  updatedStores  Store[]
+}
+
+model Author {
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String
+  bio             String?
+  updatedAt       DateTime @updatedAt
+  updatedByUserId String?
+
+  books     Book[]
+  updatedBy User?  @relation(fields: [updatedByUserId], references: [id])
+
+  @@unique([firstName, lastName])
+}
+
+model Book {
+  id              String   @id @default(cuid())
+  title           String
+  excerpt         String?
+  authorId        String
+  price           Decimal
+  updatedAt       DateTime @updatedAt
+  updatedByUserId String?
+  author          Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  stores    Store[]
+  updatedBy User?   @relation(fields: [updatedByUserId], references: [id])
+}
+
+model Store {
+  id              String   @id @default(cuid())
+  name            String
+  updatedAt       DateTime @updatedAt
+  updatedByUserId String?
+
+  books     Book[]
+  updatedBy User?  @relation(fields: [updatedByUserId], references: [id])
+}

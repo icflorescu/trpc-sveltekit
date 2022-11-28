@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+
+# You should uncomment the next lines in your appplication
+
+# .env
+# .env.*
+# !.env.example

@@ -1,0 +1,48 @@
+{
+  "name": "trpc-sveltekit",
+  "version": "3.0.0",
+  "description": "SvelteKit adapter for trpc.io",
+  "keywords": [
+    "trpc",
+    "svelte",
+    "sveltekit",
+    "kit",
+    "adapter",
+    "handle",
+    "typescript",
+    "rpc"
+  ],
+  "repository": "icflorescu/trpc-sveltekit",
+  "bugs": {
+    "url": "https://github.com/icflorescu/trpc-sveltekit/issues"
+  },
+  "author": {
+    "name": "Ionut-Cristian Florescu",
+    "email": "ionut.florescu@gmail.com",
+    "url": "https://github.com/icflorescu"
+  },
+  "license": "ISC",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && cp ../README.md README.md && cp ../LICENSE LICENSE",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write ."
+  },
+  "dependencies": {
+    "@trpc/client": "^10.4.1",
+    "@trpc/server": "^10.4.1"
+  },
+  "devDependencies": {
+    "@sveltejs/kit": "^1.0.0-next.565",
+    "@trpc/client": "^10.4.1",
+    "@trpc/server": "^10.4.1",
+    "typescript": "^4.9.3"
+  }
+}

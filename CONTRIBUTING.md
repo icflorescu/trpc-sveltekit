@@ -1,1 +1,1 @@
-Pull requests are welcomed. Please make sure to follow linting rules and run tests.
+Pull requests are welcomed. Please make sure to follow the linting rules.

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "moduleResolution": "Node",
+    "declaration": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "outDir": "dist",
+    "rootDir": "src"
+  }
+}
