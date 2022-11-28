@@ -2,10 +2,8 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "dev": { "cache": false },
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".svelte-kit/**"]
-    },
+    "trpc-sveltekit#build": { "outputs": ["dist/**"] },
+    "docs#build": { "dependsOn": ["trpc-sveltekit#build"], "outputs": ["build/**"] },
     "preview": { "dependsOn": ["^build"] },
     "lint": { "outputs": [] },
     "format": { "outputs": [] }
