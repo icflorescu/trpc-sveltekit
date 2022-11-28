@@ -5,7 +5,7 @@
   import plaintext from 'svelte-highlight/languages/plaintext';
   import shell from 'svelte-highlight/languages/shell';
   import typescript from 'svelte-highlight/languages/typescript';
-  import { fade } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
 
   type Language = 'shell' | 'typescript' | 'plaintext';
 
@@ -78,7 +78,7 @@
 </div>
 <div class="code">
   {#if copied}
-    <div class="copied" in:fade={{ duration: 100 }} out:fade>Copied!</div>
+    <div class="copied" in:fly={{ y: 10, duration: 100 }} out:fade>Copied!</div>
   {/if}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="copy" on:click={copy}><IconClipboard /></div>
