@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import Info from '$lib/components/Info.svelte';
   import { AUTHOR_URL, REPO_URL } from '$lib/constants';
 </script>
@@ -82,7 +83,7 @@
     rel="noreferrer">spread the word</a
   >, 👍<a href="https://www.linkedin.com/in/icflorescu" target="_blank" rel="noreferrer"
     >endorse me on LinkedIn</a
-  >, or — better yet — <a href="/hire-the-author">hire my services</a>.
+  >, or — better yet — <a href="{base}/hire-the-author">hire my services</a>.
 </p>
 
 <h3>Why do repository stars matter</h3>
