@@ -6,7 +6,10 @@ const config = {
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: preprocess(),
-  kit: { adapter: adapter() }
+  kit: {
+    adapter: adapter(),
+    paths: { base: process.env.GITHUB_PAGES === 'true' ? '/trpc-sveltekit' : '' }
+  }
 };
 
 export default config;
