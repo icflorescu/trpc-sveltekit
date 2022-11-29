@@ -8,7 +8,7 @@
   import IconMenu from '$lib/icons/IconMenu.svelte';
   import { menuVisible } from '$lib/menuStore';
   import throttle from 'lodash/fp/throttle';
-  import ThemeSwitcher from './ThemeSwitcher.svelte';
+  import DarkModeSwitcher from './DarkModeSwitcher.svelte';
 
   let scrolled = browser ? window.scrollY > 0 : false;
 
@@ -40,7 +40,7 @@
     <a class="repo-link" href={REPO_URL} target="_blank" title="Source code">
       <IconGitHub size="1.25em" />
     </a>
-    <ThemeSwitcher size="1.25em" />
+    <DarkModeSwitcher size="1.25em" />
   </div>
 </div>
 
