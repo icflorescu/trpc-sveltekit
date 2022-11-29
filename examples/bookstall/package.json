@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite --port 3002 --clearScreen false",
     "build": "vite build",
-    "preview": "vite preview --port 3001",
+    "preview": "vite preview --port 3002",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
