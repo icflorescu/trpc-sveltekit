@@ -53,7 +53,7 @@
     --svelte-orange: #ff3e00;
     --navbar-width: 280px;
     --header-height: 60px;
-    --footer-height: 112px;
+    --footer-height: 132px;
     @media (min-width: 1024px) {
       --header-height: 70px;
     }
