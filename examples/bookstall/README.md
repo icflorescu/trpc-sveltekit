@@ -5,6 +5,8 @@ A sample SvelteKit application built to illustrate the usage of [trpc-sveltekit]
 
 ## Screenshot
 
+![tRPC-SvelteKit Example: Bookstall](https://user-images.githubusercontent.com/581999/204535160-5ca59227-81cb-4281-bbad-23a7869c6031.png)
+
 ## License
 
 The [ISC License](LICENSE).
