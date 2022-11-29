@@ -8,6 +8,7 @@ import IconTools from '$lib/icons/IconTools.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
 
+export const GITHUB_PAGES_ROOT = 'https://icflorescu.github.io/trpc-sveltekit/';
 export const AUTHOR_URL = 'https://github.com/icflorescu';
 export const REPO_URL = `${AUTHOR_URL}/trpc-sveltekit`;
 export const BADGE_COLOR_CODE = '1095c1';
