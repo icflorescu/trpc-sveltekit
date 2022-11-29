@@ -7,7 +7,9 @@
 
 <h2>Using authentication</h2>
 
-<p><code>tRPC-SvelteKit</code> works with both cookie-based and JWT-based authentication.</p>
+<p>
+  The <code>tRPC-SvelteKit</code> package works with both cookie-based and JWT-based authentication.
+</p>
 
 <p>
   Below is an example of how you could secure your tRPC routes with cookie-based authentication.
