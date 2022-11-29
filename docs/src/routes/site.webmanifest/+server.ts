@@ -10,6 +10,8 @@ export const GET: RequestHandler = () => {
     JSON.stringify({
       name: 'tRPC-SvelteKit',
       short_name: 'tRPC-SvelteKit',
+      start_url: './',
+      scope: '.',
       icons: ICON_SIZES.map((size) => ({
         src: `${GITHUB_PAGES_ROOT}/android-chrome-${size}x${size}.png`,
         sizes: `${size}x${size}`,
