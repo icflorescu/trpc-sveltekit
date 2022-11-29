@@ -8,6 +8,8 @@
   import { PAGES } from '$lib/constants';
   import '../app.scss';
 
+  const image = 'https://icflorescu.github.io/trpc-sveltekit/trpc-sveltekit.png';
+
   $: currentPageIndex =
     $page.url.pathname === base
       ? 0
@@ -24,14 +26,14 @@
   <meta name="description" content={currentPage.pageDescription} />
   <meta property="og:description" content={currentPage.pageDescription} />
   <meta name="twitter:description" content={currentPage.pageDescription} />
-  <meta property="og:image" content="{base}/mantine-datatable-repo.png" />
+  <meta property="og:image" content={image} />
   <meta
     property="og:image:alt"
     content="tRPC-SvelteKit is a tRPC adapter that makes it easy to build end-to-end typesafe APIs for your SvelteKit applications"
   />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:url" content={base} />
-  <meta name="twitter:image" content="{base}/mantine-datatable-repo.png" />
+  <meta name="twitter:url" content="https://icflorescu.github.io/trpc-sveltekit/" />
+  <meta name="twitter:image" content={image} />
   <meta name="twitter:creator" content="@icflorescu" />
   <meta property="og:site_name" content="tRPC-SvelteKit" />
 </svelte:head>
