@@ -33,7 +33,7 @@
   .root {
     margin: 2em 0 1em;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     row-gap: var(--spacing);
     @media (min-width: 512px) {
       flex-direction: row;

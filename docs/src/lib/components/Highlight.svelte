@@ -5,7 +5,7 @@
   import plaintext from 'svelte-highlight/languages/plaintext';
   import shell from 'svelte-highlight/languages/shell';
   import typescript from 'svelte-highlight/languages/typescript';
-  import { fade, fly } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
 
   type Language = 'shell' | 'typescript' | 'plaintext';
 
@@ -78,7 +78,13 @@
 </div>
 <div class="code">
   {#if copied}
-    <div class="copied" in:fly={{ y: 10, duration: 100 }} out:fade>Copied!</div>
+    <div
+      class="copied"
+      in:fly={{ y: 5, duration: 100, opacity: 0 }}
+      out:fly={{ y: -5, duration: 300, opacity: 0 }}
+    >
+      Code copied...
+    </div>
   {/if}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="copy" on:click={copy}><IconClipboard /></div>
@@ -144,10 +150,14 @@
 
   .copied {
     position: absolute;
-    top: 0.9em;
-    right: 3.25em;
+    top: 0.75em;
+    right: 3em;
     font-size: 0.9em;
     color: var(--muted-color);
+    background: var(--background-color);
+    padding: 0.2em 0.5em;
+    border: 1px solid var(--muted-border-color);
+    border-radius: var(--border-radius);
   }
 
   .copy {

@@ -101,7 +101,7 @@
 
   .logo {
     margin-right: 0.3em;
-    vertical-align: text-bottom;
+    vertical-align: 0.1em;
   }
 
   .version {
@@ -127,10 +127,7 @@
 
   .repo-link {
     color: inherit;
-    margin-right: calc(var(--spacing) / 2);
-    @media (min-width: 512px) {
-      margin-right: var(--spacing);
-    }
+    margin-right: var(--spacing);
     &:focus {
       background: none;
     }
