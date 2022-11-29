@@ -1,22 +1,27 @@
-┌──────────┐
-│ lib/trpc │       👈 place your tRPC-related stuff here
-└┬─────────┘
- ├─ context.ts     👈 router context
- ├─ t.ts           👈 tRPC definition helper (see below)
- ├─ router.ts      👈 main router definition (imports files defined in routes folder)
- ├─ middleware.ts  👈 tRPC middleware (this could be split into multiple files if necessary)
- ├─ client.ts      👈 define a client helper function here
- │ ┌────────┐
- ├─┤ routes │      👈 split your routes into multiple files and place them here
- │ └┬───────┘
- │  ├─ route-1.ts
- │  ├─ route-2.ts
- │  ├─ route-3.ts
- │  │  ...
- │  └─ route-n.ts
- │ ┌────────────┐
- └─┤ middleware │  👈 split your middleware into multiple files and place them here
-   └┬───────────┘
-    ├─ middleware-1.ts
-    │  ...
-    └─ middleware-n.ts
+--------------
+|  lib/trpc  |         👈 place your tRPC-related stuff here
+--------------
+  |
+  |-- context.ts       👈 router context
+  |-- t.ts             👈 tRPC definition helper (see below)
+  |-- router.ts        👈 main router definition (imports files defined in routes folder)
+  |-- middleware.ts    👈 tRPC middleware (this could be split into multiple files if necessary)
+  |-- client.ts        👈 define a client helper function here
+  |
+  |  ------------
+  |--|  routes  |      👈 split your routes into multiple files and place them here
+  |  ------------
+  |    |
+  |    |-- route-1.ts
+  |    |-- route-2.ts
+  |    |-- route-3.ts
+  |    |  ...
+  |    |-- route-n.ts
+  |
+  |  ----------------
+  |--|  middleware  |  👈 split your middleware into multiple files and place them here
+     ----------------
+       |
+       |-- middleware-1.ts
+       |  ...
+       |-- middleware-n.ts
