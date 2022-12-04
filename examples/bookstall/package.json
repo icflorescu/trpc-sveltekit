@@ -18,12 +18,12 @@
   },
   "devDependencies": {
     "@picocss/pico": "^1.5.6",
-    "@prisma/client": "^4.7.0",
+    "@prisma/client": "^4.7.1",
     "@sveltejs/adapter-auto": "^1.0.0-next.90",
-    "@sveltejs/kit": "^1.0.0-next.567",
+    "@sveltejs/kit": "^1.0.0-next.571",
     "@types/debounce": "^1.2.1",
     "@types/jsonwebtoken": "^8.5.9",
-    "@types/node": "^18.11.9",
+    "@types/node": "^18.11.10",
     "sass": "^1.56.1",
     "svelte": "^3.53.1",
     "svelte-check": "^2.10.0",
@@ -35,13 +35,13 @@
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.4.2",
-    "@trpc/server": "^10.4.2",
+    "@trpc/client": "^10.4.3",
+    "@trpc/server": "^10.4.3",
     "dayjs": "^1.11.6",
     "debounce": "^1.2.1",
     "hash-wasm": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
-    "prisma": "^4.7.0",
+    "prisma": "^4.7.1",
     "zod": "^3.19.1"
   },
   "prisma": {

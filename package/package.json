@@ -36,11 +36,11 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@trpc/client": "^10.4.2",
-    "@trpc/server": "^10.4.2"
+    "@trpc/client": "^10.4.3",
+    "@trpc/server": "^10.4.3"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.0.0-next.567",
+    "@sveltejs/kit": "^1.0.0-next.571",
     "@trpc/client": "^10.4.1",
     "@trpc/server": "^10.4.1",
     "typescript": "^4.9.3"
