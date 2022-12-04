@@ -17,7 +17,38 @@ import type { TRPCResponse } from '@trpc/server/rpc';
  * consider [the sequence helper function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks).
  * @see https://kit.svelte.dev/docs/hooks
  */
-export function createTRPCHandle<Router extends AnyRouter>({
+
+ type HasTrailingSlash<
+ S extends string,
+ IfTrue = true,
+ IfFalse = false
+> = S extends `${string}/` ? IfTrue : IfFalse;
+
+type ValidateRouteStart<
+ S extends string,
+ IfValid = S,
+ IfInvalid = never
+> = HasTrailingSlash<
+ S,
+ IfInvalid,
+ S extends `/${string}` ? IfValid : IfInvalid
+>;
+
+type ValidateRouteEnd<T extends string> = string & {
+ __errorMsg: `${T} is not a valid route because ${HasTrailingSlash<
+   T,
+   "it has a trailing slash",
+   "it does not start with a slash"
+ >}`;
+};
+
+export type ValidRoute<T extends string> = ValidateRouteStart<
+ T,
+ T,
+ ValidateRouteEnd<T>
+>;
+
+export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   router,
   url = '/trpc',
   createContext,
@@ -33,7 +64,7 @@ export function createTRPCHandle<Router extends AnyRouter>({
    * The tRPC api endpoint URL.
    * @default '/trpc'
    */
-  url?: `/${string}`;
+  url?: ValidRoute<URL | "/trpc">;
 
   /**
    * An async function that returns the tRPC context.
