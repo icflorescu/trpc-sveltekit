@@ -50,7 +50,7 @@ export type ValidRoute<T extends string> = ValidateRouteStart<
 
 export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   router,
-  url = '/trpc' as ValidRoute<URL>,
+  url = '/trpc',
   createContext,
   responseMeta
 }: {
@@ -64,7 +64,7 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
    * The tRPC api endpoint URL.
    * @default '/trpc'
    */
-  url?: ValidRoute<URL>;
+  url?: ValidRoute<URL | "/trpc">;
 
   /**
    * An async function that returns the tRPC context.
