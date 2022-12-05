@@ -1,7 +1,7 @@
 {
   "name": "trpc-sveltekit",
-  "version": "3.0.6",
-  "description": "SvelteKit adapter for trpc.io",
+  "version": "3.0.7",
+  "description": "SvelteKit adapter for tRPC.io, working with Node.js, Vercel and Netlify",
   "keywords": [
     "trpc",
     "svelte",
@@ -13,6 +13,7 @@
     "rpc"
   ],
   "repository": "icflorescu/trpc-sveltekit",
+  "homepage": "https://icflorescu.github.io/trpc-sveltekit/",
   "bugs": {
     "url": "https://github.com/icflorescu/trpc-sveltekit/issues"
   },
