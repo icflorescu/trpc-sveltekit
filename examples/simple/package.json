@@ -19,10 +19,10 @@
   "devDependencies": {
     "@picocss/pico": "^1.5.6",
     "@sveltejs/adapter-auto": "^1.0.0-next.90",
-    "@sveltejs/kit": "^1.0.0-next.571",
+    "@sveltejs/kit": "^1.0.0-next.572",
     "sass": "^1.56.1",
     "svelte": "^3.53.1",
-    "svelte-check": "^2.10.0",
+    "svelte-check": "^2.10.1",
     "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",

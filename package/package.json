@@ -41,7 +41,7 @@
     "@trpc/server": "^10.4.3"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.0.0-next.571",
+    "@sveltejs/kit": "^1.0.0-next.572",
     "@trpc/client": "^10.4.1",
     "@trpc/server": "^10.4.1",
     "typescript": "^4.9.3"
