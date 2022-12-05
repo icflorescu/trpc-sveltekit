@@ -20,7 +20,7 @@ import type { ValidRoute } from './ValidRoute';
  */
 export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   router,
-  url = '/trpc' as ValidRoute<URL>,
+  url = '/trpc',
   createContext,
   responseMeta
 }: {

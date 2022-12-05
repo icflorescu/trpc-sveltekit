@@ -16,4 +16,4 @@ type ValidateRouteEnd<T extends string> = string & {
   >}`;
 };
 
-export type ValidRoute<T extends string> = ValidateRouteStart<T, T, ValidateRouteEnd<T>>;
+export type ValidRoute<T extends string> = ValidateRouteStart<T, T, ValidateRouteEnd<T>> | "/trpc";
