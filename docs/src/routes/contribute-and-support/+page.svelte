@@ -86,6 +86,15 @@
   >, or — better yet — <a href="{base}/hire-the-author">hire my services</a>.
 </p>
 
+<h3>Sponsoring the project</h3>
+
+<p>
+  Writing and maintaining open-source code requires a lot of time, effort and energy. Your
+  sponsorship <a href="https://github.com/sponsors/icflorescu" target="_blank" rel="noreferrer"
+    >would help a lot</a
+  >!
+</p>
+
 <h3>Why do repository stars matter</h3>
 
 <p>

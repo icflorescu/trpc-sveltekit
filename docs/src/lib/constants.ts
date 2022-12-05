@@ -7,6 +7,7 @@ import IconRocket from '$lib/icons/IconRocket.svelte';
 import IconTools from '$lib/icons/IconTools.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
+import IconSpeakerphone from './icons/IconSpeakerphone.svelte';
 
 export const GITHUB_PAGES_ROOT = 'https://icflorescu.github.io/trpc-sveltekit';
 export const AUTHOR_URL = 'https://github.com/icflorescu';
@@ -69,6 +70,12 @@ export const PAGES: {
     path: '/contribute-and-support',
     icon: IconLifeBuoy,
     pageDescription: 'Contribute to tRPC-SvelteKit and support the project'
+  },
+  {
+    title: 'Acknowledgements',
+    path: '/acknowledgements',
+    icon: IconSpeakerphone,
+    pageDescription: 'Huge thanks to tRPC-SvelteKit sponsors'
   },
   {
     title: 'Hire the author',
