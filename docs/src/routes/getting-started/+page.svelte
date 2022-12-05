@@ -43,6 +43,14 @@
 
 <Highlight {...data.codeBlocks['simple/src/hooks.server.ts']} />
 
+<p>
+  If you have your own logic to place in the server hook, have a look at the <a
+    href="https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks-sequence"
+    target="_blank"
+    rel="noreferrer">sequence</a
+  > helper function in the SvelteKit docs.
+</p>
+
 <h3>
   <span class="step">5</span>
   Define a helper function to easily use the tRPC client in your pages:
