@@ -22,7 +22,8 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   router,
   url = '/trpc',
   createContext,
-  responseMeta
+  responseMeta,
+  onError
 }: {
   /**
    * The tRPC router to use.
@@ -53,6 +54,19 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
     type: ProcedureType;
     errors: TRPCError[];
   }) => ResponseMeta;
+
+  /**
+   * A function that is called when an error occurs.
+   * @see https://trpc.io/docs/error-handling#handling-errors
+   */
+  onError?: (opts: {
+    ctx?: inferRouterContext<Router>;
+    error: TRPCError;
+    path: string;
+    input: unknown;
+    req: RequestInit;
+    type: ProcedureType | 'unknown';
+  }) => void;
 }): Handle {
   return async ({ event, resolve }) => {
     if (event.url.pathname.startsWith(url)) {
@@ -72,7 +86,8 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
         req,
         path: event.url.pathname.substring(url.length + 1),
         createContext: async () => createContext?.(event),
-        responseMeta
+        responseMeta,
+        onError
       });
 
       const { status, headers, body } = httpResponse as {
