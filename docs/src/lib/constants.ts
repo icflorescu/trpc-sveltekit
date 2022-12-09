@@ -5,6 +5,7 @@ import IconHome from '$lib/icons/IconHome.svelte';
 import IconLock from '$lib/icons/IconLock.svelte';
 import IconRocket from '$lib/icons/IconRocket.svelte';
 import IconTools from '$lib/icons/IconTools.svelte';
+import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
 import IconSpeakerphone from './icons/IconSpeakerphone.svelte';
@@ -58,6 +59,12 @@ export const PAGES: {
     path: '/authentication',
     icon: IconLock,
     pageDescription: 'How to add authentication to a tRPC-SvelteKit application'
+  },
+  {
+    title: 'Handling errors',
+    path: '/handling-errors',
+    icon: IconErrorHandling,
+    pageDescription: 'How to handle errors in a tRPC-SvelteKit application'
   },
   {
     title: 'Recipes and caveats',
