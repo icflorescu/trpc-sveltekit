@@ -2,9 +2,9 @@
   import Footer from '$lib/components/Footer.svelte';
   import Header from '$lib/components/Header.svelte';
   import '@picocss/pico';
-  import type { LayoutData } from './$types';
+  import type { LayoutData, LayoutServerData } from './$types';
 
-  export let data: LayoutData;
+  export let data: LayoutData & LayoutServerData;
 </script>
 
 <svelte:head>

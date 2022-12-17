@@ -11,9 +11,10 @@
   import { trpc } from '$lib/trpc/client';
   import type { RouterInputs, RouterOutputs } from '$lib/trpc/router';
   import { TRPCClientError } from '@trpc/client';
+  import type { LayoutServerData } from '../$types';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  export let data: PageData & LayoutServerData;
 
   let busy = false;
   let item: RouterInputs['books']['save'] | null = null;
