@@ -39,7 +39,7 @@
   > for more information.
 </p>
 <p>
-  The <code>createHTTPHandle</code> method conveniently alloys you to specify a
+  The <code>createHTTPHandle</code> method conveniently allows you to specify a
   <code>responseMeta</code> function.
 </p>
 
