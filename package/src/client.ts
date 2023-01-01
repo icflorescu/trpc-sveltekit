@@ -64,5 +64,7 @@ export function createTRPCClient<Router extends AnyRouter>(
     link = httpBatchLink({ url: `${location.origin}${url}`, headers });
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   return createTRPCProxyClient<Router>({ transformer, links: [link] });
 }
