@@ -1,2 +1,13 @@
 $enable-responsive-typography: false;
 @import '@picocss/pico/scss/pico';
+
+h2 {
+  font-size: 2rem;
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-weight: normal;
+    font-size: 3rem;
+  }
+}
