@@ -6,6 +6,8 @@
   import { menuVisible } from '$lib/menuStore';
   import MenuLink from './MenuLink.svelte';
 
+  console.log({ base });
+
   $: {
     if (browser) {
       if ($menuVisible) {
