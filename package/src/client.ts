@@ -4,7 +4,7 @@ import {
   type HTTPHeaders,
   type TRPCLink
 } from '@trpc/client';
-import type { AnyRouter, ClientDataTransformerOptions } from '@trpc/server';
+import type { AnyRouter } from '@trpc/server';
 
 export type TRPCClientInit = { fetch?: typeof window.fetch; url: { origin: string } };
 
@@ -29,7 +29,7 @@ export function createTRPCClient<Router extends AnyRouter>(
      * A function that transforms the data before transferring it.
      * @see https://trpc.io/docs/data-transformers
      */
-    transformer?: ClientDataTransformerOptions;
+    transformer?: Router['_def']['_config']['transformer'];
 
     /**
      * A page store or SvelteKit load event.
@@ -64,7 +64,5 @@ export function createTRPCClient<Router extends AnyRouter>(
     link = httpBatchLink({ url: `${location.origin}${url}`, headers });
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   return createTRPCProxyClient<Router>({ transformer, links: [link] });
 }
