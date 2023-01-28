@@ -8,9 +8,7 @@ const config = {
   preprocess: preprocess(),
   kit: {
     adapter: adapter(),
-    paths: {
-      base: process.env.GITHUB_PAGES === 'true' ? '/trpc-sveltekit' : ''
-    },
+    paths: { base: '/trpc-sveltekit' },
     appDir: 'internal'
   }
 };
