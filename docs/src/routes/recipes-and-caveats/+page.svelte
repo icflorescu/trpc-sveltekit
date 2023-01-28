@@ -67,3 +67,11 @@
 <p>Then, you could use the helper types in your pages code like so:</p>
 
 <Highlight {...data.codeBlocks['bookstall/src/routes/authors/+page.svelte']} />
+
+<h3>Reserved path prefix</h3>
+
+<p>
+  Invoking the <code>createHTTPHandle</code> method reserves the <code>/trpc</code> path prefix for
+  the tRPC API. This means that you cannot use this prefix for any other purpose. If you need to use
+  this prefix for other purposes, you can use the <code>url</code> option to change the reserved prefix.
+</p>
