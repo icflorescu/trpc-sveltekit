@@ -1,6 +1,6 @@
 import { JWT_SECRET } from '$env/static/private';
 import prisma from '$lib/prisma';
-import { invalid } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { md5 } from 'hash-wasm';
 import jwt from 'jsonwebtoken';
 import type { Actions } from './$types';
@@ -26,7 +26,7 @@ export const actions: Actions = {
       // 👆 or, if we're using HTTP headers based auth, we could return the token,
       // and let the client set the header on subsequent requests
     } catch {
-      return invalid(401, { error: 'Authentication failed' });
+      return fail(401, { error: 'Authentication failed' });
     }
   }
 };
