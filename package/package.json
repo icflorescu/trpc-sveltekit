@@ -37,13 +37,13 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "dependencies": {
-    "@trpc/client": "^10.9.0",
-    "@trpc/server": "^10.9.0"
+    "@trpc/client": "^10.9.1",
+    "@trpc/server": "^10.9.1"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.3.2",
-    "@trpc/client": "^10.8.1",
-    "@trpc/server": "^10.8.1",
-    "typescript": "^4.9.4"
+    "@sveltejs/kit": "^1.3.7",
+    "@trpc/client": "^10.9.1",
+    "@trpc/server": "^10.9.1",
+    "typescript": "^4.9.5"
   }
 }
