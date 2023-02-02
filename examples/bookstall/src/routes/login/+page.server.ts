@@ -20,7 +20,7 @@ export const actions: Actions = {
         select: { id: true, name: true }
       });
 
-      cookies.set('jwt', jwt.sign({ id, name }, JWT_SECRET), { path: '/' });
+      cookies.set('jwt', jwt.sign({ id, name }, JWT_SECRET), { path: '/', secure: false });
 
       return { success: true };
       // 👆 or, if we're using HTTP headers based auth, we could return the token,
