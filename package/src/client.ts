@@ -48,7 +48,7 @@ export function createTRPCClient<Router extends AnyRouter>(
   let link: TRPCLink<Router>;
 
   if (init) {
-    const fetch = init.fetch || typeof window !== 'undefined' ? window.fetch : undefined;
+    const fetch = init.fetch || (typeof window !== 'undefined' ? window.fetch : undefined);
 
     link = httpBatchLink({ url, fetch, headers });
   } else {
