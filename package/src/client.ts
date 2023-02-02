@@ -47,17 +47,22 @@ export function createTRPCClient<Router extends AnyRouter>(
 ) {
   let link: TRPCLink<Router>;
 
-  if (init) {
-    const fetch = init.fetch || (typeof window !== 'undefined' ? window.fetch : undefined);
-
-    link = httpBatchLink({ url, fetch, headers });
-  } else {
-    if (typeof window === 'undefined') {
+  if (typeof window === 'undefined') {
+    if (!init) {
       throw new Error(
         'Calling createTRPCClient() on the server requires passing a valid LoadEvent argument'
       );
     }
-    link = httpBatchLink({ url, headers });
+
+    const {
+      fetch,
+      url: { origin }
+    } = init;
+
+    link = httpBatchLink({ url: `${origin}${url}`, fetch, headers });
+  } else {
+    const fetch = init?.fetch ?? window.fetch;
+    link = httpBatchLink({ url: `${location.origin}${url}`, fetch, headers });
   }
 
   return createTRPCProxyClient<Router>({ transformer, links: [link] });
