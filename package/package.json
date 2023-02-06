@@ -38,12 +38,14 @@
   },
   "dependencies": {
     "@trpc/client": "^10.9.1",
-    "@trpc/server": "^10.9.1"
+    "@trpc/server": "^10.9.1",
+    "ws": "^8.12.0"
   },
   "devDependencies": {
     "@sveltejs/kit": "^1.3.10",
     "@trpc/client": "^10.9.1",
     "@trpc/server": "^10.9.1",
+    "@types/ws": "^8.5.4",
     "typescript": "^4.9.5"
   }
 }
