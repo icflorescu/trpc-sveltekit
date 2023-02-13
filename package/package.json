@@ -31,6 +31,10 @@
     "README.md",
     "LICENSE"
   ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./websocket": "./src/websocket/index.ts"
+  },
   "scripts": {
     "build": "tsc && cp ../README.md README.md && cp ../LICENSE LICENSE",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",

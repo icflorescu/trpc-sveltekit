@@ -28,6 +28,7 @@
   "dependencies": {
     "@trpc/client": "^10.9.1",
     "@trpc/server": "^10.9.1",
-    "delay": "^5.0.0"
+    "delay": "^5.0.0",
+    "ws": "^8.12.0"
   }
 }

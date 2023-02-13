@@ -1,8 +1,9 @@
-import { RequestEvent } from "@sveltejs/kit";
 import { AnyRouter, inferRouterContext } from "@trpc/server";
 import { applyWSSHandler } from "@trpc/server/adapters/ws";
-import { Server } from "ws";
-import { GlobalThisWSS } from ".";
+import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
+import type { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
+import type { Server } from "ws";
+import { GlobalThisWSS } from "./Global";
 
 export async function createTRPCWebSocketServer<Router extends AnyRouter>({
     router,
@@ -15,24 +16,16 @@ export async function createTRPCWebSocketServer<Router extends AnyRouter>({
     router: Router;
 
     /**
- * An async function that returns the tRPC context.
- * @see https://trpc.io/docs/context
- */
-    createContext?: (event: RequestEvent) => Promise<inferRouterContext<Router>>;
-
+     * An async function that returns the tRPC context.
+     * @see https://trpc.io/docs/context
+     */
+    createContext?: (opts: CreateHTTPContextOptions | CreateWSSContextFnOptions) => Promise<inferRouterContext<Router>>;
 }) {
-    console.log("createTRPCWebSocket::init");
-
     const wss = globalThis[GlobalThisWSS] as Server;
 
-    const wsHandler = applyWSSHandler({
+    applyWSSHandler<Router>({
         createContext,
-        router, wss,
+        router,
+        wss
     })
-
-    process.on('SIGTERM', () => {
-        console.log('SIGTERM');
-        wsHandler.broadcastReconnectNotification();
-        wss.close();
-    });
 }

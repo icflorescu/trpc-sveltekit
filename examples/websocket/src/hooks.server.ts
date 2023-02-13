@@ -1,5 +1,5 @@
 import { createContext } from '$lib/trpc/context';
 import { router } from '$lib/trpc/router';
-import { WS } from "trpc-sveltekit";
+import { createTRPCWebSocketServer } from "trpc-sveltekit/websocket";
 
-WS.createTRPCWebSocketServer({ router, createContext })
+createTRPCWebSocketServer({ router, createContext })

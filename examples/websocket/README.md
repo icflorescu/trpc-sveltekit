@@ -4,7 +4,7 @@
 **STATE:** In development, experimental
 
 - [x] Websocket works in development, with wroken hot reload
-  - [ ] Fix hot reload
+  - [x] Fix hot reload
 - [ ] Websocket works in production
 - [ ] Usage documentation
 

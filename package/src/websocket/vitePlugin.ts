@@ -1,42 +1,46 @@
 import type { PluginOption } from 'vite';
 import { WebSocketServer } from 'ws';
+import type { Server } from "ws";
 import * as url from "node:url";
-import { GlobalThisWSS } from '.';
+import { GlobalThisWSS } from './Global';
+
+let wssReference: WeakRef<Server>;
+
+function onHttpServerUpgrade(req, sock, head) {
+    const pathname = url.parse(req.url as string).pathname;
+    if (pathname === "/trpc") {
+        const wss = wssReference.deref();
+
+        wss.handleUpgrade(req, sock, head, function done(ws) {
+            wss.emit('connection', ws, req);
+        });
+    }
+}
+
+function updateWsServer(isHotReload = false) {
+    if (isHotReload) {
+        // Close previous ws, we will create a new one
+        // that server.createTRPCWebSocketServer will use
+        // when called from hooks.server.ts
+        const prevWss = wssReference.deref();
+        prevWss.close();
+    }
+
+    const wss = new WebSocketServer({
+        noServer: true,
+    });
+
+    wssReference = new WeakRef(wss);
+    globalThis[GlobalThisWSS] = wss;
+}
 
 export const vitePluginTrpcWebSocket: PluginOption = {
     name: 'TrpcWebSocketServer',
+    handleHotUpdate() {
+        updateWsServer(true);
+    },
     configureServer(server) {
-        const wss = new WebSocketServer({
-            noServer: true,
-        });
-
-        server.httpServer?.on("upgrade", (req, sock, head) => {
-            const pathname = url.parse(req.url as string).pathname;
-            console.log("Upgraded", req.url, pathname);
-            if (pathname === "/trpc") {
-                console.log("Handled by trpc");
-
-                wss.handleUpgrade(req, sock, head, function done(ws) {
-                    console.log("TRPC upgrade");
-                    wss.emit('connection', ws, req);
-                });
-            }
-        })
-
-        globalThis[GlobalThisWSS] = wss;
-
-        wss.on('connection', (ws) => {
-            console.log(`➕➕ [TRPC] Connection (${wss.clients.size})`);
-            ws.once('close', () => {
-                console.log(`➖➖ [TRPC] Connection (${wss.clients.size})`);
-            });
-        });
-
-        server.ws.on('connection', (ws) => {
-            console.log(`➕➕ [VITE] Connection (${server.ws.clients.size})`);
-            ws.once('close', () => {
-                console.log(`➖➖ [VITE] Connection (${server.ws.clients.size})`);
-            });
-        });
+        updateWsServer();
+        server.httpServer?.on("upgrade", onHttpServerUpgrade);
     },
 }
