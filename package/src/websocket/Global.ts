@@ -1,1 +1,0 @@
-export const GlobalThisWSS = Symbol.for("trpc.sveltekit.wss");

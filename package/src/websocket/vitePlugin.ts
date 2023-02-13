@@ -2,7 +2,7 @@ import type { PluginOption } from 'vite';
 import { WebSocketServer } from 'ws';
 import type { Server } from "ws";
 import * as url from "node:url";
-import { GlobalThisWSS } from './Global';
+import { GlobalThisWSS } from './svelteKitHacks';
 
 let wssReference: WeakRef<Server>;
 

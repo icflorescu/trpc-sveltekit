@@ -32,8 +32,9 @@
     "LICENSE"
   ],
   "exports": {
-    ".": "./src/index.ts",
-    "./websocket": "./src/websocket/index.ts"
+    ".": "./dist/index.js",
+    "./websocket": "./dist/websocket/index.js",
+    "./websocket/SvelteKitHacks": "./dist/websocket/svelteKitHacks.js"
   },
   "scripts": {
     "build": "tsc && cp ../README.md README.md && cp ../LICENSE LICENSE",

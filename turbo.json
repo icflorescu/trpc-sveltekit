@@ -5,6 +5,7 @@
     "docs#dev": { "cache": false },
     "example-simple#dev": { "cache": false },
     "example-bookstall#dev": { "cache": false },
+    "example-websocket#dev": { "cache": false },
     "trpc-sveltekit#build": { "outputs": ["dist/**"] },
     "docs#build": { "dependsOn": ["trpc-sveltekit#build"], "outputs": ["build/**"] },
     "preview": { "dependsOn": ["^build"] },

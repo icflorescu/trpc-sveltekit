@@ -5,8 +5,8 @@
 
 - [x] Websocket works in development, with wroken hot reload
   - [x] Fix hot reload
-- [ ] Websocket works in production
-- [ ] Usage documentation
+- [x] Websocket works in production
+- [ ] Document usage & hacks
 
 ## License
 
