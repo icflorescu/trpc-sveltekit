@@ -4,9 +4,5 @@ import { createTRPCWebSocketServer } from "trpc-sveltekit/websocket";
 
 import { building } from '$app/environment';
 
-// console.log("==================");
-// console.log("Builiding?", building)
-// console.log("==================");
-
 if (!building)
     createTRPCWebSocketServer({ router, createContext })

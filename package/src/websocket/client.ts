@@ -7,8 +7,11 @@ import {
 import { AnyRouter } from "@trpc/server";
 
 export function createTRPCWebSocketClient<Router extends AnyRouter>() {
-  // TODO: Better url handling, will not work with ssl
-  const uri = `${location.origin}/trpc`.replace("http://", "ws://");
+  console.log("location", location)
+
+  const uri = `${location.protocol === "http:"
+    ? "ws:"
+    : "wss:"}//${location.host}/trpc`;
 
   const wsClient = createWSClient({
     url: uri

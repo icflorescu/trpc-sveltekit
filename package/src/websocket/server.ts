@@ -3,7 +3,7 @@ import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import type { CreateWSSContextFnOptions } from "@trpc/server/adapters/ws";
 import type { CreateHTTPContextOptions } from "@trpc/server/adapters/standalone";
 import type { Server } from "ws";
-import { GlobalThisWSS } from "./svelteKitHacks";
+import { GlobalThisWSS } from "./svelteKitServer";
 
 export async function createTRPCWebSocketServer<Router extends AnyRouter>({
     router,
@@ -24,9 +24,11 @@ export async function createTRPCWebSocketServer<Router extends AnyRouter>({
     const wss = globalThis[GlobalThisWSS] as Server;
     if (typeof wss === "undefined") {
         // Websocket server not created
-        // TODO: Handle this case, add docs or help or something
-        console.error("PANIC ERROR - WEBSOCKET NOT CREATED");
-        // process.exit(1);
+        console.error("WebSocket server not found but 'createTRPCWebSocketServer' had been called");
+        // Prerendering with websockets its not implemented
+        // TODO: Fallback to REST for non subscriptions?
+        
+        process.exit(1);
     } else
         applyWSSHandler<Router>({
             createContext,
