@@ -1,12 +1,13 @@
 # 😎 tRPC-SvelteKit example: Websocket
 [![License][license-image]][license-url]
 
-**STATE:** In development, experimental
+**STATE:** Experimental
 
 - [x] Websocket works in development, with wroken hot reload
   - [x] Fix hot reload
 - [x] Websocket works in production
-- [ ] Document usage & hacks
+- [x] Document usage & implementation
+- [ ] Website docs
 
 ## License
 
