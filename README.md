@@ -140,12 +140,12 @@ export function trpc(init?: TRPCClientInit) {
 > [SvelteKit does not have an oficial way to implement websockets](https://github.com/sveltejs/kit/issues/1491)  
 > Check [Implementation details](#ws-implementation-details) to find out how it works under the hood
 
-This implementation only implements support for [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node)
+This implementation only implements support for [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node).
 
-Not implemented, but could be:
-- The URL its hardcoded to `/trpc`
-- When in websocket mode, all tRPC methods are handled by it. It coul be changed so only `subscriptions` are handled by `wss`
-- Prerendering its not supported as with the current implementation there is no `wss` created when building/prerendering
+Not yet implemented, but could be at some point:
+- The URL is hardcoded to `/trpc`
+- When in websocket mode, all tRPC methods are handled by it. It could be changed so only `subscriptions` are handled by `wss`
+- Prerendering is not supported as with the current implementation there is no `wss` created when building/prerendering
 
 ### Install the package and its dependencies:
 
@@ -154,7 +154,7 @@ yarn add trpc-sveltekit @trpc/server @trpc/client @sveltejs/adapter-node ws
 #    ^_________trpc-sveltekit deps______________^ ^trpc-sveltekit/websocket^
 ```
 
-### Install Websocket workarounds
+### Setup Websocket workarounds
 
 In your `vite.config.ts` add:
 
@@ -192,7 +192,7 @@ import { SvelteKitTRPCWSServer } from "trpc-sveltekit/websocket/SvelteKitServer"
 SvelteKitTRPCWSServer(import.meta.url);
 ```
 
-In your `package.json[scripts]`modify the `start` command:
+In your `package.json` `scripts` modify the `start` command:
 
 ```json
 {
@@ -275,57 +275,57 @@ export function trpc() {
 
 ### Implementation details
 
-All the related code to the websocket implementation is located at `package/src/websocket`
+All the related code to the websocket implementation is located at `package/src/websocket`.
 
 #### `vitePlugin.ts`
 
-Exports a vite plugin that handles in dev mode the websocket lifecycle
+Exports a vite plugin that handles in dev mode the websocket lifecycle.
 
 The plugin handles two cases:
 
 - On init: `configureServer`
   - `createWSSGlobalInstance`
-  - Listen for 'upgrade' events in vite dev server, so we can upgrade `/trpc` to our tRPC server
+  - Listen for `upgrade` events in vite dev server, so we can upgrade `/trpc` to our tRPC server
 - On hot reload: `handleHotUpdate`
   - `closeWSSGlobalInstance`
   - `createWSSGlobalInstance`
 
-On init & hot reload we create a `WebSocketServer` with the property `noServer` so we can handle the upgrade to our tRPC and don't break the default vite websocket. If hot reloading we first remove the previous `wss`
+On init & hot reload we create a `WebSocketServer` with the property `noServer` so we can handle the upgrade to our tRPC and don't break the default vite websocket. If hot reloading we first remove the previous `wss`.
 
-We store a reference in `globalThis` to the web socket server, so we can later get a reference from SvelteKit side
+We store a reference in `globalThis` to the web socket server, so we can later get a reference from SvelteKit side.
 
-> To store the websocket server without colliding with existing stuff in `globalThis` at `src/websocket/svelteKitServer.ts` we create a `Symbol`.  
-> So we can reference the tRPC websocket like so: `globalThis[Symbol.for('trpc.sveltekit.wss')]`
+> To store the websocket server without colliding with existing stuff in `globalThis` at `src/websocket/svelteKitServer.ts` we create a `Symbol`  
+> so we can reference the tRPC websocket like so: `globalThis[Symbol.for('trpc.sveltekit.wss')]`
 
-Then we set up an event listener to the vite dev http server to handle the `upgrade` event from `onHttpServerUpgrade`. It will check that the path is `/trpc`, if so it will upgrade our request to our tRPC websocket server
+Then we set up an event listener to the vite dev http server to handle the `upgrade` event from `onHttpServerUpgrade`. It will check that the path is `/trpc`, if so it will upgrade our request to our tRPC websocket server.
 
 #### `svelteKitServer.ts`
 
-Exports functions to handle the lifecycle of the tRPC websocket server
+Exports functions to handle the lifecycle of the tRPC websocket server:
 
 - `createWSSGlobalInstance`
 - `closeWSSGlobalInstance`
 - `onHttpServerUpgrade`
 
-> The firsts 3 methods are already explained in the `vitePlugin.ts` section
+> The firsts 3 methods are already explained in the `vitePlugin.ts` section.
 
 - `SvelteKitTRPCWSServer`
 
-The Vite plugin only works while the Vite dev server is running. When building for production we need to take a diferent aproach
+The Vite plugin only works while the Vite dev server is running. When building for production we need to take a diferent aproach.
 
-When we build a SvelteKit app, it will output a `./build` directory
+When we build a SvelteKit app, it will output a `./build` directory.
 
-This function takes `import.meta.url` as an argument from the root directory of the project (next to `package.json`) and then converts it to `__dirname`
+This function takes `import.meta.url` as an argument from the root directory of the project (next to `package.json`) and then converts it to `__dirname`.
 
-First it creates a websocket server attached to `globalThis`, as explained, then imports dynamically from  `${__dirname}/build` directory the `index.js` file, that exports a `server` property that contains an http server
+First it creates a websocket server attached to `globalThis`, as explained, then imports dynamically from  `${__dirname}/build` directory the `index.js` file, that exports a `server` property that contains an http server.
 
-We attach to this server `onHttpServerUpgrade` so we handle in the production server the tRPC websocket
+We attach to this server `onHttpServerUpgrade` so we handle in the production server the tRPC websocket.
 
 #### `server.ts`
 
-The function `createTRPCWebSocketServer` handles the creation of the websocket tRPC handler getting the `wss` from `globalThis`
+The function `createTRPCWebSocketServer` handles the creation of the websocket tRPC handler getting the `wss` from `globalThis`.
 
-This current implementation in case we are prerendering would fail as vite does not call `configureServer` on the build step, so no `wss` server is found in `globalThis`
+This current implementation in case we are prerendering would fail as vite does not call `configureServer` on the build step, so no `wss` server is found in `globalThis`.
 
 This is why when calling this method we have to add a guard on the client/consumer code:
 
@@ -340,9 +340,9 @@ if (!building) // 👈 Prevent from calling when building/prerendering
 
 `createTRPCWebSocketClient`
 
-creates the tRPC proxy client and links to the `wss`
+Creates the tRPC proxy client and links to the `wss`.
 
-> Currently all the tRPC requests are served via websockets, [but could be changed to only serve subscriptions](https://trpc.io/docs/links)
+> Currently all the tRPC requests are handled via websockets, [but this could be changed to only handle subscriptions](https://trpc.io/docs/links).
 
 ## Examples
 
