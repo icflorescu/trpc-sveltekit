@@ -1,5 +1,5 @@
 import type { Router } from '$lib/trpc/router';
-import { createTRPCWebSocketClient } from "trpc-sveltekit/websocket";
+import { createTRPCWebSocketClient } from 'trpc-sveltekit/websocket';
 
 let browserClient: ReturnType<typeof createTRPCWebSocketClient<Router>>;
 
