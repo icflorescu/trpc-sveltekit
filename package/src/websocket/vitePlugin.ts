@@ -13,7 +13,7 @@ export const vitePluginTrpcWebSocket: PluginOption = {
     // that server.createTRPCWebSocketServer will use
     // when called from hooks.server.ts
     await closeWSSGlobalInstance();
-    await createWSSGlobalInstance();
+    createWSSGlobalInstance();
   },
   configureServer(server) {
     createWSSGlobalInstance();
