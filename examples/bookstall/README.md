@@ -1,4 +1,5 @@
 # 😎 tRPC-SvelteKit example: Bookstall
+
 [![License][license-image]][license-url]
 
 A sample SvelteKit application built to illustrate the usage of [trpc-sveltekit](https://icflorescu.github.io/trpc-sveltekit/).
