@@ -21,7 +21,7 @@
     let initialMode = localStorage.getItem('theme');
     if (!initialMode) {
       initialMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      localStorage.setItem('theme', initialMode ? 'dark' : 'light');
+      localStorage.setItem('theme', initialMode);
     }
     document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
   </script>
