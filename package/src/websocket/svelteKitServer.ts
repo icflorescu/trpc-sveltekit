@@ -26,16 +26,6 @@ export function createWSSGlobalInstance() {
   return wss;
 }
 
-export function closeWSSGlobalInstance() {
-  return new Promise((resolve, reject) => {
-    const wss = globalThis[GlobalThisWSS] as Server;
-    wss.close((err) => {
-      if (err) return reject(err);
-      resolve(true);
-    });
-  });
-}
-
 export async function SvelteKitTRPCWSServer(import_meta_url: string) {
   const __filename = url.fileURLToPath(import_meta_url);
   const __dirname = path.dirname(__filename);

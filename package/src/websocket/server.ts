@@ -31,10 +31,12 @@ export async function createTRPCWebSocketServer<Router extends AnyRouter>({
     // TODO: Fallback to REST for non subscriptions?
 
     process.exit(1);
-  } else
+  } else {
+    wss.removeAllListeners();
     applyWSSHandler<Router>({
       createContext,
       router,
       wss
     });
+  }
 }

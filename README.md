@@ -281,16 +281,12 @@ All the related code to the websocket implementation is located at `package/src/
 
 Exports a vite plugin that handles in dev mode the websocket lifecycle.
 
-The plugin handles two cases:
 
 - On init: `configureServer`
   - `createWSSGlobalInstance`
   - Listen for `upgrade` events in vite dev server, so we can upgrade `/trpc` to our tRPC server
-- On hot reload: `handleHotUpdate`
-  - `closeWSSGlobalInstance`
-  - `createWSSGlobalInstance`
 
-On init & hot reload we create a `WebSocketServer` with the property `noServer` so we can handle the upgrade to our tRPC and don't break the default vite websocket. If hot reloading we first remove the previous `wss`.
+On init we create a `WebSocketServer` with the property `noServer` so we can handle the upgrade to our tRPC and don't break the default vite websocket.
 
 We store a reference in `globalThis` to the web socket server, so we can later get a reference from SvelteKit side.
 
@@ -304,10 +300,9 @@ Then we set up an event listener to the vite dev http server to handle the `upgr
 Exports functions to handle the lifecycle of the tRPC websocket server:
 
 - `createWSSGlobalInstance`
-- `closeWSSGlobalInstance`
 - `onHttpServerUpgrade`
 
-> The firsts 3 methods are already explained in the `vitePlugin.ts` section.
+> The firsts 2 methods are already explained in the `vitePlugin.ts` section.
 
 - `SvelteKitTRPCWSServer`
 
