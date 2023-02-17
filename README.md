@@ -188,7 +188,7 @@ Create next to `package.json` your server entrypoint:
 
 ```js
 // wsServer.js
-import { SvelteKitTRPCWSServer } from "trpc-sveltekit/websocket/SvelteKitServer";
+import { SvelteKitTRPCWSServer } from "trpc-sveltekit/websocket";
 
 SvelteKitTRPCWSServer(import.meta.url);
 ```
