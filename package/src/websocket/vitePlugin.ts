@@ -3,7 +3,7 @@ import type { PluginOption } from 'vite';
 import {
   createWSSGlobalInstance,
   onHttpServerUpgrade
-} from './svelteKitServer';
+} from './svelteKitServer.js';
 
 export const vitePluginTrpcWebSocket: PluginOption = {
   name: 'TrpcWebSocketServer',
