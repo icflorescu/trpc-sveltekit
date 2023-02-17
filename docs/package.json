@@ -19,7 +19,7 @@
   "devDependencies": {
     "@picocss/pico": "^1.5.7",
     "@sveltejs/adapter-static": "^2.0.1",
-    "@sveltejs/kit": "^1.6.0",
+    "@sveltejs/kit": "^1.7.0",
     "@types/lodash": "^4.14.191",
     "lodash": "^4.17.21",
     "sass": "^1.58.1",

@@ -20,7 +20,7 @@
     "@picocss/pico": "^1.5.7",
     "@prisma/client": "^4.10.1",
     "@sveltejs/adapter-auto": "^2.0.0",
-    "@sveltejs/kit": "^1.6.0",
+    "@sveltejs/kit": "^1.7.0",
     "@types/debounce": "^1.2.1",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.13.0",
