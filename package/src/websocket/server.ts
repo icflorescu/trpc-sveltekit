@@ -3,7 +3,7 @@ import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone'
 import type { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
 import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import type { Server } from 'ws';
-import { GlobalThisWSS } from './svelteKitServer';
+import { GlobalThisWSS } from './svelteKitServer.js';
 
 export async function createTRPCWebSocketServer<Router extends AnyRouter>({
   router,

@@ -33,8 +33,14 @@
   ],
   "exports": {
     ".": "./dist/index.js",
-    "./websocket": "./dist/websocket/index.js",
-    "./websocket/SvelteKitServer": "./dist/websocket/svelteKitServer.js"
+    "./websocket": "./dist/websocket/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "websocket": [
+        "dist/websocket/index.d.ts"
+      ]
+    }
   },
   "scripts": {
     "build": "tsc && cp ../README.md README.md && cp ../LICENSE LICENSE",
@@ -52,8 +58,8 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
+    "@sveltejs/adapter-node": "^1.2.0",
     "@types/ws": "^8.5.4",
-    "ws": "^8.12.0",
-    "@sveltejs/adapter-node": "^1.2.0"
+    "ws": "^8.12.0"
   }
 }
