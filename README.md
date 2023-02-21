@@ -134,10 +134,17 @@ export function trpc(init?: TRPCClientInit) {
 >
 <p>{greeting}</p>
 ```
+## Examples
 
-## Quickstart for Websockets
+This repository contains a handful of examples:
+
+- [simple](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/simple)
+- [bookstall](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/bookstall)
+- [websocket](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/websocket)
 
 ---
+
+## Quickstart for Websockets
 
 > **WARNING: EXPERIMENTAL SUPPORT**   
 > [SvelteKit does not have an oficial way to implement websockets](https://github.com/sveltejs/kit/issues/1491)  
@@ -283,7 +290,6 @@ All the related code to the websocket implementation is located at `package/src/
 
 Exports a vite plugin that handles in dev mode the websocket lifecycle.
 
-
 - On init: `configureServer`
   - `createWSSGlobalInstance`
   - Listen for `upgrade` events in vite dev server, so we can upgrade `/trpc` to our tRPC server
@@ -342,14 +348,6 @@ Creates the tRPC proxy client and links to the `wss`.
 > Currently all the tRPC requests are handled via websockets, [but this could be changed to only handle subscriptions](https://trpc.io/docs/links).
 
 ---
-
-## Examples
-
-This repository contains a handful of examples:
-
-- [simple](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/simple)
-- [bookstall](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/bookstall)
-- [websocket](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/websocket)
 
 ## Contributors
 
