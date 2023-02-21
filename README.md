@@ -137,6 +137,8 @@ export function trpc(init?: TRPCClientInit) {
 
 ## Quickstart for Websockets
 
+---
+
 > **WARNING: EXPERIMENTAL SUPPORT**   
 > [SvelteKit does not have an oficial way to implement websockets](https://github.com/sveltejs/kit/issues/1491)  
 > Check [Implementation details](#ws-implementation-details) to find out how it works under the hood
@@ -271,7 +273,6 @@ export function trpc() {
 <p>{greeting}</p>
 ```
 
-
 <div id="ws-implementation-details"></div>
 
 ### Implementation details
@@ -340,9 +341,11 @@ Creates the tRPC proxy client and links to the `wss`.
 
 > Currently all the tRPC requests are handled via websockets, [but this could be changed to only handle subscriptions](https://trpc.io/docs/links).
 
+---
+
 ## Examples
 
-This repository contains a couple of examples:
+This repository contains a handful of examples:
 
 - [simple](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/simple)
 - [bookstall](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/bookstall)

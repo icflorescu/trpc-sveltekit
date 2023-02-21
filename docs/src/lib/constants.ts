@@ -9,6 +9,7 @@ import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
 import IconSpeakerphone from './icons/IconSpeakerphone.svelte';
+import IconWebSocket from './icons/IconWebSocket.svelte';
 
 export const GITHUB_PAGES_ROOT = 'https://icflorescu.github.io/trpc-sveltekit';
 export const AUTHOR_URL = 'https://github.com/icflorescu';
@@ -16,7 +17,7 @@ export const REPO_URL = `${AUTHOR_URL}/trpc-sveltekit`;
 export const BADGE_COLOR_CODE = '1095c1';
 
 export const PAGES: {
-  title: string;
+  title: string | string[];
   path: string;
   icon: typeof IconHome;
   customPageTitle?: string;
@@ -71,6 +72,12 @@ export const PAGES: {
     path: '/recipes-and-caveats',
     icon: IconTools,
     pageDescription: 'Recipes and caveats for tRPC-SvelteKit'
+  },
+  {
+    title: ['WebSocket support', '(experimental)'],
+    path: '/experimental-websocket-support',
+    icon: IconWebSocket,
+    pageDescription: 'Experimental WebSocket support in tRPC-SvelteKit'
   },
   {
     title: 'Contribute and support',
