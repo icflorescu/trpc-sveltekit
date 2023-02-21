@@ -144,29 +144,27 @@ This repository contains a handful of examples:
 
 ---
 
-## Quickstart for Websockets
+## EXPERIMENTAL WebSocket support
+(courtesy of [@SrZorro](https://github.com/SrZorro))
 
-> **WARNING: EXPERIMENTAL SUPPORT**   
-> [SvelteKit does not have an oficial way to implement websockets](https://github.com/sveltejs/kit/issues/1491)  
-> Check [Implementation details](#ws-implementation-details) to find out how it works under the hood
+SvelteKit [doesn't (yet) offer WebSockets support](https://github.com/sveltejs/kit/issues/1491), but if you're using `@sveltejs/adapter-node`, `tRPC-SvelteKit` can spin up an experimental WS server to process tRPC procedure calls (see the [implementation details](#websockets-implementation-details) to find out how this works under the hood).
 
-This implementation only adds support for [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node).
+### Caveats
 
-Not yet implemented, but could be at some point:
-- The URL is hardcoded to `/trpc`
-- When in websocket mode, all tRPC methods are handled by it. It could be changed so only `subscriptions` are handled by `wss`
-- Prerendering is not supported as with the current implementation there is no `wss` created when building/prerendering
+- Works with [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node) **exclusively**;
+- The URL is hardcoded to `/trpc`;
+- When in websocket mode, all tRPC methods are handled by it; this could be changed at some point so that only `subscriptions` are handled by the WebSockets server;
+- Prerendering is not supported, since in the current implementation no WebSockets server is created when building/prerendering.
 
 ### Install the package and its dependencies:
 
 ```bash
 yarn add trpc-sveltekit @trpc/server @trpc/client @sveltejs/adapter-node ws
-#    ^_________trpc-sveltekit deps______________^ ^trpc-sveltekit/websocket^
 ```
 
-### Setup Websocket workarounds
+### Setup workarounds
 
-In your `vite.config.ts` add:
+In your `vite.config.ts`, add:
 
 ```ts
 import { sveltekit } from '@sveltejs/kit/vite';
@@ -189,8 +187,6 @@ In your `svelte.config.js`, modify:
 ```ts
 import adapter from '@sveltejs/adapter-node';    // ➕
 // import adapter from '@sveltejs/adapter-auto'; // ➖
-
-// [...]
 ```
 
 Create this file next to `package.json` your server entrypoint:
@@ -207,10 +203,8 @@ In your `package.json` `scripts`, modify the `start` command:
 ```json
 {
   "scripts": {
-    "start": "node ./wsServer",
-    // [...]
-  },
-  // [...]
+    "start": "node ./wsServer"
+  }
 }
 ```
 
@@ -229,8 +223,7 @@ import { createTRPCWebSocketServer } from "trpc-sveltekit/websocket";
 
 import { building } from '$app/environment';
 
-if (!building)
-  createTRPCWebSocketServer({ router, createContext })
+if (!building) createTRPCWebSocketServer({ router, createContext })
 ```
 
 ### Define a helper function to easily use the tRPC client in your pages:
@@ -280,7 +273,7 @@ export function trpc() {
 <p>{greeting}</p>
 ```
 
-<div id="ws-implementation-details"></div>
+<div id="websockets-implementation-details"></div>
 
 ### Implementation details
 
@@ -330,7 +323,7 @@ The function `createTRPCWebSocketServer` handles the creation of the websocket t
 
 This current implementation in case we are prerendering would fail as vite does not call `configureServer` on the build step, so no `wss` server is found in `globalThis`.
 
-This is why when calling this method we have to add a guard on the client/consumer code:
+This is why, when calling this method, we have to add a guard on the client/consumer code:
 
 ```ts
 import { building } from '$app/environment';

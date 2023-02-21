@@ -8,7 +8,7 @@
 
 <p>
   Please refer to the <a
-    href="https://github.com/icflorescu/trpc-sveltekit#quickstart-for-websockets"
+    href="https://github.com/icflorescu/trpc-sveltekit#experimental-websocket-support"
     target="_blank"
     rel="noreferrer">dedicated section</a
   > in the README for more information.
