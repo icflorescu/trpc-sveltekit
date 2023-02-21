@@ -1,0 +1,35 @@
+{
+  "name": "example-websocket",
+  "version": "0.0.0",
+  "author": "https://github.com/SrZorro",
+  "private": true,
+  "scripts": {
+    "dev": "vite --port 3003 --clearScreen false",
+    "build": "vite build",
+    "preview": "vite preview --port 3003",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write .",
+    "start": "node ./wsServer"
+  },
+  "devDependencies": {
+    "@picocss/pico": "^1.5.7",
+    "@sveltejs/adapter-node": "^1.2.0",
+    "@sveltejs/kit": "^1.7.0",
+    "sass": "^1.58.0",
+    "svelte": "^3.55.1",
+    "svelte-check": "^3.0.3",
+    "svelte-preprocess": "^5.0.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.1"
+  },
+  "type": "module",
+  "dependencies": {
+    "@trpc/client": "^10.9.1",
+    "@trpc/server": "^10.9.1",
+    "delay": "^5.0.0",
+    "ws": "^8.12.0"
+  }
+}
