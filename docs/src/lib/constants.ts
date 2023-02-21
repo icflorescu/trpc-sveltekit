@@ -5,6 +5,7 @@ import IconHome from '$lib/icons/IconHome.svelte';
 import IconLock from '$lib/icons/IconLock.svelte';
 import IconRocket from '$lib/icons/IconRocket.svelte';
 import IconTools from '$lib/icons/IconTools.svelte';
+import IconBulb from './icons/IconBulb.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
@@ -72,6 +73,12 @@ export const PAGES: {
     path: '/recipes-and-caveats',
     icon: IconTools,
     pageDescription: 'Recipes and caveats for tRPC-SvelteKit'
+  },
+  {
+    title: 'Using with Svelte Query',
+    path: '/using-with-svelte-query',
+    icon: IconBulb,
+    pageDescription: 'How to use tRPC-SvelteKit with Svelte Query'
   },
   {
     title: ['WebSocket support', '(experimental)'],
