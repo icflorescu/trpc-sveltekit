@@ -1,9 +1,10 @@
 <h2>Experimental WebSocket support</h2>
 
 <p>
-  SvelteKit doesn't (yet) officially support WebSockets, but if you're using <code
-    >@sveltejs/adapter-node</code
-  >, <code>tRPC-SvelteKit</code> gives you the option to spin up a WebSocket server alongside SvelteKit.
+  SvelteKit <a href="https://github.com/sveltejs/kit/issues/1491" target="_blank" rel="noreferrer"
+    >doesn't (yet) offer WebSockets support</a
+  >, but if you're using <code>@sveltejs/adapter-node</code>, <code>tRPC-SvelteKit</code> can spin up
+  an experimental WS server to process tRPC procedure calls.
 </p>
 
 <p>
