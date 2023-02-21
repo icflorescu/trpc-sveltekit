@@ -141,7 +141,7 @@ export function trpc(init?: TRPCClientInit) {
 > [SvelteKit does not have an oficial way to implement websockets](https://github.com/sveltejs/kit/issues/1491)  
 > Check [Implementation details](#ws-implementation-details) to find out how it works under the hood
 
-This implementation only implements support for [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node).
+This implementation only adds support for [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node).
 
 Not yet implemented, but could be at some point:
 - The URL is hardcoded to `/trpc`
@@ -175,7 +175,7 @@ const config: UserConfig = {
 export default config;
 ```
 
-In your `svelte.config.js` modify:
+In your `svelte.config.js`, modify:
 
 ```ts
 import adapter from '@sveltejs/adapter-node';    // ➕
@@ -184,7 +184,7 @@ import adapter from '@sveltejs/adapter-node';    // ➕
 // [...]
 ```
 
-Create next to `package.json` your server entrypoint:
+Create this file next to `package.json` your server entrypoint:
 
 ```js
 // wsServer.js
@@ -193,7 +193,7 @@ import { SvelteKitTRPCWSServer } from "trpc-sveltekit/websocket";
 SvelteKitTRPCWSServer(import.meta.url);
 ```
 
-In your `package.json` `scripts` modify the `start` command:
+In your `package.json` `scripts`, modify the `start` command:
 
 ```json
 {
