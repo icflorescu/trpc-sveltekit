@@ -16,7 +16,11 @@
       : PAGES.findIndex((p) => `${base}${p.path}` === $page.url.pathname);
   $: currentPage = PAGES[currentPageIndex];
 
-  $: title = currentPage.customPageTitle || `${currentPage.title} | tRPC-SvelteKit`;
+  $: title =
+    currentPage.customPageTitle ||
+    `${
+      typeof currentPage.title === 'string' ? currentPage.title : currentPage.title.join(' ')
+    } | tRPC-SvelteKit`;
 </script>
 
 <svelte:head>
