@@ -1,6 +1,8 @@
 import {
   createTRPCProxyClient,
   httpBatchLink,
+  splitLink,
+  httpLink,
   type HTTPHeaders,
   type TRPCLink
 } from '@trpc/client';
@@ -46,6 +48,7 @@ export function createTRPCClient<Router extends AnyRouter>(
   } = { url: '/trpc' }
 ) {
   let link: TRPCLink<Router>;
+  let unbatchedLink: TRPCLink<Router>;
 
   if (typeof window === 'undefined') {
     if (!init) {
@@ -60,10 +63,26 @@ export function createTRPCClient<Router extends AnyRouter>(
     } = init;
 
     link = httpBatchLink({ url: `${origin}${url}`, fetch, headers });
+    unbatchedLink = httpLink({ url: `${origin}${url}`, fetch, headers });
   } else {
     const fetch = init?.fetch ?? window.fetch;
     link = httpBatchLink({ url: `${location.origin}${url}`, fetch, headers });
+    unbatchedLink = httpLink({
+      url: `${location.origin}${url}`,
+      fetch,
+      headers
+    });
   }
 
-  return createTRPCProxyClient<Router>({ transformer, links: [link] });
+  const links = [
+    splitLink({
+      condition(op) {
+        return op.context.skipBatch === true;
+      },
+      true: unbatchedLink,
+      false: link
+    })
+  ];
+
+  return createTRPCProxyClient<Router>({ transformer, links });
 }
