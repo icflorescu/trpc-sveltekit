@@ -8,31 +8,30 @@ export const t = initTRPC.context<Context>().create();
 const ee = new EventEmitter();
 
 export const router = t.router({
-	allMessages: t.procedure
-		.subscription(() => {
-			return observable<string>((emit) => {
-				const onAdd = (message: string) => {
-					emit.next(`${new Date().toLocaleTimeString()}: ${message}`);
-				}
+  allMessages: t.procedure.subscription(() => {
+    return observable<string>((emit) => {
+      const onAdd = (message: string) => {
+        emit.next(`${new Date().toLocaleTimeString()}: ${message}`);
+      };
 
-				ee.on('add', onAdd);
+      ee.on('add', onAdd);
 
-				return () => {
-					ee.off('add', onAdd);
-				};
-			});
-		}),
-	addMessage: t.procedure
-		.input((input: unknown) => {
-			if (typeof input === 'string') return input;
+      return () => {
+        ee.off('add', onAdd);
+      };
+    });
+  }),
+  addMessage: t.procedure
+    .input((input: unknown) => {
+      if (typeof input === 'string') return input;
 
-			throw new Error('Invalid input type');
-		})
-		.mutation(async ({ input: message }) => {
-			ee.emit('add', message);
+      throw new Error('Invalid input type');
+    })
+    .mutation(async ({ input: message }) => {
+      ee.emit('add', message);
 
-			return { success: true };
-		}),
+      return { success: true };
+    })
 });
 
 export type Router = typeof router;
