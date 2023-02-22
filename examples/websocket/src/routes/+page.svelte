@@ -1,36 +1,53 @@
 <script lang="ts">
   import { trpc } from '$lib/trpc/client';
-  import '@picocss/pico';
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
 
-  let greeting = 'press the button to load data';
+  let message = '';
   let loading = false;
 
-  const loadData = async () => {
-    loading = true;
-    greeting = await trpc().greeting.query();
-    loading = false;
+  const client = trpc();
+  const addMessage = async () => {
+    await client.addMessage.mutate(message);
   };
+
+  onMount(() => {
+    client.allMessages.subscribe(undefined, {
+      onData(newMessage) {
+        console.log(newMessage);
+      }
+    });
+  });
 </script>
 
-<main class="container">
-  <h6>Loading data in<br /><code>+page.svelte</code></h6>
+<h1>Add a new message</h1>
+See the messages appear at:<strong><a href={`${$page.url}messages`}>{$page.url}messages</a></strong>
+<br />
+<span> (preferably in a second window) </span>
 
+<div class="add-message">
+  <input type="text" bind:value={message} required min="1" />
   <a
+    placeholder="Add message"
     href="#load"
     role="button"
     class="secondary"
     aria-busy={loading}
-    on:click|preventDefault={loadData}>Load</a
+    on:click|preventDefault={addMessage}>Add Message</a
   >
-  <p>{greeting}</p>
-</main>
+</div>
 
 <style>
-  main {
+	h1 {
+		margin: 0 !important;
+		margin-bottom: 1rem !important;
+	}
+
+  .add-message {
+    margin-top: 1rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
   }
 </style>
