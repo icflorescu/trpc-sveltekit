@@ -9,7 +9,6 @@
   onMount(() => {
     client.allMessages.subscribe(undefined, {
       onData(newMessage) {
-        console.log(newMessage);
         messages.push(newMessage);
         messages = messages;
       }
