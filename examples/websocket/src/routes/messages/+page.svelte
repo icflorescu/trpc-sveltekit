@@ -17,13 +17,13 @@
 
   let el: HTMLElement;
 
-	$: {
-		if (el) el.scrollIntoView();
-	}
+  $: {
+    if (el) el.scrollIntoView();
+  }
 </script>
 
 <div class="container">
-  <h1>✨ Messages ✨</h1>
+  <h1>✨ WebSocket Messages ✨</h1>
   <div class="messages">
     {#each messages as message, i}
       {#if i === messages.length - 1}
@@ -51,10 +51,10 @@
   }
 
   .messages {
-		width: 100%;
+    width: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column-reverse;
-		align-items: center;
+    align-items: center;
   }
 </style>
