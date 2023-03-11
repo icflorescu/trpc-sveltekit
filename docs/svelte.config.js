@@ -8,7 +8,7 @@ const config = {
   preprocess: preprocess(),
   kit: {
     adapter: adapter(),
-    paths: { base: '/trpc-sveltekit' },
+    paths: { base: '/trpc-sveltekit', relative: false },
     appDir: 'internal'
   }
 };

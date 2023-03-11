@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build
-        run: yarn turbo docs#build
+        run: yarn turbo build
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
