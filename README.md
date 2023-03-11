@@ -1,4 +1,6 @@
 # tRPC-SvelteKit
+
+![Publish NPM & deploy docs workflow](https://github.com/icflorescu/trpc-sveltekit/actions/workflows/publish-and-deploy.yml/badge.svg)  
 [![NPM version][npm-image]][npm-url]
 [![License][license-image]][license-url]
 [![Stars][stars-image]][stars-url]
