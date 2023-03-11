@@ -101,7 +101,7 @@
 
   .logo {
     margin-right: 0.3em;
-    vertical-align: 0.1em;
+    vertical-align: 0.2em;
   }
 
   .version {
