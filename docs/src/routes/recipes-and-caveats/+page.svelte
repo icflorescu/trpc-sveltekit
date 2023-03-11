@@ -25,6 +25,21 @@
   for more information, and keep in mind that you'll have to use the same <code>transformer</code> when
   you're defining the router and when you're creating the client.
 </p>
+<p>
+  If you're looking for a convenient transformer based on <a
+    href="https://github.com/blitz-js/superjson"
+    target="_blank"
+    rel="noreferrer">superjson</a
+  >
+  with
+  <a href="https://mikemcl.github.io/decimal.js/" target="_blank" rel="noreferrer">Decimal.js</a>
+  support, consider using the
+  <a href="https://github.com/icflorescu/trpc-transformer" target="_blank" rel="noreferrer"
+    >trpc-transformer</a
+  >
+  package. Keep in mind that you'll have to install the <code>superjson</code> and
+  <code>decimal.js</code> peer dependencies as well.
+</p>
 <h3>Response caching</h3>
 
 <p>
