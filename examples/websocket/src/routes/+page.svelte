@@ -12,7 +12,9 @@
 </script>
 
 <h1>WebSocket example</h1>
-<p>Open <a href={`${$page.url}messages`}>{$page.url}messages</a> in a new window/tab.</p>
+<p>
+  Open <a href={`${$page.url}messages`} target="_blank">{$page.url}messages</a> in a new window/tab.
+</p>
 
 <form class="add-message" on:submit|preventDefault={addMessage}>
   <input type="text" bind:value={message} required min="1" />
