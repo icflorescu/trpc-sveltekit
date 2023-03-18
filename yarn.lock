@@ -291,10 +291,10 @@
   dependencies:
     import-meta-resolve "^2.2.0"
 
-"@sveltejs/adapter-node@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-1.2.2.tgz#014d2fad84b19b1c02e176a9eaa56adce81b372a"
-  integrity sha512-HA+QPRve97ZAQfZ0wkHjtoSR9ilyYZV82T7zRgzm2WJ0rIpAgyRYf6K7KNwiCq23KKkN0hZHY5elNyCnVz8zrA==
+"@sveltejs/adapter-node@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-1.2.3.tgz#466b39d8bcc918e2cc000b108491f1181c32791b"
+  integrity sha512-Fv6NyVpVWYA63KRaV6dDjcU8ytcWFiUr0siJOoHl+oWy5WHNEuRiJOUdiZzYbZo8MmvFaCoxHkTgPrVQhpqaRA==
   dependencies:
     "@rollup/plugin-commonjs" "^24.0.0"
     "@rollup/plugin-json" "^6.0.0"
@@ -306,10 +306,10 @@
   resolved "https://registry.yarnpkg.com/@sveltejs/adapter-static/-/adapter-static-2.0.1.tgz#b76f7742ae635e1c063efcab8c6de064255f6292"
   integrity sha512-o5/q3YwD/ErxYCFlK1v3ydvldyNKk1lh3oeyxn4mhz+Pkbx/uuxhzmbOpytTlp5aVqNHDVsb04xadUzOFCDDzw==
 
-"@sveltejs/kit@^1.11.0":
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.11.0.tgz#23f233c351e5956356ba6f3206e40637c5f5dbda"
-  integrity sha512-PwViZcMoLgEU/jhLoSyjf5hSrHS67wvSm0ifBo4prP9irpGa5HuPOZeVDTL5tPDSBoKxtdYi1zlGdoiJfO86jA==
+"@sveltejs/kit@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@sveltejs/kit/-/kit-1.12.0.tgz#044d1d681fe5fbec832cd3e7bf2ff56576eb5b50"
+  integrity sha512-hhOtaL3jS7p4A3O34m8RlM+K5OSyrEyFUIh4iqsv6e8BDvupzNSxGa7J9+Gfjb+Z1yZCxjvxJ8Flb2Cj0g8cLg==
   dependencies:
     "@sveltejs/vite-plugin-svelte" "^2.0.0"
     "@types/cookie" "^0.5.1"
@@ -323,7 +323,7 @@
     set-cookie-parser "^2.5.1"
     sirv "^2.0.2"
     tiny-glob "^0.2.9"
-    undici "5.20.0"
+    undici "5.21.0"
 
 "@sveltejs/vite-plugin-svelte@^2.0.0":
   version "2.0.0"
@@ -1755,10 +1755,10 @@ svelte-preprocess@^5.0.0:
     sorcery "^0.10.0"
     strip-indent "^3.0.0"
 
-svelte-preprocess@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-5.0.2.tgz#72e31adb559732aa6811b5449058d231c0974f95"
-  integrity sha512-iXpIoa43VdF7fPkBdoodztZd4H+3EP/GYA66tbuLVtQnM3sWCpsOtc7HjfA7BDR+6VTpqlEnpDmPoXk0dgUa0g==
+svelte-preprocess@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-5.0.3.tgz#431d538d457d3a5ba470a5ae5754a5aeb76579c8"
+  integrity sha512-GrHF1rusdJVbOZOwgPWtpqmaexkydznKzy5qIC2FabgpFyKN57bjMUUUqPRfbBXK5igiEWn1uO/DXsa2vJ5VHA==
   dependencies:
     "@types/pug" "^2.0.6"
     detect-indent "^6.1.0"
@@ -1896,10 +1896,10 @@ typescript@^5.0.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.2.tgz#891e1a90c5189d8506af64b9ef929fca99ba1ee5"
   integrity sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==
 
-undici@5.20.0:
-  version "5.20.0"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-5.20.0.tgz#6327462f5ce1d3646bcdac99da7317f455bcc263"
-  integrity sha512-J3j60dYzuo6Eevbawwp1sdg16k5Tf768bxYK4TUJRH7cBM4kFCbf3mOnM/0E3vQYXvpxITbbWmBafaDbxLDz3g==
+undici@5.21.0:
+  version "5.21.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.21.0.tgz#b00dfc381f202565ab7f52023222ab862bb2494f"
+  integrity sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==
   dependencies:
     busboy "^1.6.0"
 
