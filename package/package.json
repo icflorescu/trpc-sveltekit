@@ -1,6 +1,6 @@
 {
   "name": "trpc-sveltekit",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "SvelteKit adapter for tRPC.io, working with Node.js, Vercel and Netlify",
   "keywords": [
     "trpc",
