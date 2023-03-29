@@ -20,7 +20,7 @@
     "@picocss/pico": "^1.5.7",
     "@sveltejs/adapter-static": "^2.0.1",
     "@sveltejs/kit": "^1.14.0",
-    "@types/lodash": "^4.14.191",
+    "@types/lodash": "^4.14.192",
     "lodash": "^4.17.21",
     "sass": "^1.60.0",
     "svelte": "^3.57.0",
