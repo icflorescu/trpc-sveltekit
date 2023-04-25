@@ -17,13 +17,13 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
-    "@picocss/pico": "^1.5.9",
-    "@prisma/client": "^4.12.0",
-    "@sveltejs/adapter-auto": "^2.0.0",
-    "@sveltejs/kit": "^1.15.4",
+    "@picocss/pico": "^1.5.10",
+    "@prisma/client": "^4.13.0",
+    "@sveltejs/adapter-auto": "^2.0.1",
+    "@sveltejs/kit": "^1.15.8",
     "@types/debounce": "^1.2.1",
     "@types/jsonwebtoken": "^9.0.1",
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.16.0",
     "sass": "^1.62.0",
     "svelte": "^3.58.0",
     "svelte-check": "^3.2.0",
@@ -31,17 +31,17 @@
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
     "typescript": "^5.0.4",
-    "vite": "^4.2.1"
+    "vite": "^4.3.2"
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.19.1",
-    "@trpc/server": "^10.19.1",
+    "@trpc/client": "^10.21.1",
+    "@trpc/server": "^10.21.1",
     "dayjs": "^1.11.7",
     "debounce": "^1.2.1",
     "hash-wasm": "^4.9.0",
     "jsonwebtoken": "^9.0.0",
-    "prisma": "^4.12.0",
+    "prisma": "^4.13.0",
     "zod": "^3.21.4"
   },
   "prisma": {
