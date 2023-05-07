@@ -24,7 +24,7 @@
 
 <p>
   You can also supply an <code>onError</code> handler to the <code>createHTTPHandle</code> method in
-  your <code>hoohs.server.ts</code>, which could be useful, for instance, if you want to log all
+  your <code>hooks.server.ts</code>, which could be useful, for instance, if you want to log all
   errors to a service like Sentry:
 </p>
 
