@@ -23,7 +23,7 @@
 </p>
 
 <p>
-  You can also supply an <code>onError</code> handler to the <code>createHTTPHandle</code> method in
+  You can also supply an <code>onError</code> handler to the <code>createTRPCHandle</code> method in
   your <code>hooks.server.ts</code>, which could be useful, for instance, if you want to log all
   errors to a service like Sentry:
 </p>
