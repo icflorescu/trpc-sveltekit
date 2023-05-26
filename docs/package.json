@@ -19,8 +19,8 @@
   "devDependencies": {
     "@picocss/pico": "^1.5.10",
     "@sveltejs/adapter-static": "^2.0.2",
-    "@sveltejs/kit": "^1.18.0",
-    "@types/lodash": "^4.14.194",
+    "@sveltejs/kit": "^1.19.0",
+    "@types/lodash": "^4.14.195",
     "lodash": "^4.17.21",
     "sass": "^1.62.1",
     "svelte": "^3.59.1",
@@ -29,7 +29,7 @@
     "svelte-preprocess": "^5.0.3",
     "tslib": "^2.5.2",
     "typescript": "^5.0.4",
-    "vite": "^4.3.8"
+    "vite": "^4.3.9"
   },
   "type": "module"
 }

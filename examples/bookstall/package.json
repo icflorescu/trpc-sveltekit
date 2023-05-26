@@ -20,10 +20,10 @@
     "@picocss/pico": "^1.5.10",
     "@prisma/client": "^4.14.1",
     "@sveltejs/adapter-auto": "^2.1.0",
-    "@sveltejs/kit": "^1.18.0",
+    "@sveltejs/kit": "^1.19.0",
     "@types/debounce": "^1.2.1",
     "@types/jsonwebtoken": "^9.0.2",
-    "@types/node": "^20.2.3",
+    "@types/node": "^20.2.4",
     "sass": "^1.62.1",
     "svelte": "^3.59.1",
     "svelte-check": "^3.3.2",
@@ -31,12 +31,12 @@
     "ts-node": "^10.9.1",
     "tslib": "^2.5.2",
     "typescript": "^5.0.4",
-    "vite": "^4.3.8"
+    "vite": "^4.3.9"
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.27.1",
-    "@trpc/server": "^10.27.1",
+    "@trpc/client": "^10.28.0",
+    "@trpc/server": "^10.28.0",
     "dayjs": "^1.11.7",
     "debounce": "^1.2.1",
     "hash-wasm": "^4.9.0",
