@@ -2,10 +2,10 @@ import type { Handle, RequestEvent } from '@sveltejs/kit';
 import type {
   AnyRouter,
   Dict,
-  inferRouterContext,
-  inferRouterError,
   ProcedureType,
-  TRPCError
+  TRPCError,
+  inferRouterContext,
+  inferRouterError
 } from '@trpc/server';
 import { resolveHTTPResponse, type ResponseMeta } from '@trpc/server/http';
 import type { TRPCResponse } from '@trpc/server/rpc';
@@ -87,7 +87,8 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
         path: event.url.pathname.substring(url.length + 1),
         createContext: async () => createContext?.(event),
         responseMeta,
-        onError
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: onError as any
       });
 
       const { status, headers, body } = httpResponse as {
