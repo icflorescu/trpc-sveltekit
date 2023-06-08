@@ -24,7 +24,7 @@
     "@types/debounce": "^1.2.1",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.2.5",
-    "sass": "^1.62.1",
+    "sass": "^1.63.2",
     "svelte": "^3.59.1",
     "svelte-check": "^3.4.3",
     "svelte-preprocess": "^5.0.4",
