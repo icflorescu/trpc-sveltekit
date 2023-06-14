@@ -20,7 +20,7 @@
     "@picocss/pico": "^1.5.10",
     "@sveltejs/adapter-auto": "^2.1.0",
     "@sveltejs/kit": "^1.20.2",
-    "sass": "^1.63.2",
+    "sass": "^1.63.4",
     "svelte": "^3.59.1",
     "svelte-check": "^3.4.3",
     "svelte-preprocess": "^5.0.4",
@@ -30,8 +30,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.29.1",
-    "@trpc/server": "^10.29.1",
+    "@trpc/client": "^10.30.0",
+    "@trpc/server": "^10.30.0",
     "delay": "^6.0.0"
   }
 }
