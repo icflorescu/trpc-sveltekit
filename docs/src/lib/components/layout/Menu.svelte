@@ -28,7 +28,7 @@
 <aside class:visible={$menuVisible} on:click={hide}>
   <header>
     <div class="title"><span class="logo"><Logo /></span>tRPC-SvelteKit</div>
-    <div class="hide-button" aria-label="Hide menu" role="button" />
+    <div class="hide-button" aria-label="Hide menu" />
   </header>
   <nav>
     {#each PAGES as { path, title, icon: Icon } (path)}
