@@ -58,10 +58,10 @@
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "@sveltejs/adapter-node": "^1.2.4",
-    "@trpc/client": "^10.30.0",
-    "@trpc/server": "^10.30.0",
-    "@types/ws": "^8.5.4",
-    "ws": "^8.13.0"
+    "@sveltejs/adapter-node": ">=1.2",
+    "@trpc/client": ">=10",
+    "@trpc/server": ">=10",
+    "@types/ws": ">=8",
+    "ws": "^>=8"
   }
 }
