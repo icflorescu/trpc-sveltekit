@@ -8,6 +8,7 @@
 [![Closed issues][closed-issues-image]][closed-issues-url]
 [![Downloads][downloads-image]][npm-url]
 [![Language][language-image]][repo-url]
+[![Sponsor the author][sponsor-image]][sponsor-url]
 
 Documentation available at [icflorescu.github.io/trpc-sveltekit](https://icflorescu.github.io/trpc-sveltekit/).
 
@@ -372,3 +373,5 @@ The [ISC License](https://github.com/icflorescu/trpc-sveltekit/blob/master/LICEN
 [last-commit-image]: https://img.shields.io/github/last-commit/icflorescu/trpc-sveltekit?style=flat-square
 [closed-issues-image]: https://img.shields.io/github/issues-closed-raw/icflorescu/trpc-sveltekit?style=flat-square
 [language-image]: https://img.shields.io/github/languages/top/icflorescu/trpc-sveltekit?style=flat-square
+[sponsor-image]: https://img.shields.io/badge/sponsor-violet?style=flat-square
+[sponsor-url]: https://github.com/sponsors/icflorescu
