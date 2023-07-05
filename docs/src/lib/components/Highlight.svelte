@@ -63,6 +63,8 @@
     {#each tabs as tab, i (tab.title)}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
+        role="tab"
+        tabindex="-1"
         class="tab"
         class:current={i === tabIndex}
         on:click={() => {
@@ -87,7 +89,7 @@
     </div>
   {/if}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="copy" on:click={copy}><IconClipboard /></div>
+  <div class="copy" role="button" tabindex="-1" on:click={copy}><IconClipboard /></div>
   {#if currentContentLanguage}
     <Highlight
       language={currentContentLanguage === 'shell'

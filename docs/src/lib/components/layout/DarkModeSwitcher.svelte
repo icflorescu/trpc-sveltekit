@@ -33,7 +33,13 @@
 </svelte:head>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<span class="switch" title="Switch to {darkMode ? 'light' : 'dark'} mode" on:click={toggleDarkMode}>
+<span
+  class="switch"
+  title="Switch to {darkMode ? 'light' : 'dark'} mode"
+  role="button"
+  tabindex="-1"
+  on:click={toggleDarkMode}
+>
   <span class="sun"><IconSun {size} /></span>
   <span class="moon"><IconMoon {size} /></span>
 </span>

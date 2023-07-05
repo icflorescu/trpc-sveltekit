@@ -22,13 +22,13 @@
 </script>
 
 <svelte:window on:resize={hide} />
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
 <div class="backdrop" class:visible={$menuVisible} on:click={hide} />
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <aside class:visible={$menuVisible} on:click={hide}>
   <header>
     <div class="title"><span class="logo"><Logo /></span>tRPC-SvelteKit</div>
-    <div class="hide-button" aria-label="Hide menu" />
+    <div class="hide-button" aria-label="Hide menu" role="button" />
   </header>
   <nav>
     {#each PAGES as { path, title, icon: Icon } (path)}

@@ -25,7 +25,7 @@
 <div class="root" class:scrolled>
   <div class="background" />
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="menu-button" aria-label="Show menu" on:click={showMenu}>
+  <div class="menu-button" aria-label="Show menu" role="button" tabindex="-1" on:click={showMenu}>
     <IconMenu size="1.25em" />
   </div>
   <a href={base} class="home-link" class:hidden={$menuVisible}>
