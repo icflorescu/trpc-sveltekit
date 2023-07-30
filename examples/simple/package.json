@@ -30,8 +30,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.35.0",
-    "@trpc/server": "^10.35.0",
+    "@trpc/client": "^10.36.0",
+    "@trpc/server": "^10.36.0",
     "delay": "^6.0.0"
   }
 }

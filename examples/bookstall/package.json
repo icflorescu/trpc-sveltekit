@@ -35,8 +35,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.35.0",
-    "@trpc/server": "^10.35.0",
+    "@trpc/client": "^10.36.0",
+    "@trpc/server": "^10.36.0",
     "dayjs": "^1.11.9",
     "debounce": "^1.2.1",
     "hash-wasm": "^4.9.0",
