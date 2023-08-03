@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dev } from '$app/environment';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
   import Footer from '$lib/components/layout/Footer.svelte';
@@ -40,6 +41,10 @@
   <meta name="twitter:image" content={image} />
   <meta name="twitter:creator" content="@icflorescu" />
   <meta property="og:site_name" content="tRPC-SvelteKit" />
+  <meta property="og:type" content="object" />
+  {#if !dev}
+    <link rel="canonical" href="https://icflorescu.github.io/trpc-sveltekit/" />
+  {/if}
 </svelte:head>
 
 <Menu />
