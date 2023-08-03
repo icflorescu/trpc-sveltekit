@@ -29,6 +29,7 @@
   <meta property="og:title" content={title} />
   <meta name="twitter:title" content={title} />
   <meta name="description" content={currentPage.pageDescription} />
+  <meta name="author" content="Ionut-Cristian Florescu" />
   <meta property="og:description" content={currentPage.pageDescription} />
   <meta name="twitter:description" content={currentPage.pageDescription} />
   <meta property="og:image" content={image} />
