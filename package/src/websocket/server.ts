@@ -29,7 +29,6 @@ export async function createTRPCWebSocketServer<Router extends AnyRouter>({
     console.error("WebSocket server not found but 'createTRPCWebSocketServer' had been called");
     // Prerendering with websockets its not implemented
     // TODO: Fallback to REST for non subscriptions?
-
     process.exit(1);
   } else {
     wss.removeAllListeners();
