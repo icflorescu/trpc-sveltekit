@@ -55,7 +55,7 @@
     "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.22.3",
+    "@sveltejs/kit": "^1.22.4",
     "@trpc/client": "^10.36.0",
     "@trpc/server": "^10.36.0",
     "typescript": "^5.1.6"
