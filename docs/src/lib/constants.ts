@@ -28,7 +28,7 @@ export const PAGES: {
     title: 'Home',
     path: '/',
     icon: IconHome,
-    customPageTitle: 'tRPC-SvelteKit: end-to-end typesafe APIs for your SvelteKit applications',
+    customPageTitle: 'tRPC-SvelteKit: end-to-end typesafe APIs for SvelteKit',
     pageDescription:
       'tRPC-SvelteKit is a tRPC adapter that makes it easy to build end-to-end typesafe APIs for your SvelteKit applications.'
   },
