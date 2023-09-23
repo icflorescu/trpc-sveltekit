@@ -9,7 +9,7 @@
 <h2>Page data</h2>
 
 <p>
-  Assuming you createad a <code>trpc()</code> helper function as described in the
+  Assuming you created a <code>trpc()</code> helper function as described in the
   <a href="{base}/getting-started">getting started</a>
   section, you can call tRPC procedures in your SvelteKit
   <a href="https://kit.svelte.dev/docs/load" target="_blank" rel="noreferrer">page load functions</a
