@@ -19,17 +19,23 @@
   "devDependencies": {
     "@picocss/pico": "^1.5.10",
     "@sveltejs/adapter-static": "^2.0.3",
-    "@sveltejs/kit": "^1.22.4",
-    "@types/lodash": "^4.14.196",
+    "@sveltejs/kit": "^1.25.1",
+    "@types/lodash": "^4.14.199",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
     "lodash": "^4.17.21",
-    "sass": "^1.64.2",
-    "svelte": "^4.1.2",
-    "svelte-check": "^3.4.6",
+    "prettier": "^3.0.3",
+    "sass": "^1.68.0",
+    "svelte": "^4.2.1",
+    "svelte-check": "^3.5.2",
     "svelte-highlight": "^7.3.0",
     "svelte-preprocess": "^5.0.4",
-    "tslib": "^2.6.1",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.8"
+    "tslib": "^2.6.2",
+    "turbo": "^1.10.14",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9"
   },
   "type": "module"
 }

@@ -18,31 +18,31 @@
   },
   "devDependencies": {
     "@picocss/pico": "^1.5.10",
-    "@prisma/client": "^5.1.0",
+    "@prisma/client": "^5.3.1",
     "@sveltejs/adapter-auto": "^2.1.0",
-    "@sveltejs/kit": "^1.22.4",
-    "@types/debounce": "^1.2.1",
-    "@types/jsonwebtoken": "^9.0.2",
-    "@types/node": "^20.4.6",
-    "sass": "^1.64.2",
-    "svelte": "^4.1.2",
-    "svelte-check": "^3.4.6",
+    "@sveltejs/kit": "^1.25.1",
+    "@types/debounce": "^1.2.2",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/node": "^20.7.0",
+    "sass": "^1.68.0",
+    "svelte": "^4.2.1",
+    "svelte-check": "^3.5.2",
     "svelte-preprocess": "^5.0.4",
     "ts-node": "^10.9.1",
-    "tslib": "^2.6.1",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.8"
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9"
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.36.0",
-    "@trpc/server": "^10.36.0",
-    "dayjs": "^1.11.9",
+    "@trpc/client": "^10.38.4",
+    "@trpc/server": "^10.38.4",
+    "dayjs": "^1.11.10",
     "debounce": "^1.2.1",
     "hash-wasm": "^4.9.0",
-    "jsonwebtoken": "^9.0.1",
-    "prisma": "^5.1.0",
-    "zod": "^3.21.4"
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.3.1",
+    "zod": "^3.22.2"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm prisma/seed.ts"
