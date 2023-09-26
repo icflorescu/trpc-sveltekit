@@ -12,7 +12,7 @@ import type { TRPCResponse } from '@trpc/server/rpc';
 import type { ValidRoute } from './ValidRoute';
 
 /**
- * Create a SvelteKit handle function for rRPC requests.
+ * Create a SvelteKit handle function for tRPC requests.
  *
  * If you want to use it in conjunction with other SvelteKit handles,
  * consider [the sequence helper function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks).
