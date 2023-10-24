@@ -69,7 +69,7 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   }) => void;
 }): Handle {
   return async ({ event, resolve }) => {
-    if (event.url.pathname.startsWith(url)) {
+    if (event.url.pathname.startsWith(url+'/')) {
       const request = event.request as Request & {
         headers: Dict<string | string[]>;
       };
