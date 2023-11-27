@@ -17,7 +17,7 @@
   export let busy = false;
   export let arrayFields: string[] | undefined = undefined;
 
-  const dispatch = createEventDispatcher<{ cancel: never; save: T }>();
+  const dispatch = createEventDispatcher<{ cancel?: never; save: T }>();
 
   const handleCancel = () => {
     dispatch('cancel');

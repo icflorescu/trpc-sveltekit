@@ -9,6 +9,7 @@
   export let item: Record<string, unknown> | null;
   export let errors: { message: string; path: string[] }[] | null = null;
 
+  $: value = item?.[name];
   $: error = errors?.find((e) => e.path.includes(name));
 </script>
 
@@ -20,7 +21,7 @@
     {name}
     {placeholder}
     {required}
-    value={item?.[name] || ''}
+    {value}
     aria-invalid={error ? 'true' : undefined}
   />
   {#if error}

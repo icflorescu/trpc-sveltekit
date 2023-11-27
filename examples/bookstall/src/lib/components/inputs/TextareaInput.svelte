@@ -25,6 +25,7 @@
   };
 
   $: item?.[name], autosize();
+  $: value = item?.[name] as string;
 </script>
 
 <label>
@@ -34,7 +35,7 @@
     {name}
     {placeholder}
     {required}
-    value={item?.[name]}
+    {value}
     on:input={autosize}
     aria-invalid={error ? 'true' : undefined}
   />

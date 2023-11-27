@@ -4,7 +4,7 @@
 
   export let visible = false;
 
-  const dispatch = createEventDispatcher<{ close: never }>();
+  const dispatch = createEventDispatcher();
 
   const handleClose = () => {
     dispatch('close');
