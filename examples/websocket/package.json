@@ -27,8 +27,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.41.0",
-    "@trpc/server": "^10.41.0",
+    "@trpc/client": "tmp",
+    "@trpc/server": "tmp",
     "delay": "^6.0.0",
     "ws": "^8.14.2"
   }

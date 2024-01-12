@@ -402,15 +402,24 @@
     svelte-hmr "^0.15.1"
     vitefu "^0.2.4"
 
-"@trpc/client@^10.41.0":
-  version "10.41.0"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.41.0.tgz#8abde2ae72fe33cb762ccbc8ba03f39d51c91cd5"
-  integrity sha512-W4lYULb7//2yXkULCKim49slXsBwiBq48rfge1yOWXdq0Ed8VxzXvZt8+uWOkxmHbQAw4lq8G5fCNYFB+Za6vQ==
+"@trpc/client@tmp":
+  version "11.0.0-next-beta.178"
+  resolved "https://registry.npmjs.org/@trpc/client/-/client-11.0.0-next-beta.178.tgz#9fecb114feb3cf52b13422d0dc211488c5203ffd"
+  integrity sha512-4UIw7SQQd0yvi6SEQA07XtZWRuIFrZM59/90yCHEwYuIqBvgYaEEEXgecYgMkmnSjZEOvZzDEnRqYF5jyzPJbQ==
+  dependencies:
+    "@trpc/core" "11.0.0-next-beta.178+f6674ef59"
 
-"@trpc/server@^10.41.0":
-  version "10.41.0"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.41.0.tgz#4689d71677e5f67a7d1e5ed72d01fce24babf2ca"
-  integrity sha512-uC0xLelzOuoFwxbBQ3GzX4DaWNucO9lW2vlGPdKu8ycXu2ObSa739oQ/lNF6qWDNUKXS0tQvGnDCAxEd178EzQ==
+"@trpc/core@11.0.0-next-beta.178+f6674ef59":
+  version "11.0.0-next-beta.178"
+  resolved "https://registry.npmjs.org/@trpc/core/-/core-11.0.0-next-beta.178.tgz#2f9966b65f013a4fb6f662047889b96c4e8186cb"
+  integrity sha512-LBATWGzZwQtcLrTCN09Oita4BSln0w47dhSTTE2TkcIro42srJIp+dES0lUWL6w5Lsxk1wpAY+SgVHQSjJrvCw==
+
+"@trpc/server@tmp":
+  version "11.0.0-next-beta.178"
+  resolved "https://registry.npmjs.org/@trpc/server/-/server-11.0.0-next-beta.178.tgz#7cb15e831480dc00fc75ad188d9232bd8de15aa2"
+  integrity sha512-1BCOG+SmwHUyEQynlmjLrlBVm2u9p5VC0o6aX1KY524aACJMbmc74UDnqZYFgD/zms32R727kUMG2TiJ4U/vsg==
+  dependencies:
+    "@trpc/core" "11.0.0-next-beta.178+f6674ef59"
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
