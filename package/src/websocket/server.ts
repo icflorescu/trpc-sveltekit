@@ -27,7 +27,7 @@ export async function createTRPCWebSocketServer<Router extends AnyRouter>({
   if (typeof wss === 'undefined') {
     // Websocket server not created
     console.error("WebSocket server not found but 'createTRPCWebSocketServer' had been called");
-    // Prerendering with websockets its not implemented
+    // Prerendering with websockets is not implemented
     // TODO: Fallback to REST for non subscriptions?
     process.exit(1);
   } else {
