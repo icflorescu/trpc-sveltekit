@@ -1,6 +1,6 @@
 {
   "name": "trpc-sveltekit",
-  "version": "3.5.23",
+  "version": "3.5.24",
   "description": "SvelteKit adapter for tRPC.io, working with Node.js, Vercel and Netlify",
   "keywords": [
     "trpc",
@@ -48,6 +48,13 @@
       "import": "./dist/websocket/index.js"
     },
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "websocket": [
+        "dist/websocket/index.d.ts"
+      ]
+    }
   },
   "scripts": {
     "build": "tsc && cp ../README.md README.md && cp ../LICENSE LICENSE",
