@@ -11,3 +11,9 @@ node_modules
 # !.env.example
 
 vite.config.ts.timestamp-*.*
+
+# LOCK
+bun.lockb
+
+# PRISMA
+prisma/*.db

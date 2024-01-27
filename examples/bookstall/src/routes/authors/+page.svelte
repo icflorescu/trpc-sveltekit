@@ -14,7 +14,7 @@
   export let data: PageData;
 
   let busy = false;
-  let item: RouterInputs['authors']['save'] | null = null; // 👈 we're using a helper type
+  let item: RouterInputs['authors']['save'] | null; // 👈 we're using a helper type
   let errors: { message: string; path: string[] }[] | null = null;
   let needsAuthorization = false;
 
@@ -55,7 +55,7 @@
     errors = null;
   };
 
-  const handleSave = async (e: { detail: RouterInputs['authors']['save'] }) => {
+  const handleSave = async (e: CustomEvent<RouterInputs['authors']['save']>) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
@@ -63,7 +63,7 @@
 
     busy = true;
     try {
-      await trpc().authors.save.mutate(savable(e.detail));
+      await trpc().authors.save.mutate(e.detail);
       item = null;
       await invalidateAll();
     } catch (err) {
@@ -92,7 +92,11 @@
       grow: true,
       accessor: ({ firstName, lastName }) => `${firstName} ${lastName}`
     },
-    { title: 'Books', align: 'right', accessor: (author) => author._count.books }
+    {
+      title: 'Books',
+      align: 'right',
+      accessor: (author) => author._count.books
+    }
   ]}
   on:add={handleAdd}
   on:edit={handleEdit}

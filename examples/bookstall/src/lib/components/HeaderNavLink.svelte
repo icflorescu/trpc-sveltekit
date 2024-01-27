@@ -5,7 +5,7 @@
   export let to: string | undefined = undefined;
   export let title: string;
 
-  const dispatch = createEventDispatcher<{ click: never }>();
+  const dispatch = createEventDispatcher();
 
   const handleClick = (e: MouseEvent) => {
     if (!to) {
