@@ -2,10 +2,9 @@
   import { invalidateAll } from '$app/navigation';
   import AuthorizationAlert from '$lib/components/AuthorizationAlert.svelte';
   import DataTable from '$lib/components/DataTable.svelte';
-  import TextareaInput from '$lib/components/inputs/TextareaInput.svelte';
-  import TextInput from '$lib/components/inputs/TextInput.svelte';
   import ModalEditor from '$lib/components/ModalEditor.svelte';
-  import { savable } from '$lib/savable';
+  import TextInput from '$lib/components/inputs/TextInput.svelte';
+  import TextareaInput from '$lib/components/inputs/TextareaInput.svelte';
   import { trpc } from '$lib/trpc/client';
   import type { RouterInputs } from '$lib/trpc/router';
   import { TRPCClientError } from '@trpc/client';
