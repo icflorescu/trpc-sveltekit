@@ -69,7 +69,7 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   }) => void;
 }): Handle {
   return async ({ event, resolve }) => {
-    if (event.url.pathname.startsWith(url+'/')) {
+    if (event.url.pathname.startsWith(url + '/')) {
       const request = event.request as Request & {
         headers: Dict<string | string[]>;
       };
@@ -79,6 +79,34 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
         headers: request.headers,
         query: event.url.searchParams,
         body: await request.text()
+      };
+
+      // Using the default `event.setHeaders` and `event.cookies` will not work
+      // as the event in not resolved by SvelteKit. Instead, we "proxy" the access
+      // to the headers and cookies, so that we can set them later.
+      const headersProxy: Record<string, string> = {};
+      const originalCookiesSet = event.cookies.set;
+      const originalCookiesDelete = event.cookies.delete;
+      const newCookiesNames: string[] = [];
+      const deleteCookiesNames: string[] = [];
+      event.setHeaders = (headers) => {
+        for (const [key, value] of Object.entries(headers)) {
+          headersProxy[key] = value;
+        }
+      };
+      event.cookies.set = (name, value, opts) => {
+        newCookiesNames.push(name);
+        if (deleteCookiesNames.includes(name)) {
+          deleteCookiesNames.splice(deleteCookiesNames.indexOf(name), 1);
+        }
+        originalCookiesSet(name, value, opts);
+      };
+      event.cookies.delete = (name) => {
+        deleteCookiesNames.push(name);
+        if (newCookiesNames.includes(name)) {
+          newCookiesNames.splice(newCookiesNames.indexOf(name), 1);
+        }
+        originalCookiesDelete(name);
       };
 
       const httpResponse = await resolveHTTPResponse({
@@ -96,6 +124,23 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
         headers: Record<string, string>;
         body: string;
       };
+
+      // Set headers and cookies that were set using SvelteKit's `event.setHeaders` and `event.cookies.set`.
+      for (const [key, value] of Object.entries(headersProxy)) {
+        headers[key] = value;
+      }
+      const cookies = event.cookies.getAll().filter((cookie) => {
+        // Only pick new cookies
+        if (!newCookiesNames.includes(cookie.name)) return false;
+        // Don't pick cookies that were deleted
+        if (deleteCookiesNames.includes(cookie.name)) return false;
+        return true;
+      });
+      if (cookies.length > 0) {
+        headers['Set-Cookie'] = cookies
+          .map((cookie) => `${cookie.name}=${cookie.value}`)
+          .join('; ');
+      }
 
       return new Response(body, { status, headers });
     }
