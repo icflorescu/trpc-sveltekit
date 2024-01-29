@@ -83,30 +83,15 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
 
       // Using the default `event.setHeaders` and `event.cookies` will not work
       // as the event in not resolved by SvelteKit. Instead, we "proxy" the access
-      // to the headers and cookies, so that we can set them later.
+      // to the headers.
+      const originalSetHeaders = event.setHeaders;
       const headersProxy: Record<string, string> = {};
-      const originalCookiesSet = event.cookies.set;
-      const originalCookiesDelete = event.cookies.delete;
-      const newCookiesNames: string[] = [];
-      const deleteCookiesNames: string[] = [];
       event.setHeaders = (headers) => {
         for (const [key, value] of Object.entries(headers)) {
           headersProxy[key] = value;
         }
-      };
-      event.cookies.set = (name, value, opts) => {
-        newCookiesNames.push(name);
-        if (deleteCookiesNames.includes(name)) {
-          deleteCookiesNames.splice(deleteCookiesNames.indexOf(name), 1);
-        }
-        originalCookiesSet(name, value, opts);
-      };
-      event.cookies.delete = (name) => {
-        deleteCookiesNames.push(name);
-        if (newCookiesNames.includes(name)) {
-          newCookiesNames.splice(newCookiesNames.indexOf(name), 1);
-        }
-        originalCookiesDelete(name);
+        // Still call the original `event.setHeaders` function, as it may be used in SvelteKit internals.
+        originalSetHeaders(headers);
       };
 
       const httpResponse = await resolveHTTPResponse({
@@ -129,18 +114,31 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
       for (const [key, value] of Object.entries(headersProxy)) {
         headers[key] = value;
       }
-      const cookies = event.cookies.getAll().filter((cookie) => {
-        // Only pick new cookies
-        if (!newCookiesNames.includes(cookie.name)) return false;
-        // Don't pick cookies that were deleted
-        if (deleteCookiesNames.includes(cookie.name)) return false;
-        return true;
-      });
-      if (cookies.length > 0) {
-        headers['Set-Cookie'] = cookies
-          .map((cookie) => `${cookie.name}=${cookie.value}`)
-          .join('; ');
+      // Current cookies from TRPC
+      const currentCookiesHeaders =
+        headers['Set-Cookie']?.split('; ').map((cookie) => {
+          const name = cookie.split('=')[0];
+          const value = cookie.split('=').at(1);
+          return { name, value };
+        }) ?? [];
+      // Add / Replace cookies from SvelteKit
+      for (const cookie of event.cookies.getAll()) {
+        // Remove existing cookie
+        const existingCookieIndex = currentCookiesHeaders.findIndex((c) => c.name === cookie.name);
+        if (existingCookieIndex !== -1) {
+          currentCookiesHeaders.splice(existingCookieIndex, 1);
+        }
+
+        // Add the new cookie
+        currentCookiesHeaders.push({
+          name: cookie.name,
+          value: cookie.value
+        });
       }
+      // Set "Set-Cookie" header
+      headers['Set-Cookie'] = currentCookiesHeaders
+        .map((cookie) => `${cookie.name}=${cookie.value}`)
+        .join('; ');
 
       return new Response(body, { status, headers });
     }
