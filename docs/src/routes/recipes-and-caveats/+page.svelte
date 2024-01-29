@@ -14,6 +14,20 @@
   can be useful, for example, to set an <code>Authorization</code> header.
 </p>
 
+<h3>Setting response headers and cookies</h3>
+
+<p>
+  To change the headers of the response, you want to use the <code>event</code> provided in
+  <code>getContext</code>. You may also pass the <code>event</code> into the context, so that it can
+  be accessed in your procedures.
+</p>
+
+<p>
+  You can then use <code>event.setHeaders</code> and <code>event.cookies</code> to edit the headers.
+</p>
+
+<Highlight {...data.codeBlocks['simple/src/lib/trpc/context.ts']} />
+
 <h3>Using custom data transformers</h3>
 
 <p>

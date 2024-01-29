@@ -6,6 +6,7 @@ export const prerender = true;
 export const load: PageServerLoad = () => ({
   codeBlocks: loadCodeBlocks({
     'bookstall/src/lib/trpc/router.ts': 'example',
-    'bookstall/src/routes/authors/+page.svelte': 'example'
+    'bookstall/src/routes/authors/+page.svelte': 'example',
+    'simple/src/lib/trpc/context.ts': 'example'
   })
 });
