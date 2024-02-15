@@ -59,7 +59,7 @@ export function createTRPCClient<Router extends AnyRouter>(
     url: '/trpc'
   }
 ) {
-  if (links) return createTRPCProxyClient<Router>({ transformer, links });
+  if (links) return createTRPCProxyClient<Router>({ links });
 
   if (typeof window === 'undefined' && !init) {
     throw new Error(
@@ -68,13 +68,14 @@ export function createTRPCClient<Router extends AnyRouter>(
   }
 
   return createTRPCProxyClient<Router>({
-    transformer,
+    
     links: [
       httpBatchLink({
         url:
           typeof window === 'undefined' ? `${init.url.origin}${url}` : `${location.origin}${url}`,
         fetch: typeof window === 'undefined' ? init.fetch : init?.fetch ?? window.fetch,
-        headers
+        headers,
+        transformer,
       })
     ]
   });
