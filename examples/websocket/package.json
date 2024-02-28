@@ -26,8 +26,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^11.0.0-next-beta.190",
-    "@trpc/server": "^11.0.0-next-beta.190",
+    "@trpc/client": "^11.0.0-next-beta.286",
+    "@trpc/server": "^11.0.0-next-beta.286",
     "delay": "^6.0.0",
     "ws": "^8.14.2"
   }

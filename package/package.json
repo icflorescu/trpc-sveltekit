@@ -63,15 +63,15 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "^1.27.0",
-    "@trpc/client": "^11.0.0-next-beta.190",
-    "@trpc/server": "^11.0.0-next-beta.190",
+    "@trpc/client": "^11.0.0-next-beta.286",
+    "@trpc/server": "^11.0.0-next-beta.286",
     "@types/ws": "^8.5.8",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "@sveltejs/adapter-node": ">=1.2",
-    "@trpc/client": "^10.0.0 || ^11.0.0-next-beta.190",
-    "@trpc/server": "^10.0.0 || ^11.0.0-next-beta.190",
+    "@trpc/client": "^10.0.0 || ^11.0.0-next-beta.286",
+    "@trpc/server": "^10.0.0 || ^11.0.0-next-beta.286",
     "ws": ">=8"
   }
 }
