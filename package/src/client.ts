@@ -47,7 +47,21 @@ type CreateTRPCClientOptions<Router extends AnyRouter> = (
    * A function that transforms the data before transferring it.
    * @see https://trpc.io/docs/data-transformers
    */
-  transformer?: Router['_def']['_config']['transformer'];
+  transformer?:
+    | {
+        serialize: (object: any) => any;
+        deserialize: (object: any) => any;
+      }
+    | {
+        input: {
+          serialize: (object: any) => any;
+          deserialize: (object: any) => any;
+        };
+        output: {
+          serialize: (object: any) => any;
+          deserialize: (object: any) => any;
+        };
+      };
 };
 
 /**
@@ -68,14 +82,13 @@ export function createTRPCClient<Router extends AnyRouter>(
   }
 
   return createTRPCProxyClient<Router>({
-    
     links: [
       httpBatchLink({
         url:
           typeof window === 'undefined' ? `${init.url.origin}${url}` : `${location.origin}${url}`,
         fetch: typeof window === 'undefined' ? init.fetch : init?.fetch ?? window.fetch,
         headers,
-        transformer,
+        transformer
       })
     ]
   });
