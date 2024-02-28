@@ -10,6 +10,7 @@ import type {
 import { resolveHTTPResponse, type ResponseMeta } from '@trpc/server/http';
 import type { TRPCResponse } from '@trpc/server/rpc';
 import type { ValidRoute } from './ValidRoute';
+import { serialize, type CookieSerializeOptions } from 'cookie';
 
 /**
  * Create a SvelteKit handle function for tRPC requests.
@@ -85,13 +86,32 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
       // as the event in not resolved by SvelteKit. Instead, we "proxy" the access
       // to the headers.
       const originalSetHeaders = event.setHeaders;
+      const originalSetCookies = event.cookies.set;
+      const originalDeleteCookies = event.cookies.delete;
       const headersProxy: Record<string, string> = {};
+      const cookiesProxy: Record<string, { value: string; options: CookieSerializeOptions }> = {};
+
+      // Same as the one provided from sveltekit
+      const defaultCookiesOptions: CookieSerializeOptions = {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: event.url.hostname === 'localhost' && event.url.protocol === 'http:' ? false : true
+      };
+
       event.setHeaders = (headers) => {
         for (const [key, value] of Object.entries(headers)) {
           headersProxy[key] = value;
         }
         // Still call the original `event.setHeaders` function, as it may be used in SvelteKit internals.
         originalSetHeaders(headers);
+      };
+      event.cookies.set = (name, value, options) => {
+        cookiesProxy[name] = { value, options: { ...defaultCookiesOptions, ...options } };
+        originalSetCookies(name, value, options);
+      };
+      event.cookies.delete = (name, options) => {
+        cookiesProxy[name] = { value: '', options: { ...options, maxAge: 0 } };
+        originalDeleteCookies(name, options);
       };
 
       const httpResponse = await resolveHTTPResponse({
@@ -110,35 +130,17 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
         body: string;
       };
 
-      // Set headers and cookies that were set using SvelteKit's `event.setHeaders` and `event.cookies.set`.
       for (const [key, value] of Object.entries(headersProxy)) {
         headers[key] = value;
       }
-      // Current cookies from TRPC
-      const currentCookiesHeaders =
-        headers['Set-Cookie']?.split('; ').map((cookie) => {
-          const name = cookie.split('=')[0];
-          const value = cookie.split('=').at(1);
-          return { name, value };
-        }) ?? [];
-      // Add / Replace cookies from SvelteKit
-      for (const cookie of event.cookies.getAll()) {
-        // Remove existing cookie
-        const existingCookieIndex = currentCookiesHeaders.findIndex((c) => c.name === cookie.name);
-        if (existingCookieIndex !== -1) {
-          currentCookiesHeaders.splice(existingCookieIndex, 1);
-        }
 
-        // Add the new cookie
-        currentCookiesHeaders.push({
-          name: cookie.name,
-          value: cookie.value
-        });
+      if (Object.keys(cookiesProxy).length > 0) {
+        let cookieHeader = headers['Set-Cookie'] ?? '';
+        for (const [name, { value, options }] of Object.entries(cookiesProxy)) {
+          cookieHeader += serialize(name, value, options) + '; ';
+        }
+        headers['Set-Cookie'] = cookieHeader;
       }
-      // Set "Set-Cookie" header
-      headers['Set-Cookie'] = currentCookiesHeaders
-        .map((cookie) => `${cookie.name}=${cookie.value}`)
-        .join('; ');
 
       return new Response(body, { status, headers });
     }
