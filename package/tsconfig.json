@@ -8,6 +8,6 @@
     "module": "ESNext",
     "target": "ESNext",
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDirs": ["src", "node_modules/@sveltejs/kit/src/runtime/components"],
   }
 }
