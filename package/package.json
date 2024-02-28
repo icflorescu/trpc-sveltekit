@@ -65,8 +65,8 @@
     "@sveltejs/kit": "^1.27.0",
     "@trpc/client": "^11.0.0-next-beta.286",
     "@trpc/server": "^11.0.0-next-beta.286",
-    "@types/ws": "^8.5.8",
-    "typescript": "^5.2.2"
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "@sveltejs/adapter-node": ">=1.2",

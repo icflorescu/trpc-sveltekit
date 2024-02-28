@@ -2,3 +2,4 @@
 node_modules
 .turbo
 yarn-error.log
+vite.config.ts.*

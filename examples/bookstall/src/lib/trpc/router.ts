@@ -10,6 +10,8 @@ export const router = t.router({
   stores
 });
 
+export const createCaller = t.createCallerFactory(router);
+
 export type Router = typeof router;
 
 // 👇 type helpers 💡
