@@ -1,4 +1,3 @@
-import type { inferAsyncReturnType } from '@trpc/server';
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone';
 import type { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
 
@@ -9,4 +8,4 @@ export async function createContext(opts: CreateHTTPContextOptions | CreateWSSCo
   };
 }
 
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = Awaited<ReturnType<typeof createContext>>;
