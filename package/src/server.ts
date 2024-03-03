@@ -1,16 +1,15 @@
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import type {
-  AnyRouter,
-  Dict,
-  ProcedureType,
+  AnyTRPCRouter,
   TRPCError,
+  TRPCProcedureType,
   inferRouterContext,
   inferRouterError
 } from '@trpc/server';
 import { resolveHTTPResponse, type ResponseMeta } from '@trpc/server/http';
 import type { TRPCResponse } from '@trpc/server/rpc';
-import type { ValidRoute } from './ValidRoute';
 import { serialize, type CookieSerializeOptions } from 'cookie';
+import type { ValidRoute } from './ValidRoute';
 
 /**
  * Create a SvelteKit handle function for tRPC requests.
@@ -19,7 +18,7 @@ import { serialize, type CookieSerializeOptions } from 'cookie';
  * consider [the sequence helper function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks).
  * @see https://kit.svelte.dev/docs/hooks
  */
-export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
+export function createTRPCHandle<Router extends AnyTRPCRouter, URL extends string>({
   router,
   url = '/trpc',
   createContext,
@@ -52,7 +51,7 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
     data: TRPCResponse<unknown, inferRouterError<Router>>[];
     ctx?: inferRouterContext<Router>;
     paths?: string[];
-    type: ProcedureType;
+    type: TRPCProcedureType;
     errors: TRPCError[];
   }) => ResponseMeta;
 
@@ -66,13 +65,13 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
     path: string;
     input: unknown;
     req: RequestInit;
-    type: ProcedureType | 'unknown';
+    type: TRPCProcedureType | 'unknown';
   }) => void;
 }): Handle {
   return async ({ event, resolve }) => {
     if (event.url.pathname.startsWith(url + '/')) {
       const request = event.request as Request & {
-        headers: Dict<string | string[]>;
+        headers: Record<string, string | string[]>;
       };
 
       const req = {
