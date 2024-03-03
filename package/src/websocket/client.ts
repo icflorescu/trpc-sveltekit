@@ -18,7 +18,6 @@ export function createTRPCWebSocketClient<Router extends AnyRouter>(): ReturnTyp
   });
 
   return createTRPCProxyClient<Router>({
-    // @ts-expect-error - need to address this when tRPC v11 stable is released
     links: [wsLink({ client: wsClient })]
   } as CreateTRPCClientOptions<Router>);
 }

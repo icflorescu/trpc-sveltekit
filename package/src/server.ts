@@ -1,8 +1,8 @@
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import type {
-  AnyTRPCRouter,
+  AnyRouter,
+  ProcedureType,
   TRPCError,
-  TRPCProcedureType,
   inferRouterContext,
   inferRouterError
 } from '@trpc/server';
@@ -18,7 +18,7 @@ import type { ValidRoute } from './ValidRoute';
  * consider [the sequence helper function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks).
  * @see https://kit.svelte.dev/docs/hooks
  */
-export function createTRPCHandle<Router extends AnyTRPCRouter, URL extends string>({
+export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   router,
   url = '/trpc',
   createContext,
@@ -51,7 +51,7 @@ export function createTRPCHandle<Router extends AnyTRPCRouter, URL extends strin
     data: TRPCResponse<unknown, inferRouterError<Router>>[];
     ctx?: inferRouterContext<Router>;
     paths?: string[];
-    type: TRPCProcedureType;
+    type: ProcedureType;
     errors: TRPCError[];
   }) => ResponseMeta;
 
@@ -65,7 +65,7 @@ export function createTRPCHandle<Router extends AnyTRPCRouter, URL extends strin
     path: string;
     input: unknown;
     req: RequestInit;
-    type: TRPCProcedureType | 'unknown';
+    type: ProcedureType | 'unknown';
   }) => void;
 }): Handle {
   return async ({ event, resolve }) => {
