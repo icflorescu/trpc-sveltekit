@@ -1,14 +1,14 @@
 import {
   httpBatchLink,
-  createTRPCClient as internalCreateTRPCClient,
+  createTRPCProxyClient as internalCreateTRPCClient,
   type HTTPHeaders,
   type TRPCLink
 } from '@trpc/client';
-import type { AnyTRPCRouter, TRPCCombinedDataTransformer } from '@trpc/server';
+import type { AnyRouter } from '@trpc/server';
 
 export type TRPCClientInit = { fetch?: typeof window.fetch; url: { origin: string } };
 
-type CreateTRPCClientOptions<Router extends AnyTRPCRouter> = (
+type CreateTRPCClientOptions<Router extends AnyRouter> = (
   | {
       links?: never;
 
@@ -47,24 +47,19 @@ type CreateTRPCClientOptions<Router extends AnyTRPCRouter> = (
    * A function that transforms the data before transferring it.
    * @see https://trpc.io/docs/data-transformers
    */
-  transformer?:
-    | {
-        serialize: (object: any) => any;
-        deserialize: (object: any) => any;
-      }
-    | TRPCCombinedDataTransformer;
+  transformer?: Router['_def']['_config']['transformer'];
 };
 
 /**
  * Create a tRPC client.
  * @see https://trpc.io/docs/vanilla
  */
-export function createTRPCClient<Router extends AnyTRPCRouter>(
+export function createTRPCClient<Router extends AnyRouter>(
   { links, url = '/trpc', transformer, init, headers }: CreateTRPCClientOptions<Router> = {
     url: '/trpc'
   }
 ) {
-  if (links) return internalCreateTRPCClient<Router>({ links });
+  if (links) return internalCreateTRPCClient<Router>({ transformer, links });
 
   if (typeof window === 'undefined' && !init) {
     throw new Error(
@@ -73,13 +68,13 @@ export function createTRPCClient<Router extends AnyTRPCRouter>(
   }
 
   return internalCreateTRPCClient<Router>({
+    transformer,
     links: [
       httpBatchLink({
         url:
           typeof window === 'undefined' ? `${init.url.origin}${url}` : `${location.origin}${url}`,
         fetch: typeof window === 'undefined' ? init.fetch : init?.fetch ?? window.fetch,
-        headers,
-        transformer
+        headers
       })
     ]
   });
