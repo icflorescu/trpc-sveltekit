@@ -129,19 +129,23 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
         body: string;
       };
 
+      const finalHeaders = new Headers();
+
+      for (const [key, value] of Object.entries(headers)) {
+        finalHeaders.set(key, value);
+      }
       for (const [key, value] of Object.entries(headersProxy)) {
-        headers[key] = value;
+        finalHeaders.set(key, value);
       }
 
       if (Object.keys(cookiesProxy).length > 0) {
-        let cookieHeader = headers['Set-Cookie'] ?? '';
         for (const [name, { value, options }] of Object.entries(cookiesProxy)) {
-          cookieHeader += serialize(name, value, options) + '; ';
+          const serializedCookie = serialize(name, value, options);
+          finalHeaders.append('Set-Cookie', serializedCookie);
         }
-        headers['Set-Cookie'] = cookieHeader;
       }
 
-      return new Response(body, { status, headers });
+      return new Response(body, { status, headers: finalHeaders });
     }
 
     return resolve(event);
