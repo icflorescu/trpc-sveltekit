@@ -1,9 +1,9 @@
-name: Publish npm & deploy docs
+name: Publish npm
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the next branch
   push:
-    branches: ['main']
+    branches: ['next']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -35,10 +35,6 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn turbo build
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./docs/build
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
@@ -59,16 +55,4 @@ jobs:
       - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
-
-  # Pages deployment job
-  deploy:
-    if: github.repository_owner == 'icflorescu'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: [build, publish]
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          tag: next
