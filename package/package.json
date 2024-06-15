@@ -63,10 +63,10 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "^1.27.0",
-    "@trpc/client": "^10.0.0",
-    "@trpc/server": "^10.0.0",
+    "@trpc/client": "^10.45.2",
+    "@trpc/server": "^10.45.2",
     "@types/ws": "^8.5.10",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "@sveltejs/adapter-node": ">=1.2",
