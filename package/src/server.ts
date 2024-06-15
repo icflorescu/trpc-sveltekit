@@ -38,10 +38,12 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
   url?: ValidRoute<URL>;
 
   /**
-   * An async function that returns the tRPC context.
+   * A function that returns the tRPC context.
    * @see https://trpc.io/docs/context
    */
-  createContext?: (event: RequestEvent) => Promise<inferRouterContext<Router>>;
+  createContext?: (
+    event: RequestEvent
+  ) => inferRouterContext<Router> | Promise<inferRouterContext<Router>>;
 
   /**
    * A function that returns the response meta.
