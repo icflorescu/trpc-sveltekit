@@ -8,7 +8,7 @@ import type {
 } from '@trpc/server';
 import { resolveHTTPResponse, type ResponseMeta } from '@trpc/server/http';
 import type { TRPCResponse } from '@trpc/server/rpc';
-import { serialize, type CookieSerializeOptions } from 'cookie';
+import { serialize, type SerializeOptions } from 'cookie';
 import type { ValidRoute } from './ValidRoute';
 
 /**
@@ -90,10 +90,10 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
       const originalSetCookies = event.cookies.set;
       const originalDeleteCookies = event.cookies.delete;
       const headersProxy: Record<string, string> = {};
-      const cookiesProxy: Record<string, { value: string; options: CookieSerializeOptions }> = {};
+      const cookiesProxy: Record<string, { value: string; options: SerializeOptions }> = {};
 
       // Same as the one provided from sveltekit
-      const defaultCookiesOptions: CookieSerializeOptions = {
+      const defaultCookiesOptions: SerializeOptions = {
         httpOnly: true,
         sameSite: 'lax',
         secure: event.url.hostname === 'localhost' && event.url.protocol === 'http:' ? false : true

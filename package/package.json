@@ -75,6 +75,6 @@
     "@sveltejs/adapter-node": "^5.2.12",
     "@trpc/client": "^10.0.0",
     "@trpc/server": "^10.0.0",
-    "ws": ">=8"
+    "ws": "^8.18.1"
   }
 }
