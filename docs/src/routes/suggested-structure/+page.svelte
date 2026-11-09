@@ -1,10 +1,9 @@
 <script lang="ts">
   import Highlight from '#lib/components/Highlight.svelte';
-  import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data } = $props();
 
-  const { code, language } = data.codeBlocks['suggested-structure.txt'];
+  const { code, language } = $derived(data.codeBlocks['suggested-structure.txt']);
 </script>
 
 <h2>Suggested structure</h2>

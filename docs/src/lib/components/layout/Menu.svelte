@@ -1,38 +1,31 @@
 <script lang="ts">
-  import { browser } from '$app/env';
   import { resolve } from '$app/paths';
   import Logo from '#lib/components/Logo.svelte';
   import { PAGES } from '#lib/constants.ts';
-  import { menuVisible } from '#lib/menuStore.ts';
+  import { menu } from '#lib/menu.svelte.ts';
   import MenuLink from './MenuLink.svelte';
 
-  $: {
-    if (browser) {
-      if ($menuVisible) {
-        document.body.classList.add('modal-is-open');
-      } else {
-        document.body.classList.remove('modal-is-open');
-      }
-    }
-  }
+  $effect(() => {
+    document.body.classList.toggle('modal-is-open', menu.visible);
+  });
 
   function hide() {
-    menuVisible.set(false);
+    menu.visible = false;
   }
 </script>
 
-<svelte:window on:resize={hide} />
-<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-<div class="backdrop" class:visible={$menuVisible} on:click={hide}></div>
-<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
-<aside class:visible={$menuVisible} on:click={hide}>
+<svelte:window onresize={hide} />
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+<div class="backdrop" class:visible={menu.visible} onclick={hide}></div>
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+<aside class:visible={menu.visible} onclick={hide}>
   <header>
     <div class="title"><span class="logo"><Logo /></span>tRPC-SvelteKit</div>
     <div class="hide-button" aria-label="Hide menu"></div>
   </header>
   <nav>
-    {#each PAGES as { path, title, icon: Icon } (path)}
-      <MenuLink to={resolve(path)} {title}><Icon slot="icon" /></MenuLink>
+    {#each PAGES as { path, title, icon } (path)}
+      <MenuLink to={resolve(path)} {title} {icon} />
     {/each}
   </nav>
 </aside>

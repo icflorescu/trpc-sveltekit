@@ -1,13 +1,7 @@
 <script lang="ts">
-  export let color = 'currentColor';
-  export let size: number | string = '1em';
-  export let m: number | string | undefined = undefined;
-  export let my: number | string | undefined = undefined;
-  export let mt: number | string | undefined = undefined;
-  export let mb: number | string | undefined = undefined;
-  export let mx: number | string | undefined = undefined;
-  export let ml: number | string | undefined = undefined;
-  export let mr: number | string | undefined = undefined;
+  import type { IconProps } from './types.ts';
+
+  let { color = 'currentColor', size = '1em', m, my, mt, mb, mx, ml, mr }: IconProps = $props();
 </script>
 
 <svg

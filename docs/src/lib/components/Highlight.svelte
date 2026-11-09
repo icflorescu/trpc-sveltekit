@@ -8,67 +8,35 @@
   import { fly } from 'svelte/transition';
 
   type Language = 'shell' | 'typescript' | 'plaintext';
+  type Tab = { code: string; title: string; language?: Language };
 
-  type $$Props =
-    | {
-        tabs: {
-          code: string;
-          title: string;
-          language?: Language;
-        }[];
-        code?: never;
-        title?: never;
-        language?: never;
-      }
-    | {
-        tabs?: never;
-        code: string;
-        title?: string;
-        language?: Language;
-      };
+  type Props =
+    | { tabs: Tab[]; code?: never; title?: never; language?: never }
+    | { tabs?: never; code: string; title?: string; language?: Language };
 
-  export let tabs:
-    | {
-        code: string;
-        title: string;
-        language?: Language;
-      }[]
-    | undefined = undefined;
-  export let code: string | undefined = undefined;
-  export let title: string | undefined = undefined;
-  export let language: string | undefined = undefined;
+  let { tabs, code, title, language }: Props = $props();
 
-  let tabIndex = 0;
+  let tabIndex = $state(0);
+  const currentContent = $derived(tabs ? tabs[tabIndex] : { code: code!, language });
 
-  $: currentContent = tabs ? tabs[tabIndex] : { code, language };
-  $: currentContentLanguage = currentContent.language;
-  $: currentContentCode = currentContent.code;
-
-  let copied = false;
-  let copiedTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
+  let copied = $state(false);
+  let copiedTimeout: ReturnType<typeof setTimeout> | undefined;
 
   const copy = () => {
-    navigator.clipboard.writeText(currentContentCode!);
+    navigator.clipboard.writeText(currentContent.code);
     copied = true;
+    clearTimeout(copiedTimeout);
     copiedTimeout = setTimeout(() => (copied = false), 1000);
   };
 
-  onDestroy(() => {
-    clearTimeout(copiedTimeout);
-  });
+  onDestroy(() => clearTimeout(copiedTimeout));
 </script>
 
 <div class="tabs">
   {#if tabs}
     {#each tabs as tab, i (tab.title)}
-      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-      <div
-        class="tab"
-        class:current={i === tabIndex}
-        on:click={() => {
-          tabIndex = i;
-        }}
-      >
+      <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+      <div class="tab" class:current={i === tabIndex} onclick={() => (tabIndex = i)}>
         {tab.title}
       </div>
     {/each}
@@ -86,19 +54,19 @@
       Code copied...
     </div>
   {/if}
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="copy" on:click={copy}><IconClipboard /></div>
-  {#if currentContentLanguage}
+  <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+  <div class="copy" onclick={copy}><IconClipboard /></div>
+  {#if currentContent.language}
     <Highlight
-      language={currentContentLanguage === 'shell'
+      language={currentContent.language === 'shell'
         ? shell
-        : currentContentLanguage === 'plaintext'
+        : currentContent.language === 'plaintext'
           ? plaintext
           : typescript}
-      code={currentContentCode}
+      code={currentContent.code}
     />
   {:else}
-    <HighlightSvelte code={currentContentCode} />
+    <HighlightSvelte code={currentContent.code} />
   {/if}
 </div>
 

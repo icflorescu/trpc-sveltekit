@@ -2,9 +2,8 @@
   import Highlight from '#lib/components/Highlight.svelte';
   import IconInfoCircle from '#lib/icons/IconInfoCircle.svelte';
   import { resolve } from '$app/paths';
-  import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data } = $props();
 </script>
 
 <h2>Getting started</h2>

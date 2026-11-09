@@ -1,12 +1,15 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import type { IconProps } from '#lib/icons/types.ts';
+  import type { Component } from 'svelte';
 
-  export let to: string;
-  export let title: string | string[];
+  type Props = { to: string; title: string | string[]; icon: Component<IconProps> };
+
+  let { to, title, icon: Icon }: Props = $props();
 </script>
 
 <a class:current={page.url.pathname === to} href={to}>
-  <slot name="icon" />
+  <Icon />
   {#if typeof title === 'string'}
     {title}
   {:else}
