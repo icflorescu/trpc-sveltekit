@@ -2,10 +2,18 @@
   import { resolve } from '$app/paths';
   import Info from '#lib/components/Info.svelte';
   import { AUTHOR_URL, REPO_URL } from '#lib/constants.ts';
-  import { useMediaQuery } from '#lib/useMediaQuery.ts';
+  import { onMount } from 'svelte';
+  import { MediaQuery } from 'svelte/reactivity';
 
-  let md = useMediaQuery('(min-width: 1024px)');
-  let lg = useMediaQuery('(min-width: 1280px)');
+  const md = new MediaQuery('(min-width: 1024px)');
+  const lg = new MediaQuery('(min-width: 1280px)');
+
+  // The page is prerendered with the narrow layout; Svelte doesn't update `src` attributes
+  // that differ while hydrating, so only switch to the viewport-based value once mounted.
+  let mounted = $state(false);
+  onMount(() => (mounted = true));
+
+  const columns = $derived(!mounted ? 4 : lg.current ? 12 : md.current ? 8 : 4);
 </script>
 
 <h2>Contribute and support</h2>
@@ -67,11 +75,7 @@
 
 <a href="{REPO_URL}/graphs/contributors?all=1">
   <img
-    src="https://contrib.rocks/image?repo=icflorescu/trpc-sveltekit&columns={$lg
-      ? '12'
-      : $md
-        ? '8'
-        : '4'}"
+    src="https://contrib.rocks/image?repo=icflorescu/trpc-sveltekit&columns={columns}"
     alt="tRPC-SvelteKit contributors"
   />
 </a>
