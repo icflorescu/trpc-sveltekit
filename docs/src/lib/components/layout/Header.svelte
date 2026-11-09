@@ -6,14 +6,10 @@
   import { REPO_URL } from '#lib/constants.ts';
   import IconGitHub from '#lib/icons/IconGitHub.svelte';
   import IconMenu from '#lib/icons/IconMenu.svelte';
-  import { menuVisible } from '#lib/menuStore.ts';
+  import { menu } from '#lib/menu.svelte.ts';
   import DarkModeSwitcher from './DarkModeSwitcher.svelte';
 
-  let scrolled = browser ? window.scrollY > 0 : false;
-
-  const showMenu = () => {
-    menuVisible.set(true);
-  };
+  let scrolled = $state(browser ? window.scrollY > 0 : false);
 
   let scrollFrame = 0;
   const handleScroll = () => {
@@ -24,14 +20,14 @@
   };
 </script>
 
-<svelte:window on:scroll={handleScroll} />
+<svelte:window onscroll={handleScroll} />
 <div class="root" class:scrolled>
   <div class="background"></div>
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="menu-button" aria-label="Show menu" on:click={showMenu}>
+  <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+  <div class="menu-button" aria-label="Show menu" onclick={() => (menu.visible = true)}>
     <IconMenu size="1.25em" />
   </div>
-  <a href={resolve('/')} class="home-link" class:hidden={$menuVisible}>
+  <a href={resolve('/')} class="home-link" class:hidden={menu.visible}>
     <h1>
       <span class="logo"><Logo /></span>tRPC-SvelteKit
       <code class="version">v{page.data.version}</code>

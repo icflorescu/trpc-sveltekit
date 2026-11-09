@@ -4,10 +4,10 @@
   import IconArrowLeft from '#lib/icons/IconArrowLeft.svelte';
   import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
 
-  export let currentPageIndex: number;
+  let { currentPageIndex }: { currentPageIndex: number } = $props();
 
-  $: previousPage = PAGES[currentPageIndex - 1];
-  $: nextPage = PAGES[currentPageIndex + 1];
+  const previousPage = $derived(PAGES[currentPageIndex - 1]);
+  const nextPage = $derived(PAGES[currentPageIndex + 1]);
 </script>
 
 <div class="root">

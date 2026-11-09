@@ -5,9 +5,11 @@
   import atomOneDark from 'svelte-highlight/styles/atom-one-dark';
   import atomOneLight from 'svelte-highlight/styles/atom-one-light';
 
-  export let size: string;
+  let { size }: { size: string } = $props();
 
-  let darkMode = browser ? document.documentElement.getAttribute('data-theme') === 'dark' : true;
+  let darkMode = $state(
+    browser ? document.documentElement.getAttribute('data-theme') === 'dark' : true
+  );
 
   function toggleDarkMode() {
     darkMode = !darkMode;
@@ -32,8 +34,8 @@
   {/if}
 </svelte:head>
 
-<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-<span class="switch" title="Switch to {darkMode ? 'light' : 'dark'} mode" on:click={toggleDarkMode}>
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+<span class="switch" title="Switch to {darkMode ? 'light' : 'dark'} mode" onclick={toggleDarkMode}>
   <span class="sun"><IconSun {size} /></span>
   <span class="moon"><IconMoon {size} /></span>
 </span>
