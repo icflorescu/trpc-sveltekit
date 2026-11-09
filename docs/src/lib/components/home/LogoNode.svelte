@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let height: number | string = '1em';
+  let { height = '1em' }: { height?: number | string } = $props();
 </script>
 
 <svg {height} viewBox="-1.5 0 24 24"
