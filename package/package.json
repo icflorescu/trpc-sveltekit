@@ -1,6 +1,6 @@
 {
   "name": "trpc-sveltekit",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "SvelteKit adapter for tRPC.io, working with any SvelteKit adapter",
   "keywords": [
     "trpc",
