@@ -1,8 +1,7 @@
 <script lang="ts">
-  import trpcLogoSrc from '$lib/assets/trpc-logo.png';
-  import type { PageData } from './$types';
+  import trpcLogoSrc from '#lib/assets/trpc-logo.png';
 
-  export let data: PageData;
+  let { data } = $props();
 </script>
 
 <svelte:head>
@@ -53,7 +52,7 @@
   .trpc-logo {
     display: inline-block;
     padding: 0.7em 1em 0.5em;
-    border-radius: var(--border-radius);
+    border-radius: var(--pico-border-radius);
     margin-top: 1em;
     text-decoration: none;
   }

@@ -1,31 +1,33 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
   import LabelAsterisk from './LabelAsterisk.svelte';
 
-  let textarea: HTMLTextAreaElement;
-
-  export let name: string;
-  export let label: string;
-  export let required = false;
-  export let placeholder = '';
-  export let item: Record<string, unknown> | null;
-  export let errors: { message: string; path: string[] }[] | null = null;
-
-  $: error = errors?.find((e) => e.path.includes(name));
-
-  const autosize = () => {
-    if (browser) {
-      requestAnimationFrame(() => {
-        if (textarea) {
-          textarea.style.height = '0';
-          textarea.style.height = `${textarea.scrollHeight + 2}px`;
-        }
-      });
-    }
+  type Props = {
+    name: string;
+    label: string;
+    required?: boolean;
+    placeholder?: string;
+    item: Record<string, unknown> | null;
+    errors?: { message: string; path: string[] }[] | null;
   };
 
-  $: item?.[name], autosize();
-  $: value = item?.[name] as string;
+  let { name, label, required = false, placeholder = '', item, errors = null }: Props = $props();
+
+  let textarea: HTMLTextAreaElement | undefined = $state();
+
+  const value = $derived(item?.[name] as string | undefined);
+  const error = $derived(errors?.find((e) => e.path.includes(name)));
+
+  const autosize = () => {
+    if (!textarea) return;
+    textarea.style.height = '0';
+    textarea.style.height = `${textarea.scrollHeight + 2}px`;
+  };
+
+  // Resize whenever the edited value changes
+  $effect(() => {
+    void value;
+    requestAnimationFrame(autosize);
+  });
 </script>
 
 <label>
@@ -36,9 +38,8 @@
     {placeholder}
     {required}
     {value}
-    on:input={autosize}
-    aria-invalid={error ? 'true' : undefined}
-  />
+    oninput={autosize}
+    aria-invalid={error ? 'true' : undefined}></textarea>
   {#if error}
     <small>{error.message}</small>
   {/if}
@@ -48,14 +49,14 @@
   textarea {
     resize: none;
     min-height: calc(
-      var(--line-height) * var(--font-size) +
-        (var(--border-width) + var(--form-element-spacing-vertical)) * 2
+      var(--pico-line-height) * var(--pico-font-size) +
+        (var(--pico-border-width) + var(--pico-form-element-spacing-vertical)) * 2
     );
     max-height: 200px;
     margin-bottom: 0.5em;
   }
 
   small {
-    color: var(--form-element-invalid-active-border-color);
+    color: var(--pico-form-element-invalid-active-border-color);
   }
 </style>

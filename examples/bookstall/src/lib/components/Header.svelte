@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation';
+  import { refreshAll } from '$app/navigation';
   import HeaderNavLink from './HeaderNavLink.svelte';
 
-  export let isAuthenticated: boolean;
+  let { isAuthenticated }: { isAuthenticated: boolean } = $props();
 
   const logout = async () => {
     await fetch('/logout', { method: 'POST' });
-    invalidateAll();
+    refreshAll();
   };
 </script>
 
@@ -22,7 +22,7 @@
       <HeaderNavLink to="/books" title="Books" />
       <HeaderNavLink to="/stores" title="Stores" />
       {#if isAuthenticated}
-        <HeaderNavLink on:click={logout} title="Logout" />
+        <HeaderNavLink onclick={logout} title="Logout" />
       {:else}
         <HeaderNavLink to="/login" title="Login" />
       {/if}
@@ -32,8 +32,8 @@
 
 <style lang="scss">
   header {
-    background: var(--card-background-color);
-    border-bottom: 1px solid var(--muted-border-color);
+    background: var(--pico-card-background-color);
+    border-bottom: 1px solid var(--pico-muted-border-color);
     padding: 1em 1em 0;
     text-align: center;
     text-transform: uppercase;
@@ -46,7 +46,7 @@
 
   h1,
   p {
-    color: var(--h6-color);
+    color: var(--pico-h6-color);
     font-family: Cormorant, serif;
     line-height: 1;
     margin: 0;

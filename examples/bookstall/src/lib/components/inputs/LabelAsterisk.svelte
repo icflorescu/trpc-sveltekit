@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let required: boolean;
+  let { required }: { required: boolean } = $props();
 </script>
 
 {#if required}

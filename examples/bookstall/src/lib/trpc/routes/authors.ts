@@ -1,7 +1,7 @@
-import prisma from '$lib/prisma';
-import { auth } from '$lib/trpc/middleware/auth';
-import { logger } from '$lib/trpc/middleware/logger';
-import { t } from '$lib/trpc/t';
+import prisma from '#lib/server/prisma.ts';
+import { auth } from '#lib/trpc/middleware/auth.ts';
+import { logger } from '#lib/trpc/middleware/logger.ts';
+import { t } from '#lib/trpc/t.ts';
 import { z } from 'zod';
 
 export const authors = t.router({

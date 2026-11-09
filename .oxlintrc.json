@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "import"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": { "browser": true, "node": true, "es2024": true },
+  "ignorePatterns": ["**/dist", "**/build", "**/.svelte-kit", "**/generated"],
+  "rules": {
+    "typescript/no-explicit-any": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
+  }
+}

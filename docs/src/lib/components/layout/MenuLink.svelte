@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   export let to: string;
   export let title: string | string[];
 </script>
 
-<a class:current={$page.url.pathname === to} href={to}>
+<a class:current={page.url.pathname === to} href={to}>
   <slot name="icon" />
   {#if typeof title === 'string'}
     {title}
@@ -24,19 +24,19 @@
     display: flex;
     gap: 0.75em;
     margin: 0;
-    padding: var(--spacing);
+    padding: var(--pico-spacing);
     font-weight: 500;
     color: inherit;
     border-radius: 0;
     &:hover {
-      background: var(--primary-focus);
+      background: var(--pico-primary-focus);
     }
     &.current {
       &,
       &:hover {
         cursor: default;
-        color: var(--contrast);
-        background: var(--muted-border-color);
+        color: var(--pico-contrast);
+        background: var(--pico-muted-border-color);
       }
     }
   }

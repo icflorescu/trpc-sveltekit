@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AUTHOR_URL, BADGE_COLOR_CODE, REPO_URL } from '$lib/constants';
+  import { AUTHOR_URL, BADGE_COLOR_CODE, REPO_URL } from '#lib/constants.ts';
 </script>
 
 <footer>
@@ -19,14 +19,12 @@
     >.
   </div>
   <div class="repo-metrics">
-    <!-- svelte-ignore security-anchor-rel-noreferrer -->
     <a class="image-link" href={REPO_URL} target="_blank">
       <img
         src="https://img.shields.io/github/stars/icflorescu/trpc-sveltekit?style=flat&color={BADGE_COLOR_CODE}"
         alt="GitHub Stars"
       />
     </a>
-    <!-- svelte-ignore security-anchor-rel-noreferrer -->
     <a class="image-link" href="https://www.npmjs.com/package/trpc-sveltekit" target="_blank">
       <img
         src="https://img.shields.io/npm/dm/trpc-sveltekit.svg?style=flat&color={BADGE_COLOR_CODE}"
@@ -48,13 +46,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: calc(var(--spacing) / 2);
-    padding: var(--spacing);
+    gap: calc(var(--pico-spacing) / 2);
+    padding: var(--pico-spacing);
     @media (min-width: 1024px) {
       margin-left: var(--navbar-width);
     }
     @media (min-width: 1280px) {
-      padding: var(--spacing) calc(var(--spacing) * 2);
+      padding: var(--pico-spacing) calc(var(--pico-spacing) * 2);
       flex-direction: row;
       justify-content: space-between;
     }
@@ -82,6 +80,6 @@
 
   .repo-metrics {
     display: flex;
-    gap: calc(var(--spacing) / 2);
+    gap: calc(var(--pico-spacing) / 2);
   }
 </style>

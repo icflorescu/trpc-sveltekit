@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "lib": ["esnext", "DOM", "DOM.Iterable"],
-    "moduleResolution": "Node",
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
     "declaration": true,
+    "declarationMap": true,
     "skipLibCheck": true,
-    "module": "ESNext",
-    "target": "ESNext",
-    "outDir": "dist",
-    "rootDirs": ["src", "node_modules/@sveltejs/kit/src/runtime/components"],
-  }
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "types": ["node"],
+    "outDir": "dist"
+  },
+  "include": ["src", "test"]
 }

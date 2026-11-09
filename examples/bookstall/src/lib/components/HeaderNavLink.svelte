@@ -1,22 +1,20 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { createEventDispatcher } from 'svelte';
+  import { page } from '$app/state';
 
-  export let to: string | undefined = undefined;
-  export let title: string;
+  type Props = { to?: string; title: string; onclick?: () => void };
 
-  const dispatch = createEventDispatcher();
+  let { to, title, onclick }: Props = $props();
 
   const handleClick = (e: MouseEvent) => {
     if (!to) {
       e.preventDefault();
-      dispatch('click');
+      onclick?.();
     }
   };
 </script>
 
 <li>
-  <a class:active={$page.url.pathname === to} href={to || '#'} on:click={handleClick}>{title}</a>
+  <a class:active={page.url.pathname === to} href={to || '#'} onclick={handleClick}>{title}</a>
 </li>
 
 <style lang="scss">
@@ -37,11 +35,11 @@
     &::after {
       content: '';
       position: absolute;
-      bottom: calc(var(--spacing) * 0.75);
-      left: calc(var(--spacing) * 0.5);
-      right: calc(var(--spacing) * 0.5);
+      bottom: calc(var(--pico-spacing) * 0.75);
+      left: calc(var(--pico-spacing) * 0.5);
+      right: calc(var(--pico-spacing) * 0.5);
       height: 2px;
-      background: var(--color);
+      background: var(--pico-color);
       transform: scaleX(0);
       transition: transform 0.2s;
     }

@@ -1,22 +1,26 @@
 <script lang="ts">
   import LabelAsterisk from './LabelAsterisk.svelte';
 
-  export let name: string;
-  export let label: string;
-  export let item: Record<string, unknown> | null;
-  export let options: { value: string; label: string }[];
-  export let required = false;
-  export let errors: { message: string; path: string[] }[] | null = null;
+  type Props = {
+    name: string;
+    label: string;
+    item: Record<string, unknown> | null;
+    options: { value: string; label: string }[];
+    required?: boolean;
+    errors?: { message: string; path: string[] }[] | null;
+  };
 
-  $: error = errors?.find((e) => e.path.includes(name));
+  let { name, label, item, options, required = false, errors = null }: Props = $props();
+
+  const error = $derived(errors?.find((e) => e.path.includes(name)));
 </script>
 
 <label>
   {label}<LabelAsterisk {required} />
   <select {name} value={item?.[name]} aria-invalid={error ? 'true' : undefined}>
     <option value="">Select...</option>
-    {#each options as { value, label } (value)}
-      <option {value}>{label}</option>
+    {#each options as option (option.value)}
+      <option value={option.value}>{option.label}</option>
     {/each}
   </select>
   {#if error}
@@ -30,6 +34,6 @@
   }
 
   small {
-    color: var(--form-element-invalid-active-border-color);
+    color: var(--pico-form-element-invalid-active-border-color);
   }
 </style>

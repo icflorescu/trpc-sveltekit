@@ -1,4 +1,4 @@
-import { t } from '$lib/trpc/t';
+import { t } from '#lib/trpc/t.ts';
 
 export const logger = t.middleware(async ({ path, type, next }) => {
   const start = Date.now();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AUTHOR_URL, BADGE_COLOR_CODE } from '$lib/constants';
+  import { AUTHOR_URL, BADGE_COLOR_CODE } from '#lib/constants.ts';
 </script>
 
 <h2>Hire the author</h2>
@@ -61,7 +61,7 @@
   }
 
   .author {
-    border-radius: var(--border-radius);
+    border-radius: var(--pico-border-radius);
     margin-bottom: 1.5em;
     @media (min-width: 400px) {
       float: left;

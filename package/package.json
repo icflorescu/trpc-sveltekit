@@ -1,7 +1,7 @@
 {
   "name": "trpc-sveltekit",
-  "version": "3.6.3",
-  "description": "SvelteKit adapter for tRPC.io, working with Node.js, Vercel and Netlify",
+  "version": "4.0.0",
+  "description": "SvelteKit adapter for tRPC.io, working with any SvelteKit adapter",
   "keywords": [
     "trpc",
     "svelte",
@@ -10,12 +10,13 @@
     "adapter",
     "handle",
     "typescript",
-    "rpc",
-    "vercel",
-    "netlify",
-    "node"
+    "rpc"
   ],
-  "repository": "icflorescu/trpc-sveltekit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icflorescu/trpc-sveltekit.git",
+    "directory": "package"
+  },
   "homepage": "https://icflorescu.github.io/trpc-sveltekit/",
   "bugs": {
     "url": "https://github.com/icflorescu/trpc-sveltekit/issues"
@@ -31,8 +32,7 @@
   },
   "license": "ISC",
   "type": "module",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "README.md",
@@ -41,37 +41,46 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./websocket": {
       "types": "./dist/websocket/index.d.ts",
-      "import": "./dist/websocket/index.js"
+      "browser": "./dist/websocket/index.browser.js",
+      "default": "./dist/websocket/index.js"
     },
     "./package.json": "./package.json"
   },
-  "typesVersions": {
-    "*": {
-      "websocket": [
-        "dist/websocket/index.d.ts"
-      ]
-    }
-  },
   "scripts": {
-    "build": "tsc && cp ../README.md README.md && cp ../LICENSE LICENSE",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "build": "tsc -p tsconfig.build.json && cp ../README.md ../LICENSE .",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "clean": "rm -rf dist",
+    "check": "tsc --noEmit",
+    "test": "vitest run"
   },
   "devDependencies": {
-    "@sveltejs/kit": "^1.27.0",
-    "@trpc/client": "^10.45.2",
-    "@trpc/server": "^10.45.2",
-    "@types/ws": "^8.18.0",
-    "typescript": "^5.8.2"
+    "@sveltejs/kit": "^3.1.1",
+    "@trpc/client": "^11.25.2",
+    "@trpc/server": "^11.25.2",
+    "@types/node": "^24.10.1",
+    "@types/ws": "^8.18.2",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.0",
+    "vitest": "^5.1.0",
+    "ws": "^8.22.2"
   },
   "peerDependencies": {
-    "@sveltejs/adapter-node": ">=1.2",
-    "@trpc/client": "^10.0.0",
-    "@trpc/server": "^10.0.0",
-    "ws": ">=8"
+    "@sveltejs/kit": "^2.0.0 || ^3.0.0",
+    "@trpc/client": "^11.0.0",
+    "@trpc/server": "^11.0.0",
+    "ws": "^8.0.0"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependenciesMeta": {
+    "ws": {
+      "optional": true
+    }
   }
 }

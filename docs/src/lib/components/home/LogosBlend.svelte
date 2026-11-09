@@ -1,7 +1,7 @@
 <script lang="ts">
-  import LogoSvelte from '$lib/components/home/LogoSvelte.svelte';
-  import LogoTrpc from '$lib/components/home/LogoTrpc.svelte';
-  import Logo from '$lib/components/Logo.svelte';
+  import LogoSvelte from '#lib/components/home/LogoSvelte.svelte';
+  import LogoTrpc from '#lib/components/home/LogoTrpc.svelte';
+  import Logo from '#lib/components/Logo.svelte';
   import { onMount } from 'svelte';
 
   let visible = false;

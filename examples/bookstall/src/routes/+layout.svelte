@@ -1,10 +1,9 @@
 <script lang="ts">
-  import Footer from '$lib/components/Footer.svelte';
-  import Header from '$lib/components/Header.svelte';
-  import '@picocss/pico';
-  import type { LayoutData } from './$types';
+  import Footer from '#lib/components/Footer.svelte';
+  import Header from '#lib/components/Header.svelte';
+  import '@picocss/pico/css/pico.min.css';
 
-  export let data: LayoutData;
+  let { data, children } = $props();
 </script>
 
 <svelte:head>
@@ -19,7 +18,7 @@
 
 <Header isAuthenticated={data.isAuthenticated} />
 <main class="container">
-  <slot />
+  {@render children()}
 </main>
 <Footer />
 
@@ -39,14 +38,14 @@
     form {
       > article {
         width: 100%;
-        border: 1px solid var(--muted-border-color);
+        border: 1px solid var(--pico-muted-border-color);
         > header {
           margin-bottom: 0.5em;
           padding-top: 0.75em;
           padding-bottom: 0.75em;
           font-size: 1.25rem;
           font-weight: 500;
-          border-bottom: 1px solid var(--muted-border-color);
+          border-bottom: 1px solid var(--pico-muted-border-color);
           .close {
             margin-top: 0.5em;
           }
@@ -54,15 +53,19 @@
         > footer {
           display: flex;
           gap: 1em;
+          align-items: center;
           justify-content: center;
           margin-top: 1em;
           padding-top: 1em;
           padding-bottom: 1em;
-          border-top: 1px solid var(--muted-border-color);
-          > button {
+          border-top: 1px solid var(--pico-muted-border-color);
+          > :is(button, [role='button']),
+          > button[type='submit'] {
             display: inline-block;
-            margin-bottom: 0;
+            width: auto;
+            min-width: 100px;
             max-width: 160px;
+            margin: 0;
           }
         }
       }

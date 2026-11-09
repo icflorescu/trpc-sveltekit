@@ -1,29 +1,34 @@
-<script lang="ts">
-  import dayjs from '$lib/dayjs';
-  import IconClock from '$lib/icons/IconClock.svelte';
-  import { createEventDispatcher } from 'svelte';
+<script lang="ts" generics="T">
+  import dayjs from '#lib/dayjs.ts';
+  import IconClock from '#lib/icons/IconClock.svelte';
+  import type { Snippet } from 'svelte';
   import BusyOverlay from './BusyOverlay.svelte';
 
-  type T = $$Generic;
-
-  export let itemName: string;
-  export let item:
-    | (T & {
-        id: string | null;
-        updatedAt?: Date;
-        updatedBy?: { name: string } | null;
-      })
-    | null;
-  export let busy = false;
-  export let arrayFields: string[] | undefined = undefined;
-
-  const dispatch = createEventDispatcher<{ cancel?: never; save: T }>();
-
-  const handleCancel = () => {
-    dispatch('cancel');
+  type Props = {
+    itemName: string;
+    item:
+      | (T & {
+          id: string | null;
+          updatedAt?: Date;
+          updatedBy?: { name: string } | null;
+        })
+      | null;
+    busy?: boolean;
+    arrayFields?: string[];
+    oncancel: () => void;
+    onsave: (data: T) => void;
+    children: Snippet;
   };
 
-  const handleSave = (e: { currentTarget: HTMLFormElement }) => {
+  let { itemName, item, busy = false, arrayFields, oncancel, onsave, children }: Props = $props();
+
+  const handleCancel = (e: Event) => {
+    e.preventDefault();
+    oncancel();
+  };
+
+  const handleSave = (e: SubmitEvent & { currentTarget: HTMLFormElement }) => {
+    e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data: Record<string, unknown> = {};
 
@@ -33,35 +38,29 @@
       }
     }
 
-    for (let field of formData) {
-      const [key, value] = field;
+    for (const [key, value] of formData) {
       if (arrayFields?.includes(key)) {
         (data[key] as unknown[]).push(value);
       } else {
         data[key] = value;
       }
     }
-    dispatch('save', data as T);
+    onsave(data as T);
   };
 </script>
 
-<form on:submit|preventDefault={handleSave}>
+<form onsubmit={handleSave}>
   <dialog open={!!item}>
     <input type="hidden" name="id" value={item?.id} />
     <article>
       <BusyOverlay visible={busy} />
       <header>
-        <!-- svelte-ignore a11y-missing-content -->
-        <a
-          href="#cancel"
-          aria-label="Cancel"
-          class="close"
-          on:click|preventDefault={handleCancel}
-        />
+        <!-- svelte-ignore a11y_missing_content -->
+        <a href="#cancel" aria-label="Cancel" class="close" onclick={handleCancel}></a>
         {item?.id ? 'Edit' : 'Add'}
         {itemName}
       </header>
-      <slot />
+      {@render children()}
       {#if item?.id}
         <small>
           <span class="clock-icon"><IconClock /></span>
@@ -71,7 +70,7 @@
         </small>
       {/if}
       <footer>
-        <button class="secondary" on:click|preventDefault={handleCancel}>Cancel</button>
+        <button class="secondary" onclick={handleCancel}>Cancel</button>
         <button type="submit">Save</button>
       </footer>
     </article>
@@ -83,7 +82,7 @@
     display: block;
     margin-left: 1.5em;
     text-indent: -1.5em;
-    color: var(--muted-color);
+    color: var(--pico-muted-color);
   }
 
   .clock-icon {

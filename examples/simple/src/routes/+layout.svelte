@@ -1,8 +1,10 @@
 <script lang="ts">
-  import '@picocss/pico';
+  import '@picocss/pico/css/pico.min.css';
 
-  import { navigating, page } from '$app/stores';
+  import { navigating, page } from '$app/state';
   import { fade } from 'svelte/transition';
+
+  let { children } = $props();
 
   const routes = [
     { to: '/', title: 'Simple usage' },
@@ -19,22 +21,22 @@
   <nav class="container">
     <ul>
       {#each routes as { to, title } (to)}
-        <li><a class:active={$page.url.pathname === to} href={to}>{title}</a></li>
+        <li><a class:active={page.url.pathname === to} href={to}>{title}</a></li>
       {/each}
     </ul>
   </nav>
   <div class="navigation-status">
-    {#if $navigating}
+    {#if navigating.to}
       <sub aria-busy="true" transition:fade={{ duration: 100 }}>Navigating...</sub>
     {/if}
   </div>
 </header>
 
 <main class="container">
-  <slot />
+  {@render children()}
 </main>
 
-<footer />
+<footer></footer>
 
 <style lang="scss">
   header {
@@ -55,7 +57,7 @@
       display: block;
       position: absolute;
       content: '';
-      background: var(--muted-color);
+      background: var(--pico-muted-color);
       bottom: 0;
       left: 0.5em;
       right: 0.5em;
@@ -70,7 +72,7 @@
 
   .navigation-status {
     text-align: center;
-    color: var(--muted-color);
+    color: var(--pico-muted-color);
   }
 
   main {
@@ -89,7 +91,7 @@
       display: block;
       position: absolute;
       content: '';
-      background: var(--muted-color);
+      background: var(--pico-muted-color);
       bottom: -0.75em;
       width: 50%;
       left: 25%;

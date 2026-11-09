@@ -1,5 +1,5 @@
-import { createContext } from '$lib/trpc/context';
-import { createCaller } from '$lib/trpc/router';
+import { createContext } from '#lib/trpc/context.ts';
+import { createCaller } from '#lib/trpc/router.ts';
 import type { PageServerLoad } from './$types';
 
 // 👇 since this is only called on the server, we can bypass HTTP 💡

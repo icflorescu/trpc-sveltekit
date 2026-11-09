@@ -19,8 +19,8 @@
 
 <style>
   footer {
-    background: var(--card-background-color);
-    border-top: 1px solid var(--muted-border-color);
+    background: var(--pico-card-background-color);
+    border-top: 1px solid var(--pico-muted-border-color);
     font-size: 0.75em;
     text-align: center;
     padding: 1em;

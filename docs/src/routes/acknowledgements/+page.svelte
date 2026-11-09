@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AUTHOR_URL } from '$lib/constants';
+  import { AUTHOR_URL } from '#lib/constants.ts';
 </script>
 
 <h2>Acknowledgements</h2>

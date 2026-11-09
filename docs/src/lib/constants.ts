@@ -1,10 +1,11 @@
-import IconFileCode from '$lib/icons/IconFileCode.svelte';
-import IconFileDatabase from '$lib/icons/IconFileDatabase.svelte';
-import IconFolder from '$lib/icons/IconFolder.svelte';
-import IconHome from '$lib/icons/IconHome.svelte';
-import IconLock from '$lib/icons/IconLock.svelte';
-import IconRocket from '$lib/icons/IconRocket.svelte';
-import IconTools from '$lib/icons/IconTools.svelte';
+import IconFileCode from '#lib/icons/IconFileCode.svelte';
+import IconFileDatabase from '#lib/icons/IconFileDatabase.svelte';
+import IconFolder from '#lib/icons/IconFolder.svelte';
+import IconHome from '#lib/icons/IconHome.svelte';
+import IconLock from '#lib/icons/IconLock.svelte';
+import IconRocket from '#lib/icons/IconRocket.svelte';
+import IconTools from '#lib/icons/IconTools.svelte';
+import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
 import IconBulb from './icons/IconBulb.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
@@ -17,9 +18,11 @@ export const AUTHOR_URL = 'https://github.com/icflorescu';
 export const REPO_URL = `${AUTHOR_URL}/trpc-sveltekit`;
 export const BADGE_COLOR_CODE = '1095c1';
 
+import type { RouteId } from '$app/types';
+
 export const PAGES: {
   title: string | string[];
-  path: string;
+  path: RouteId;
   icon: typeof IconHome;
   customPageTitle?: string;
   pageDescription: string;
@@ -37,6 +40,12 @@ export const PAGES: {
     path: '/getting-started',
     icon: IconRocket,
     pageDescription: 'Get started with tRPC-SvelteKit'
+  },
+  {
+    title: 'Upgrading to v4',
+    path: '/upgrading-to-v4',
+    icon: IconArrowRight,
+    pageDescription: 'How to upgrade to tRPC-SvelteKit v4 and tRPC v11'
   },
   {
     title: 'Page data',
@@ -102,6 +111,6 @@ export const PAGES: {
     title: 'Hire the author',
     path: '/hire-the-author',
     icon: IconHeartHandshake,
-    pageDescription: 'Hire the author of tRPC-SvleteKit'
+    pageDescription: 'Hire the author of tRPC-SvelteKit'
   }
 ];

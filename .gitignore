@@ -1,5 +1,7 @@
 .DS_Store
 node_modules
-.turbo
-yarn-error.log
-vite.config.ts.*
+dist
+build
+.svelte-kit
+*.log
+vite.config.ts.timestamp-*

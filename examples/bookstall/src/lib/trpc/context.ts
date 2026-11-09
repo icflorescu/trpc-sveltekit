@@ -1,4 +1,4 @@
-import { JWT_SECRET } from '$env/static/private';
+import { JWT_SECRET } from '$app/env/private';
 import type { RequestEvent } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 

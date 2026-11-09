@@ -1,12 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/lib/server/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./bookstall.db"
 }
-
 model User {
   id           String   @id @default(cuid())
   name         String

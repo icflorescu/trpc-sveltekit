@@ -1,5 +1,7 @@
-$enable-responsive-typography: false;
-@import '@picocss/pico/scss/pico';
+@use '@picocss/pico/scss/pico' with (
+  $enable-responsive-typography: false,
+  $theme-color: 'azure'
+);
 
 h2 {
   font-size: 2rem;
@@ -10,4 +12,39 @@ h2 {
     font-weight: normal;
     font-size: 3rem;
   }
+}
+
+// Keep the look of the site as it was with Pico v1
+// Links are only underlined on hover
+a {
+  --pico-text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  --pico-line-height: 1.5;
+}
+
+h1 {
+  --pico-typography-spacing-vertical: 3rem;
+}
+
+h2 {
+  --pico-typography-spacing-vertical: 2.625rem;
+}
+
+h3 {
+  --pico-typography-spacing-vertical: 2.25rem;
+}
+
+h4 {
+  --pico-typography-spacing-vertical: 1.874rem;
+}
+
+h5 {
+  --pico-typography-spacing-vertical: 1.6875rem;
 }

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import { base } from '$app/paths';
-  import Logo from '$lib/components/Logo.svelte';
-  import { PAGES } from '$lib/constants';
-  import { menuVisible } from '$lib/menuStore';
+  import { browser } from '$app/env';
+  import { resolve } from '$app/paths';
+  import Logo from '#lib/components/Logo.svelte';
+  import { PAGES } from '#lib/constants.ts';
+  import { menuVisible } from '#lib/menuStore.ts';
   import MenuLink from './MenuLink.svelte';
 
   $: {
@@ -22,17 +22,17 @@
 </script>
 
 <svelte:window on:resize={hide} />
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-<div class="backdrop" class:visible={$menuVisible} on:click={hide} />
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+<div class="backdrop" class:visible={$menuVisible} on:click={hide}></div>
+<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
 <aside class:visible={$menuVisible} on:click={hide}>
   <header>
     <div class="title"><span class="logo"><Logo /></span>tRPC-SvelteKit</div>
-    <div class="hide-button" aria-label="Hide menu" />
+    <div class="hide-button" aria-label="Hide menu"></div>
   </header>
   <nav>
     {#each PAGES as { path, title, icon: Icon } (path)}
-      <MenuLink to="{base}{path}" {title}><Icon slot="icon" /></MenuLink>
+      <MenuLink to={resolve(path)} {title}><Icon slot="icon" /></MenuLink>
     {/each}
   </nav>
 </aside>
@@ -66,8 +66,8 @@
     left: 0;
     bottom: 0;
     width: var(--navbar-width);
-    background: var(--card-background-color);
-    border-right: 1px solid var(--muted-border-color);
+    background: var(--pico-card-background-color);
+    border-right: 1px solid var(--pico-muted-border-color);
     display: flex;
     flex-direction: column;
     transform: translate3d(-100%, 0, 0);
@@ -76,7 +76,7 @@
     pointer-events: all;
     &.visible {
       transform: translate3d(0, 0, 0);
-      box-shadow: var(--card-box-shadow);
+      box-shadow: var(--pico-card-box-shadow);
     }
     @media (min-width: 1024px) {
       top: var(--header-height);
@@ -87,11 +87,11 @@
   header {
     flex-shrink: 0;
     height: var(--header-height);
-    border-bottom: 1px solid var(--muted-border-color);
+    border-bottom: 1px solid var(--pico-muted-border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--spacing);
+    padding: 0 var(--pico-spacing);
     @media (min-width: 1024px) {
       display: none;
     }
@@ -109,7 +109,7 @@
   .hide-button {
     width: 1rem;
     height: 1rem;
-    background: var(--icon-close) center/auto 1rem no-repeat;
+    background: var(--pico-icon-close) center/auto 1rem no-repeat;
   }
 
   nav {

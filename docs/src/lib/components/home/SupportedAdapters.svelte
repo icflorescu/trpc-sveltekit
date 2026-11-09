@@ -1,4 +1,5 @@
 <script lang="ts">
+  import LogoCloud from './LogoCloud.svelte';
   import LogoNetlify from './LogoNetlify.svelte';
   import LogoNode from './LogoNode.svelte';
   import LogoVercel from './LogoVercel.svelte';
@@ -6,11 +7,12 @@
 </script>
 
 <div class="root">
-  <h3>tRPC-SvelteKit works with:</h3>
+  <h3>tRPC-SvelteKit works with any SvelteKit adapter, such as:</h3>
   <div class="list">
     <SupportedAdapter name="node"><LogoNode height="1.5em" /></SupportedAdapter>
     <SupportedAdapter name="vercel"><LogoVercel height="1.5em" /></SupportedAdapter>
     <SupportedAdapter name="netlify"><LogoNetlify height="1.5em" /></SupportedAdapter>
+    <SupportedAdapter name="cloudflare"><LogoCloud height="1.5em" /></SupportedAdapter>
   </div>
 </div>
 
@@ -25,7 +27,7 @@
     font-size: 1.25em;
     font-weight: normal;
     margin: 2em 0;
-    color: var(--muted-color);
+    color: var(--pico-muted-color);
   }
 
   .list {

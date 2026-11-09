@@ -1,4 +1,4 @@
-import { JWT_SECRET } from '$env/static/private';
+import { JWT_SECRET } from '$app/env/private';
 import jwt from 'jsonwebtoken';
 import type { LayoutServerLoad } from './$types';
 

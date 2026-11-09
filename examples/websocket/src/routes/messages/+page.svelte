@@ -1,31 +1,27 @@
 <script lang="ts">
-  import { trpc } from '$lib/trpc/client';
-  import { onMount } from 'svelte';
+  import { trpc } from '#lib/trpc/client.ts';
 
-  const client = trpc();
+  let messages: string[] = $state([]);
+  let el: HTMLElement | undefined = $state();
 
-  let messages: string[] = [];
-
-  onMount(() => {
-    client.allMessages.subscribe(undefined, {
+  $effect(() => {
+    const subscription = trpc().allMessages.subscribe(undefined, {
       onData(newMessage) {
         messages.push(newMessage);
-        messages = messages;
       }
     });
+    return () => subscription.unsubscribe();
   });
 
-  let el: HTMLElement;
-
-  $: {
-    if (el) el.scrollIntoView();
-  }
+  $effect(() => {
+    el?.scrollIntoView();
+  });
 </script>
 
 <div class="container">
   <h1>✨ WebSocket Messages ✨</h1>
   <div class="messages">
-    {#each messages as message, i}
+    {#each messages as message, i (i)}
       {#if i === messages.length - 1}
         <h2 bind:this={el}>{message}</h2>
       {:else}

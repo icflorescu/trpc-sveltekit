@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client';
 import { md5 } from 'hash-wasm';
-const prisma = new PrismaClient();
+import prisma from '../src/lib/server/prisma.ts';
 
 async function main() {
   await prisma.user.deleteMany();
