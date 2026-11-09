@@ -65,7 +65,7 @@
 
 <h3>List of code contributors</h3>
 
-<a href="{REPO_URL}/graphs/contributors">
+<a href="{REPO_URL}/graphs/contributors?all=1">
   <img
     src="https://contrib.rocks/image?repo=icflorescu/trpc-sveltekit&columns={$lg
       ? '12'

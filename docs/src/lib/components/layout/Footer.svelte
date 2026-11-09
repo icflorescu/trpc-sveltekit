@@ -14,8 +14,11 @@
       >Ionut-Cristian Florescu</a
     >
     and
-    <a class="text-link" href="{REPO_URL}/graphs/contributors" target="_blank" rel="noreferrer"
-      >these awesome people</a
+    <a
+      class="text-link"
+      href="{REPO_URL}/graphs/contributors?all=1"
+      target="_blank"
+      rel="noreferrer">these awesome people</a
     >.
   </div>
   <div class="repo-metrics">
