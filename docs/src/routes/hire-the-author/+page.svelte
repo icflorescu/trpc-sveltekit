@@ -11,18 +11,40 @@
 >
 
 <p>
-  I'm Ionut-Cristian Florescu, a full-stack developer from Bucharest, Romania, EU, with more than 20
-  years of experience in building commercial web applications and open-source projects.
+  I'm Ionut-Cristian Florescu, a hands-on fractional CTO, product builder and open-source author
+  from Bucharest, Romania, EU, building for the web since 1998.
   <br />
-  tRPC-SvelteKit is one of my dearest open-source projects.
+  I take software products from a blank repo to production, and stay to run them for years. I still write
+  production code.
 </p>
 
 <p>
-  You can learn more about what I do by visiting my profiles on <a
-    href={AUTHOR_URL}
-    target="_blank"
-    rel="noreferrer">GitHub</a
+  tRPC-SvelteKit is one of my dearest open-source projects. I'm also the author of
+  <a href="https://icflorescu.github.io/mantine-datatable/" target="_blank" rel="noreferrer"
+    >Mantine DataTable</a
   >
+  (600k+ npm downloads a month, used by companies such as Microsoft and Namecheap) and
+  <a href="https://icflorescu.github.io/mantine-contextmenu/" target="_blank" rel="noreferrer"
+    >Mantine ContextMenu</a
+  >, and a contributor to tRPC and Mantine. These days I'm building
+  <a href="https://swapp.ro" target="_blank" rel="noreferrer">swapp.ro</a>, an invoicing and
+  accounting product for Romanian freelancers, on TanStack Start, tRPC, Drizzle and PostgreSQL.
+</p>
+
+<h3>How I can help</h3>
+
+<ul>
+  <li>as a fractional CTO or technical partner for early-stage products;</li>
+  <li>in sweat-equity partnerships where I own the technical side;</li>
+  <li>
+    on selected hands-on projects, ideally built with TypeScript, React and TanStack, tRPC and
+    PostgreSQL (and I'm always happy to work with Svelte and SvelteKit).
+  </li>
+</ul>
+
+<p>
+  You can learn more about what I do on my
+  <a href={AUTHOR_URL} target="_blank" rel="noreferrer">GitHub profile</a>
   <a href={AUTHOR_URL} target="_blank" rel="noreferrer"
     ><img
       class="badge"
@@ -36,17 +58,25 @@
       src="https://img.shields.io/github/followers/icflorescu?style=flat&color={BADGE_COLOR_CODE}"
       alt="GitHub followers"
     /></a
-  >
-  or <a href="https://www.linkedin.com/in/icflorescu" target="_blank" rel="noreferrer">LinkedIn</a>,
-  but since you are on this page, you probably have a pretty good idea of how my skills could help
-  you.
+  >, on
+  <a href="https://www.linkedin.com/in/icflorescu" target="_blank" rel="noreferrer">LinkedIn</a>, or
+  in my
+  <a
+    href="https://github.com/icflorescu/icflorescu/blob/main/ionut-cristian-florescu--resume.pdf"
+    target="_blank"
+    rel="noreferrer">résumé</a
+  >.
 </p>
 
+<h3>Get in touch</h3>
+
 <p>
-  So, if you want to hire my services, don't hesitate to drop me a line at the email address listed
-  in my GitHub profile. I'm currently getting a constant flow of approaches from recruiters, some of
-  them relevant, others not so relevant. Mentioning "tRPC-SvelteKit" in your text would help me
-  prioritize your message.
+  Drop me a line at the email address listed in my
+  <a href={AUTHOR_URL} target="_blank" rel="noreferrer">GitHub profile</a>, and we'll schedule a
+  meeting on
+  <a href="https://cal.com/icflorescu" target="_blank" rel="noreferrer">cal.com/icflorescu</a>. I'm
+  getting a constant flow of approaches, some of them relevant, others not so relevant, so
+  mentioning "tRPC-SvelteKit" in your message would help me prioritize it.
 </p>
 
 <p>
