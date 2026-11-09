@@ -19,9 +19,12 @@
     "build:package": "pnpm --filter trpc-sveltekit build",
     "dev": "pnpm build:package && pnpm -r --parallel dev",
     "check": "pnpm build:package && pnpm -r check",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test",
+    "lint": "prettier --check . && oxlint",
+    "format": "prettier --write . && oxlint --fix"
   },
   "devDependencies": {
+    "oxlint": "^1.90.0",
     "prettier": "^3.9.10",
     "prettier-plugin-svelte": "^4.1.1",
     "svelte": "^5.57.3",
