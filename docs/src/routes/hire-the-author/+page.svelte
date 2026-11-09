@@ -134,7 +134,9 @@
       float: left;
       width: 30%;
       max-width: 200px;
-      margin: 0.4em 1.5em 0 0;
+      // The bottom margin keeps elements that clear the float (e.g. the swapp.ro box) from
+      // touching it, since a clearing element's own top margin is ignored in that case
+      margin: 0.4em 1.5em calc(var(--pico-spacing) * 2) 0;
     }
   }
 
