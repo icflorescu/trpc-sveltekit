@@ -1,6 +1,6 @@
 # tRPC-SvelteKit
 
-![Publish NPM & deploy docs workflow](https://github.com/icflorescu/trpc-sveltekit/actions/workflows/publish-and-deploy.yml/badge.svg)  
+![CI](https://github.com/icflorescu/trpc-sveltekit/actions/workflows/ci.yml/badge.svg)  
 [![NPM version][npm-image]][npm-url]
 [![License][license-image]][license-url]
 [![Stars][stars-image]][stars-url]
@@ -20,81 +20,85 @@ Documentation available at [icflorescu.github.io/trpc-sveltekit](https://icflore
 
 ## Works with
 
-✅ `@sveltejs/adapter-node`  
-✅ `@sveltejs/adapter-vercel`  
-✅ `@sveltejs/adapter-netlify`  
+✅ Any SvelteKit adapter: `@sveltejs/adapter-node`, `adapter-vercel`, `adapter-netlify`, `adapter-cloudflare`, …
 
-## Important
+## Compatibility
 
-tRPC-SvelteKit v3.x.x is compatible with tRPC v10.  
-If you're using tRPC v9, use tRPC-SvelteKit v2.x.x. The old source code is available in the [trpc-v9](https://github.com/icflorescu/trpc-sveltekit/tree/trpc-v9) branch.
+| tRPC-SvelteKit | tRPC | SvelteKit |
+| -------------- | ---- | --------- |
+| v4.x.x         | v11  | v2, v3    |
+| v3.x.x         | v10  | v1, v2    |
+| v2.x.x         | v9   | v1        |
+
+The source code of tRPC-SvelteKit v2 is available in the [trpc-v9](https://github.com/icflorescu/trpc-sveltekit/tree/trpc-v9) branch.
 
 ## Quickstart
 
 ### Install the package and its dependencies:
 
 ```bash
-yarn add trpc-sveltekit @trpc/server @trpc/client
+pnpm add trpc-sveltekit @trpc/server @trpc/client
 ```
+
 <div id="create-your-trpc-router"></div>
 
-### Create your [tRPC router](https://trpc.io/docs/router):
+### Create your [tRPC router](https://trpc.io/docs/server/routers):
 
 ```ts
-// lib/trpc/router.ts
-import type { Context } from '$lib/trpc/context';
+// src/lib/trpc/router.ts
+import type { Context } from '#lib/trpc/context.ts';
 import { initTRPC } from '@trpc/server';
-import delay from 'delay';
+import { setTimeout as delay } from 'node:timers/promises';
 
 export const t = initTRPC.context<Context>().create();
 
 export const router = t.router({
   greeting: t.procedure.query(async () => {
     await delay(500); // 👈 simulate an expensive operation
-    return `Hello tRPC v10 @ ${new Date().toLocaleTimeString()}`;
+    return `Hello tRPC v11 @ ${new Date().toLocaleTimeString()}`;
   })
 });
 
+export const createCaller = t.createCallerFactory(router);
+
 export type Router = typeof router;
 ```
+
 <div id="create-a-trpc-context"></div>
 
-### Create a [tRPC context](https://trpc.io/docs/context):
+### Create a [tRPC context](https://trpc.io/docs/server/context):
 
 ```ts
-// lib/trpc/context.ts
+// src/lib/trpc/context.ts
 import type { RequestEvent } from '@sveltejs/kit';
-import type { inferAsyncReturnType } from '@trpc/server';
 
-// we're not using the event parameter is this example,
-// hence the eslint-disable rule
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function createContext(event: RequestEvent) {
   return {
-    // context information
+    event // 👈 `event` is now available in your context
   };
 }
 
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = Awaited<ReturnType<typeof createContext>>;
 ```
 
-### Add this handle to your SvelteKit app [hooks](https://kit.svelte.dev/docs/hooks):
+### Add this handle to your SvelteKit app [hooks](https://svelte.dev/docs/kit/hooks):
 
 ```ts
-// hooks.server.ts
-import { createContext } from '$lib/trpc/context';
-import { router } from '$lib/trpc/router';
-import type { Handle } from '@sveltejs/kit';
+// src/hooks.server.ts
+import { createContext } from '#lib/trpc/context.ts';
+import { router } from '#lib/trpc/router.ts';
 import { createTRPCHandle } from 'trpc-sveltekit';
 
-export const handle: Handle = createTRPCHandle({ router, createContext });
+export const handle = createTRPCHandle({ router, createContext });
 ```
+
+If you have your own logic to place in the server hook, use the [`sequence`](https://svelte.dev/docs/kit/@sveltejs-kit-hooks#sequence) helper.
 
 ### Define a helper function to easily use the tRPC client in your pages:
 
 ```ts
-// lib/trpc/client.ts
-import type { Router } from '$lib/trpc/router';
+// src/lib/trpc/client.ts
+import type { Router } from '#lib/trpc/router.ts';
 import { createTRPCClient, type TRPCClientInit } from 'trpc-sveltekit';
 
 let browserClient: ReturnType<typeof createTRPCClient<Router>>;
@@ -110,33 +114,73 @@ export function trpc(init?: TRPCClientInit) {
 
 ### Call the tRPC procedures in your pages:
 
-```ts
-// routes/+page.svelte
+```svelte
+<!-- src/routes/+page.svelte -->
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { trpc } from '$lib/trpc/client';
+  import { page } from '$app/state';
+  import { trpc } from '#lib/trpc/client.ts';
 
-  let greeting = 'press the button to load data';
-  let loading = false;
+  let greeting = $state('press the button to load data');
+  let loading = $state(false);
 
-  const loadData = async () => {
+  const loadData = async (e: MouseEvent) => {
+    e.preventDefault();
     loading = true;
-    greeting = await trpc($page).greeting.query();
+    greeting = await trpc(page).greeting.query();
     loading = false;
   };
 </script>
 
 <h6>Loading data in<br /><code>+page.svelte</code></h6>
 
-<a
-  href="#load"
-  role="button"
-  class="secondary"
-  aria-busy={loading}
-  on:click|preventDefault={loadData}>Load</a
->
+<a href="#load" role="button" class="secondary" aria-busy={loading} onclick={loadData}>Load</a>
 <p>{greeting}</p>
 ```
+
+> The examples use SvelteKit 3, which replaced `$lib` with the `#lib` [subpath import](https://svelte.dev/docs/kit/$lib).
+> With SvelteKit 2, import from `$lib/trpc/...` instead.
+
+## Options
+
+`createTRPCHandle` accepts all the options of tRPC's HTTP handlers (`onError`, `responseMeta`, `allowBatching`, `allowMethodOverride`, `maxBodySize`, …), plus:
+
+- `url` - the endpoint path (default: `/trpc`);
+- `createContext(event, opts)` - receives the SvelteKit request event and the tRPC fetch adapter options.
+
+Cookies and headers set by your procedures with `event.cookies` and `event.setHeaders` are copied onto the tRPC response.
+
+`createTRPCClient` uses an [`httpBatchLink`](https://trpc.io/docs/client/links/httpBatchLink) and passes its options through (`transformer`, `headers`, `maxURLLength`, `methodOverride`, …), or accepts your own `links`.
+
+## Subscriptions
+
+tRPC v11 can stream [subscriptions over server-sent events](https://trpc.io/docs/server/subscriptions), which works with every adapter. Use an `httpSubscriptionLink`:
+
+```ts
+import { httpBatchLink, httpSubscriptionLink, splitLink } from '@trpc/client';
+import { createTRPCClient } from 'trpc-sveltekit';
+
+const url = `${location.origin}/trpc`;
+
+const client = createTRPCClient<Router>({
+  links: [
+    splitLink({
+      condition: (op) => op.type === 'subscription',
+      true: httpSubscriptionLink({ url }),
+      false: httpBatchLink({ url })
+    })
+  ]
+});
+```
+
+## Upgrading from v3
+
+- Upgrade `@trpc/server` and `@trpc/client` to v11 and follow the [tRPC v11 migration guide](https://trpc.io/docs/migrate-from-v10-to-v11).
+- `transformer` is still accepted by `createTRPCClient`, but it must now be set on links if you pass your own `links`.
+- `createContext` may return a plain object or a promise, and receives a second argument with the fetch adapter options.
+- `responseMeta` and `onError` now use the tRPC v11 signatures.
+- `@sveltejs/adapter-node` is no longer a peer dependency; `ws` is only needed for WebSocket support.
+- `trpc-sveltekit` no longer depends on the `cookie` package.
+
 ## Examples
 
 This repository contains a handful of examples:
@@ -148,65 +192,65 @@ This repository contains a handful of examples:
 ---
 
 ## EXPERIMENTAL WebSocket support
+
 (courtesy of [@SrZorro](https://github.com/SrZorro))
 
-SvelteKit [doesn't (yet) offer WebSockets support](https://github.com/sveltejs/kit/issues/1491), but if you're using `@sveltejs/adapter-node`, `tRPC-SvelteKit` can spin up an experimental WS server to process tRPC procedure calls (see the [implementation details](#websockets-implementation-details) to find out how this works under the hood).
+SvelteKit [doesn't offer WebSockets support](https://github.com/sveltejs/kit/issues/1491), but if you're using `@sveltejs/adapter-node`, `tRPC-SvelteKit` can spin up an experimental WS server to process tRPC procedure calls.
+
+> If you only need subscriptions, consider [server-sent events](#subscriptions) instead, which work with every adapter.
 
 ### Caveats
 
 - Works with [@sveltejs/adapter-node](https://www.npmjs.com/package/@sveltejs/adapter-node) **exclusively**;
-- The URL is hardcoded to `/trpc`;
-- When in websocket mode, all tRPC methods are handled by it; this could be changed at some point so that only `subscriptions` are handled by the WebSockets server;
-- Prerendering is not supported, since in the current implementation no WebSockets server is created when building/prerendering.
+- When in websocket mode, all tRPC procedures are handled by the WebSocket server, unless you build your own client with a [`splitLink`](https://trpc.io/docs/client/links/splitLink);
+- No WebSocket server is created when building/prerendering.
 
 ### Install the package and its dependencies:
 
 ```bash
-yarn add trpc-sveltekit @trpc/server @trpc/client @sveltejs/adapter-node ws
+pnpm add trpc-sveltekit @trpc/server @trpc/client ws
+pnpm add -D @sveltejs/adapter-node
 ```
 
-### Setup workarounds
-
-In your `vite.config.ts`, add:
+### Add the Vite plugin
 
 ```ts
+// vite.config.ts
+import adapter from '@sveltejs/adapter-node';
 import { sveltekit } from '@sveltejs/kit/vite';
-import type { UserConfig } from 'vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { vitePluginTrpcWebSocket } from 'trpc-sveltekit/websocket';
+import { defineConfig } from 'vite';
 
-import { vitePluginTrpcWebSocket } from 'trpc-sveltekit/websocket'; // ➕
-
-const config: UserConfig = {
+export default defineConfig({
   plugins: [
-    sveltekit(),
-    vitePluginTrpcWebSocket // ➕
+    sveltekit({ adapter: adapter(), preprocess: vitePreprocess() }),
+    vitePluginTrpcWebSocket
   ]
-};
-
-export default config;
+});
 ```
 
-In your `svelte.config.js`, modify:
+`vitePluginTrpcWebSocket` handles the `/trpc` path; use `trpcWebSocketPlugin({ path: '/my-path' })` for a different one.
 
-```ts
-import adapter from '@sveltejs/adapter-node';    // ➕
-// import adapter from '@sveltejs/adapter-auto'; // ➖
-```
+### Create the production server entrypoint
 
-Create this file next to `package.json` your server entrypoint:
+Create this file next to `package.json`:
 
 ```js
 // wsServer.js
-import { SvelteKitTRPCWSServer } from "trpc-sveltekit/websocket";
+import { SvelteKitTRPCWSServer } from 'trpc-sveltekit/websocket';
 
 SvelteKitTRPCWSServer(import.meta.url);
 ```
+
+`SvelteKitTRPCWSServer` also accepts a second argument: `{ path, buildDir }`.
 
 In your `package.json` `scripts`, modify the `start` command:
 
 ```json
 {
   "scripts": {
-    "start": "node ./wsServer"
+    "start": "node ./wsServer.js"
   }
 }
 ```
@@ -214,134 +258,45 @@ In your `package.json` `scripts`, modify the `start` command:
 ### Create your tRPC router & context
 
 - [Create your tRPC router](#create-your-trpc-router)
-- [Create a tRPC context](#create-a-trpc-context)
+- [Create a tRPC context](#create-a-trpc-context) (the WebSocket context receives `CreateWSSContextFnOptions` instead of a request event)
 
-### Call this function from your SvelteKit app [server hooks](https://kit.svelte.dev/docs/hooks#server-hooks):
+### Call this function from your SvelteKit app [server hooks](https://svelte.dev/docs/kit/hooks#Server-hooks):
 
 ```ts
-// hooks.server.ts
-import { createContext } from '$lib/trpc/context';
-import { router } from '$lib/trpc/router';
-import { createTRPCWebSocketServer } from "trpc-sveltekit/websocket";
+// src/hooks.server.ts
+import { building } from '$app/env';
+import { createContext } from '#lib/trpc/context.ts';
+import { router } from '#lib/trpc/router.ts';
+import { createTRPCWebSocketServer } from 'trpc-sveltekit/websocket';
 
-import { building } from '$app/environment';
-
-if (!building) createTRPCWebSocketServer({ router, createContext })
+if (!building) createTRPCWebSocketServer({ router, createContext });
 ```
 
 ### Define a helper function to easily use the tRPC client in your pages:
 
 ```ts
-// lib/trpc/client.ts
-import type { Router } from '$lib/trpc/router';
-import { createTRPCWebSocketClient } from "trpc-sveltekit/websocket";
+// src/lib/trpc/client.ts
+import type { Router } from '#lib/trpc/router.ts';
+import { createTRPCWebSocketClient } from 'trpc-sveltekit/websocket';
 
 let browserClient: ReturnType<typeof createTRPCWebSocketClient<Router>>;
 
 export function trpc() {
-  const isBrowser = typeof window !== 'undefined';
-  if (isBrowser && browserClient) return browserClient;
-  const client = createTRPCWebSocketClient<Router>();
-  if (isBrowser) browserClient = client;
-  return client;
+  browserClient ??= createTRPCWebSocketClient<Router>();
+  return browserClient!;
 }
 ```
 
-### Call the tRPC procedures in your pages:
-
-```ts
-// routes/+page.svelte
-<script lang="ts">
-  import { trpc } from '$lib/trpc/client';
-
-  let greeting = 'press the button to load data';
-  let loading = false;
-
-  const loadData = async () => {
-    loading = true;
-    greeting = await trpc().greeting.query();
-    loading = false;
-  };
-</script>
-
-<h6>Loading data in<br /><code>+page.svelte</code></h6>
-
-<a
-  href="#load"
-  role="button"
-  class="secondary"
-  aria-busy={loading}
-  on:click|preventDefault={loadData}>Load</a
->
-<p>{greeting}</p>
-```
-
-<div id="websockets-implementation-details"></div>
+`createTRPCWebSocketClient` accepts the `wsLink` and `createWSClient` options (`transformer`, `retryDelayMs`, `lazy`, …) and a `url` path.
 
 ### Implementation details
 
-All the related code to the websocket implementation is located at `package/src/websocket`.
+All the code related to the WebSocket implementation is located in `package/src/websocket`.
 
-#### `vitePlugin.ts`
-
-Exports a vite plugin that handles in dev mode the websocket lifecycle.
-
-- On init: `configureServer`
-  - `createWSSGlobalInstance`
-  - Listen for `upgrade` events in vite dev server, so we can upgrade `/trpc` to our tRPC server
-
-On init we create a `WebSocketServer` with the property `noServer` so we can handle the upgrade to our tRPC and don't break the default vite websocket.
-
-We store a reference in `globalThis` to the web socket server, so we can later get a reference from SvelteKit side.
-
-> To store the websocket server without colliding with existing stuff in `globalThis` at `src/websocket/svelteKitServer.ts` we create a `Symbol`  
-> so we can reference the tRPC websocket like so: `globalThis[Symbol.for('trpc.sveltekit.wss')]`
-
-Then we set up an event listener to the vite dev http server to handle the `upgrade` event from `onHttpServerUpgrade`. It will check that the path is `/trpc`, if so it will upgrade our request to our tRPC websocket server.
-
-#### `svelteKitServer.ts`
-
-Exports functions to handle the lifecycle of the tRPC websocket server:
-
-- `createWSSGlobalInstance`
-- `onHttpServerUpgrade`
-
-> The firsts 2 methods are already explained in the `vitePlugin.ts` section.
-
-- `SvelteKitTRPCWSServer`
-
-The Vite plugin only works while the Vite dev server is running. When building for production we need to take a diferent aproach.
-
-When we build a SvelteKit app, it will output a `./build` directory.
-
-This function takes `import.meta.url` as an argument from the root directory of the project (next to `package.json`) and then converts it to `__dirname`.
-
-First it creates a websocket server attached to `globalThis`, as explained, then imports dynamically from  `${__dirname}/build` directory the `index.js` file, that exports a `server` property that contains an http server.
-
-We attach to this server `onHttpServerUpgrade` so we handle in the production server the tRPC websocket.
-
-#### `server.ts`
-
-The function `createTRPCWebSocketServer` handles the creation of the websocket tRPC handler getting the `wss` from `globalThis`.
-
-This current implementation in case we are prerendering would fail as vite does not call `configureServer` on the build step, so no `wss` server is found in `globalThis`.
-
-This is why, when calling this method, we have to add a guard on the client/consumer code:
-
-```ts
-import { building } from '$app/environment';
-
-if (!building) // 👈 Prevent from calling when building/prerendering
-    createTRPCWebSocketServer({ router, createContext })
-```
-
-#### `client.ts`
-
-`createTRPCWebSocketClient`
-
-Creates the tRPC proxy client and links to the `wss`.
-
-> Currently all the tRPC requests are handled via websockets, [but this could be changed to only handle subscriptions](https://trpc.io/docs/links).
+- `vitePlugin.ts` - a Vite plugin that creates a `WebSocketServer` (with `noServer: true`, so it doesn't break Vite's own HMR WebSocket) when the dev or preview server starts, and upgrades requests made to the tRPC path.
+- `svelteKitServer.ts` - stores the WebSocket server in `globalThis[Symbol.for('trpc.sveltekit.wss')]`, so it can be reached from the SvelteKit side, and provides `SvelteKitTRPCWSServer`, which imports the `adapter-node` build output and attaches the upgrade handler to its HTTP server.
+- `server.ts` - `createTRPCWebSocketServer` applies the tRPC WebSocket handler to the global WebSocket server. Since no server exists while building, guard the call with `building` from `$app/env`.
+- `client.ts` - `createTRPCWebSocketClient` creates a tRPC client using a `wsLink`.
 
 ---
 
@@ -351,7 +306,7 @@ Creates the tRPC proxy client and links to the `wss`.
 
 ## Acknowledgements
 
-Huge thanks to [Alex / KATT](https://github.com/KATT), the author of [tRPC](https://trpc.io/), for being the first sponsor of this project! 🎉 
+Huge thanks to [Alex / KATT](https://github.com/KATT), the author of [tRPC](https://trpc.io/), for being the first sponsor of this project! 🎉
 
 ## Stand with Ukraine
 
@@ -359,7 +314,7 @@ On 24th of February 2022 [Russia unlawfully invaded Ukraine](https://en.wikipedi
 
 ## License
 
-The [ISC License](https://github.com/icflorescu/trpc-sveltekit/blob/master/LICENSE).
+The [ISC License](https://github.com/icflorescu/trpc-sveltekit/blob/main/LICENSE).
 
 [npm-url]: https://npmjs.org/package/trpc-sveltekit
 [repo-url]: https://github.com/icflorescu/trpc-sveltekit
