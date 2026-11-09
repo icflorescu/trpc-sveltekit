@@ -1,41 +1,44 @@
-import { AnyRouter, inferRouterContext } from '@trpc/server';
-import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone';
-import type { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws';
-import { applyWSSHandler } from '@trpc/server/adapters/ws';
-import type { Server } from 'ws';
-import { GlobalThisWSS } from './svelteKitServer.js';
+import type { AnyTRPCRouter, inferRouterContext } from '@trpc/server';
+import {
+  applyWSSHandler,
+  type CreateWSSContextFnOptions,
+  type WSSHandlerOptions
+} from '@trpc/server/adapters/ws';
+import { getWSSGlobalInstance } from './svelteKitServer.js';
 
-export async function createTRPCWebSocketServer<Router extends AnyRouter>({
-  router,
-  createContext
-}: {
+export type CreateTRPCWebSocketServerOptions<Router extends AnyTRPCRouter> = Omit<
+  WSSHandlerOptions<Router>,
+  'wss' | 'createContext'
+> & {
   /**
-   * The tRPC router to use.
-   * @see https://trpc.io/docs/router
-   */
-  router: Router;
-
-  /**
-   * An async function that returns the tRPC context.
-   * @see https://trpc.io/docs/context
+   * A function that returns the tRPC context.
+   * @see https://trpc.io/docs/server/context
    */
   createContext?: (
-    opts: CreateHTTPContextOptions | CreateWSSContextFnOptions
-  ) => Promise<inferRouterContext<Router>>;
-}) {
-  const wss = globalThis[GlobalThisWSS] as Server;
-  if (typeof wss === 'undefined') {
-    // Websocket server not created
-    console.error("WebSocket server not found but 'createTRPCWebSocketServer' had been called");
-    // Prerendering with websockets is not implemented
-    // TODO: Fallback to REST for non subscriptions?
-    process.exit(1);
-  } else {
-    wss.removeAllListeners();
-    applyWSSHandler<Router>({
-      createContext,
-      router,
-      wss
-    });
+    opts: CreateWSSContextFnOptions
+  ) => inferRouterContext<Router> | Promise<inferRouterContext<Router>>;
+};
+
+/**
+ * Attach a tRPC router to the global WebSocket server created by `vitePluginTrpcWebSocket`
+ * (in development) or `SvelteKitTRPCWSServer` (in production).
+ *
+ * Returns the handler (with `broadcastReconnectNotification`), or `undefined` when there is
+ * no WebSocket server, for instance while prerendering.
+ */
+export function createTRPCWebSocketServer<Router extends AnyTRPCRouter>(
+  options: CreateTRPCWebSocketServerOptions<Router>
+) {
+  const wss = getWSSGlobalInstance();
+  if (!wss) {
+    console.warn(
+      '[trpc-sveltekit] createTRPCWebSocketServer() was called, but no WebSocket server was found. ' +
+        'Use `vitePluginTrpcWebSocket` in development and `SvelteKitTRPCWSServer` in production.'
+    );
+    return undefined;
   }
+
+  // Allow re-applying the handler on HMR without stacking connection listeners.
+  wss.removeAllListeners('connection');
+  return applyWSSHandler<Router>({ ...options, wss } as WSSHandlerOptions<Router>);
 }

@@ -1,37 +1,73 @@
-import * as path from 'path';
-import * as url from 'url';
-import type { Server } from 'ws';
+import type { IncomingMessage, Server as HttpServer } from 'node:http';
+import { resolve } from 'node:path';
+import type { Duplex } from 'node:stream';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { WebSocketServer } from 'ws';
 
 export const GlobalThisWSS = Symbol.for('trpc.sveltekit.wss');
 
-export function onHttpServerUpgrade(req, sock, head) {
-  const pathname = url.parse(req.url).pathname;
-  if (pathname !== '/trpc') return;
+type GlobalWithWSS = typeof globalThis & { [GlobalThisWSS]?: WebSocketServer };
 
-  const wss = globalThis[GlobalThisWSS] as Server;
-
-  wss.handleUpgrade(req, sock, head, function done(ws) {
-    wss.emit('connection', ws, req);
-  });
+/**
+ * Get the global WebSocket server instance, if it was created.
+ */
+export function getWSSGlobalInstance(): WebSocketServer | undefined {
+  return (globalThis as GlobalWithWSS)[GlobalThisWSS];
 }
 
-export function createWSSGlobalInstance() {
-  const wss = new WebSocketServer({
-    noServer: true
-  });
-
-  globalThis[GlobalThisWSS] = wss;
-
-  return wss;
+/**
+ * Create the global WebSocket server instance (or return the existing one).
+ */
+export function createWSSGlobalInstance(): WebSocketServer {
+  const g = globalThis as GlobalWithWSS;
+  return (g[GlobalThisWSS] ??= new WebSocketServer({ noServer: true }));
 }
 
-export async function SvelteKitTRPCWSServer(import_meta_url: string) {
-  const __filename = url.fileURLToPath(import_meta_url);
-  const __dirname = path.dirname(__filename);
+/**
+ * Create a listener for the HTTP server `upgrade` event that hands requests made to `path`
+ * over to the global WebSocket server. Other upgrade requests (such as Vite HMR) are ignored.
+ */
+export function createUpgradeHandler(path = '/trpc') {
+  return (req: IncomingMessage, socket: Duplex, head: Buffer) => {
+    const { pathname } = new URL(req.url ?? '/', 'http://localhost');
+    if (pathname !== path) return;
 
+    const wss = getWSSGlobalInstance();
+    if (!wss) return;
+
+    wss.handleUpgrade(req, socket, head, (ws) => {
+      wss.emit('connection', ws, req);
+    });
+  };
+}
+
+/**
+ * Upgrade listener for the default `/trpc` path.
+ */
+export const onHttpServerUpgrade = createUpgradeHandler();
+
+/**
+ * Start the SvelteKit `adapter-node` server with WebSocket support.
+ *
+ * @example
+ * ```js
+ * // wsServer.js, next to the `build` folder
+ * import { SvelteKitTRPCWSServer } from 'trpc-sveltekit/websocket';
+ * SvelteKitTRPCWSServer(import.meta.url);
+ * ```
+ */
+export async function SvelteKitTRPCWSServer(
+  importMetaUrl: string,
+  { path = '/trpc', buildDir = 'build' }: { path?: string; buildDir?: string } = {}
+) {
   createWSSGlobalInstance();
 
-  const { server } = await import(/* @vite-ignore */ path.resolve(__dirname, './build/index.js'));
-  server.server.on('upgrade', onHttpServerUpgrade);
+  const entry = resolve(fileURLToPath(new URL('.', importMetaUrl)), buildDir, 'index.js');
+  const { server } = (await import(/* @vite-ignore */ pathToFileURL(entry).href)) as {
+    server: HttpServer | { server: HttpServer };
+  };
+
+  // adapter-node >= 6 exports the `http.Server`; older versions export a polka instance.
+  const httpServer = 'server' in server ? server.server : server;
+  httpServer.on('upgrade', createUpgradeHandler(path));
 }
