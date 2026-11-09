@@ -1,36 +1,32 @@
-import type { Handle, RequestEvent } from '@sveltejs/kit';
-import type {
-  AnyRouter,
-  ProcedureType,
-  TRPCError,
-  inferRouterContext,
-  inferRouterError
-} from '@trpc/server';
-import { resolveHTTPResponse, type ResponseMeta } from '@trpc/server/http';
-import type { TRPCResponse } from '@trpc/server/rpc';
-import { serialize, type CookieSerializeOptions } from 'cookie';
-import type { ValidRoute } from './ValidRoute';
+import type { Cookies, RequestEvent } from '@sveltejs/kit';
+import type { AnyTRPCRouter, inferRouterContext } from '@trpc/server';
+import {
+  fetchRequestHandler,
+  type FetchCreateContextFnOptions,
+  type FetchHandlerRequestOptions
+} from '@trpc/server/adapters/fetch';
+import type { HTTPBaseHandlerOptions } from '@trpc/server/http';
+import type { ValidRoute } from './validRoute.js';
+
+type MaybePromise<T> = T | Promise<T>;
 
 /**
- * Create a SvelteKit handle function for tRPC requests.
+ * A SvelteKit `handle` hook.
  *
- * If you want to use it in conjunction with other SvelteKit handles,
- * consider [the sequence helper function](https://kit.svelte.dev/docs/modules#sveltejs-kit-hooks).
- * @see https://kit.svelte.dev/docs/hooks
+ * Declared structurally (instead of importing `Handle`) so that the same build works
+ * with SvelteKit 2 (`@sveltejs/kit`) and SvelteKit 3 (`@sveltejs/kit/hooks`).
  */
-export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
-  router,
-  url = '/trpc',
-  createContext,
-  responseMeta,
-  onError
-}: {
-  /**
-   * The tRPC router to use.
-   * @see https://trpc.io/docs/router
-   */
-  router: Router;
+export type TRPCHandle = (input: {
+  event: RequestEvent;
+  resolve: (event: RequestEvent, opts?: any) => MaybePromise<Response>;
+}) => Promise<Response>;
 
+type CookieOptions = Parameters<Cookies['set']>[2];
+
+export type CreateTRPCHandleOptions<
+  Router extends AnyTRPCRouter,
+  URL extends string
+> = HTTPBaseHandlerOptions<Router, Request> & {
   /**
    * The tRPC api endpoint URL.
    * @default '/trpc'
@@ -39,117 +35,82 @@ export function createTRPCHandle<Router extends AnyRouter, URL extends string>({
 
   /**
    * A function that returns the tRPC context.
-   * @see https://trpc.io/docs/context
+   * It receives the SvelteKit request event and the options of the tRPC fetch adapter.
+   * @see https://trpc.io/docs/server/context
    */
   createContext?: (
-    event: RequestEvent
-  ) => inferRouterContext<Router> | Promise<inferRouterContext<Router>>;
+    event: RequestEvent,
+    opts: FetchCreateContextFnOptions
+  ) => MaybePromise<inferRouterContext<Router>>;
+};
 
-  /**
-   * A function that returns the response meta.
-   * @see https://trpc.io/docs/caching#using-responsemeta-to-cache-responses
-   */
-  responseMeta?: (opts: {
-    data: TRPCResponse<unknown, inferRouterError<Router>>[];
-    ctx?: inferRouterContext<Router>;
-    paths?: string[];
-    type: ProcedureType;
-    errors: TRPCError[];
-  }) => ResponseMeta;
+/**
+ * Create a SvelteKit handle function for tRPC requests.
+ *
+ * If you want to use it in conjunction with other SvelteKit handles,
+ * consider [the sequence helper function](https://svelte.dev/docs/kit/@sveltejs-kit-hooks).
+ * @see https://svelte.dev/docs/kit/hooks
+ */
+export function createTRPCHandle<Router extends AnyTRPCRouter, URL extends string>({
+  url = '/trpc',
+  createContext,
+  ...handlerOptions
+}: CreateTRPCHandleOptions<Router, URL>): TRPCHandle {
+  const endpoint: string = url;
+  const prefix = endpoint + '/';
 
-  /**
-   * A function that is called when an error occurs.
-   * @see https://trpc.io/docs/error-handling#handling-errors
-   */
-  onError?: (opts: {
-    ctx?: inferRouterContext<Router>;
-    error: TRPCError;
-    path: string;
-    input: unknown;
-    req: RequestInit;
-    type: ProcedureType | 'unknown';
-  }) => void;
-}): Handle {
   return async ({ event, resolve }) => {
-    if (event.url.pathname.startsWith(url + '/')) {
-      const request = event.request as Request & {
-        headers: Record<string, string | string[]>;
-      };
+    if (!event.url.pathname.startsWith(prefix)) return resolve(event);
 
-      const req = {
-        method: request.method,
-        headers: request.headers,
-        query: event.url.searchParams,
-        body: await request.text()
-      };
+    // SvelteKit only applies `event.setHeaders()` and `event.cookies` to responses produced
+    // by `resolve()`. Since we answer the request ourselves, we record what procedures set
+    // and copy it onto the tRPC response.
+    const headersProxy = new Headers();
+    const cookiesProxy = new Map<string, string>();
+    let modified = false;
 
-      // Using the default `event.setHeaders` and `event.cookies` will not work
-      // as the event in not resolved by SvelteKit. Instead, we "proxy" the access
-      // to the headers.
-      const originalSetHeaders = event.setHeaders;
-      const originalSetCookies = event.cookies.set;
-      const originalDeleteCookies = event.cookies.delete;
-      const headersProxy: Record<string, string> = {};
-      const cookiesProxy: Record<string, { value: string; options: CookieSerializeOptions }> = {};
+    // `setHeaders` is only readonly at the type level; SvelteKit itself reassigns it.
+    const mutableEvent = event as { -readonly [K in keyof RequestEvent]: RequestEvent[K] };
+    const { setHeaders } = event;
+    const { set: setCookie, delete: deleteCookie, serialize } = event.cookies;
 
-      // Same as the one provided from sveltekit
-      const defaultCookiesOptions: CookieSerializeOptions = {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: event.url.hostname === 'localhost' && event.url.protocol === 'http:' ? false : true
-      };
+    mutableEvent.setHeaders = (headers: Record<string, string>) => {
+      // Let SvelteKit validate the headers (it throws on `set-cookie` and duplicates).
+      setHeaders(headers);
+      for (const [key, value] of Object.entries(headers)) headersProxy.set(key, value);
+      modified = true;
+    };
+    event.cookies.set = (name, value, options) => {
+      setCookie(name, value, options);
+      cookiesProxy.set(name, serialize(name, value, options));
+      modified = true;
+    };
+    event.cookies.delete = (name, options) => {
+      deleteCookie(name, options);
+      cookiesProxy.set(name, serialize(name, '', { ...options, maxAge: 0 } as CookieOptions));
+      modified = true;
+    };
 
-      event.setHeaders = (headers) => {
-        for (const [key, value] of Object.entries(headers)) {
-          headersProxy[key] = value;
-        }
-        // Still call the original `event.setHeaders` function, as it may be used in SvelteKit internals.
-        originalSetHeaders(headers);
-      };
-      event.cookies.set = (name, value, options) => {
-        cookiesProxy[name] = { value, options: { ...defaultCookiesOptions, ...options } };
-        originalSetCookies(name, value, options);
-      };
-      event.cookies.delete = (name, options) => {
-        cookiesProxy[name] = { value: '', options: { ...options, maxAge: 0 } };
-        originalDeleteCookies(name, options);
-      };
+    const response = await fetchRequestHandler<Router>({
+      ...handlerOptions,
+      endpoint,
+      req: event.request,
+      createContext: (opts) => createContext?.(event, opts) as inferRouterContext<Router>
+    } as FetchHandlerRequestOptions<Router>);
 
-      const httpResponse = await resolveHTTPResponse({
-        router,
-        req,
-        path: event.url.pathname.substring(url.length + 1),
-        createContext: async () => createContext?.(event),
-        responseMeta,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onError: onError as any
+    if (modified) {
+      const headers = new Headers(response.headers);
+      for (const [key, value] of headersProxy) headers.set(key, value);
+      for (const cookie of cookiesProxy.values()) headers.append('set-cookie', cookie);
+
+      // Keep the body as a stream so that streamed responses and subscriptions keep working.
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers
       });
-
-      const { status, headers, body } = httpResponse as {
-        status: number;
-        headers: Record<string, string>;
-        body: string;
-      };
-
-      const finalHeaders = new Headers();
-
-      for (const [key, value] of Object.entries(headers)) {
-        finalHeaders.set(key, value);
-      }
-      for (const [key, value] of Object.entries(headersProxy)) {
-        finalHeaders.set(key, value);
-      }
-
-      if (Object.keys(cookiesProxy).length > 0) {
-        for (const [name, { value, options }] of Object.entries(cookiesProxy)) {
-          const serializedCookie = serialize(name, value, options);
-          finalHeaders.append('Set-Cookie', serializedCookie);
-        }
-      }
-
-      return new Response(body, { status, headers: finalHeaders });
     }
 
-    return resolve(event);
+    return response;
   };
 }
