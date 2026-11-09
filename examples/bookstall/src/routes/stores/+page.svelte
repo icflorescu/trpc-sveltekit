@@ -58,6 +58,7 @@
     try {
       await trpc().stores.save.mutate(savable(input));
       item = null;
+      errors = null;
       await refreshAll();
     } catch (err) {
       if (err instanceof TRPCClientError) {

@@ -63,6 +63,7 @@
     try {
       await trpc().authors.save.mutate(input);
       item = null;
+      errors = null;
       await refreshAll();
     } catch (err) {
       if (err instanceof TRPCClientError) {
