@@ -2,18 +2,12 @@
 node_modules
 /build
 /.svelte-kit
-/package
 
-# You should uncomment the next lines in your appplication
+# Generated Prisma client
+/src/lib/server/generated
 
+# In your own application, ignore your .env files and the database:
 # .env
 # .env.*
 # !.env.example
-
-vite.config.ts.timestamp-*.*
-
-# LOCK
-bun.lockb
-
-# PRISMA
-prisma/*.db
+# prisma/*.db
