@@ -17,8 +17,10 @@
 <Highlight {...data.codeBlocks['bookstall/src/routes/authors/+page.svelte']} />
 
 <p>
-  Please refer to the <a href="https://trpc.io/docs/error-handling" target="_blank" rel="noreferrer"
-    >error handling page</a
+  Please refer to the <a
+    href="https://trpc.io/docs/server/error-handling"
+    target="_blank"
+    rel="noreferrer">error handling page</a
   > in the tRPC documentation for more information.
 </p>
 

@@ -17,7 +17,7 @@
 
 <p>
   Let's assume you have a username/password-based login page that <a
-    href="https://kit.svelte.dev/docs/form-actions"
+    href="https://svelte.dev/docs/kit/form-actions"
     target="_blank"
     rel="noreferrer">POSTs</a
   > to the following action:
@@ -33,6 +33,6 @@
 
 <Highlight {...data.codeBlocks['bookstall/src/lib/trpc/middleware/auth.ts']} />
 
-<p>And you could use the auth middleware in your tRPC procedured as needed:</p>
+<p>And you could use the auth middleware in your tRPC procedures as needed:</p>
 
 <Highlight {...data.codeBlocks['bookstall/src/lib/trpc/routes/authors.ts']} />
