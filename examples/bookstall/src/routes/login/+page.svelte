@@ -2,24 +2,24 @@
   import { enhance } from '$app/forms';
   import { goto, refreshAll } from '$app/navigation';
   import { page } from '$app/state';
-  import type { ActionData } from './$types';
 
-  export let form: ActionData;
+  let { form } = $props();
 
-  let error = false;
-  let emailInput: HTMLInputElement;
-  let passwordInput: HTMLInputElement;
+  let error = $state(false);
+  let emailInput: HTMLInputElement | undefined = $state();
+  let passwordInput: HTMLInputElement | undefined = $state();
 
-  $: (async () => {
+  $effect(() => {
     if (form?.success) {
-      await refreshAll();
-      await goto(page.url.searchParams.get('returnTo') || '/');
+      refreshAll().then(() => goto(page.url.searchParams.get('returnTo') || '/'));
     } else if (form?.error) {
       error = true;
     }
-  })();
+  });
 
-  const autofill = (user: 'john' | 'jane') => () => {
+  const autofill = (user: 'john' | 'jane') => (e: MouseEvent) => {
+    e.preventDefault();
+    if (!emailInput || !passwordInput) return;
     emailInput.value = `${user}@mail.com`;
     passwordInput.value = user === 'john' ? '1234' : 'qwer';
   };
@@ -39,8 +39,8 @@
     <!-- svelte-ignore a11y_label_has_associated_control -->
     <label>Autofill</label>
     <div class="grid">
-      <button class="secondary" on:click|preventDefault={autofill('john')}>John</button>
-      <button class="secondary" on:click|preventDefault={autofill('jane')}>Jane</button>
+      <button class="secondary" onclick={autofill('john')}>John</button>
+      <button class="secondary" onclick={autofill('jane')}>Jane</button>
     </div>
     <label>
       Email
@@ -64,7 +64,7 @@
     <header>Authentication failed!</header>
     <p>Please check your credentials and try again.</p>
     <footer>
-      <button class="secondary" on:click={clearError}>Ok</button>
+      <button class="secondary" onclick={clearError}>Ok</button>
     </footer>
   </article>
 </dialog>

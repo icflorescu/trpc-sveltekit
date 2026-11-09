@@ -1,8 +1,7 @@
 <script lang="ts">
   import trpcLogoSrc from '#lib/assets/trpc-logo.png';
-  import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data } = $props();
 </script>
 
 <svelte:head>

@@ -8,38 +8,37 @@
   import { trpc } from '#lib/trpc/client.ts';
   import type { RouterInputs } from '#lib/trpc/router.ts';
   import { TRPCClientError } from '@trpc/client';
-  import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data } = $props();
 
-  let busy = false;
-  let item: RouterInputs['stores']['save'] | null = null;
-  let errors: { message: string; path: string[] }[] | null = null;
-  let needsAuthorization = false;
+  let busy = $state(false);
+  let item: RouterInputs['stores']['save'] | null = $state(null);
+  let errors: { message: string; path: string[] }[] | null = $state(null);
+  let needsAuthorization = $state(false);
 
   const handleAdd = async () => {
     item = { id: null, name: '' };
   };
 
-  const handleEdit = async (e: CustomEvent<string>) => {
+  const handleEdit = async (id: string) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
     }
 
     busy = true;
-    item = await trpc().stores.load.query(e.detail);
+    item = await trpc().stores.load.query(id);
     busy = false;
   };
 
-  const handleDelete = async (e: CustomEvent<string>) => {
+  const handleDelete = async (id: string) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
     }
 
     busy = true;
-    await trpc().stores.delete.mutate(e.detail);
+    await trpc().stores.delete.mutate(id);
     await refreshAll();
     busy = false;
   };
@@ -49,7 +48,7 @@
     errors = null;
   };
 
-  const handleSave = async (e: { detail: RouterInputs['stores']['save'] }) => {
+  const handleSave = async (input: RouterInputs['stores']['save']) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
@@ -57,7 +56,7 @@
 
     busy = true;
     try {
-      await trpc().stores.save.mutate(savable(e.detail));
+      await trpc().stores.save.mutate(savable(input));
       item = null;
       await refreshAll();
     } catch (err) {
@@ -84,13 +83,13 @@
     { title: 'Name', grow: true, accessor: 'name' },
     { title: 'Titles', align: 'right', accessor: (store) => store._count.books }
   ]}
-  on:add={handleAdd}
-  on:edit={handleEdit}
-  on:delete={handleDelete}
+  onadd={handleAdd}
+  onedit={handleEdit}
+  ondelete={handleDelete}
 />
 
-<ModalEditor {item} itemName="store" on:cancel={handleCancel} on:save={handleSave}>
+<ModalEditor {item} itemName="store" oncancel={handleCancel} onsave={handleSave}>
   <TextInput name="name" label="Name" required {errors} {item} />
 </ModalEditor>
 
-<AuthorizationAlert visible={needsAuthorization} on:close={() => (needsAuthorization = false)} />
+<AuthorizationAlert visible={needsAuthorization} onclose={() => (needsAuthorization = false)} />

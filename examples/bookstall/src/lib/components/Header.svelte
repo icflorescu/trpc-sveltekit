@@ -2,7 +2,7 @@
   import { refreshAll } from '$app/navigation';
   import HeaderNavLink from './HeaderNavLink.svelte';
 
-  export let isAuthenticated: boolean;
+  let { isAuthenticated }: { isAuthenticated: boolean } = $props();
 
   const logout = async () => {
     await fetch('/logout', { method: 'POST' });
@@ -22,7 +22,7 @@
       <HeaderNavLink to="/books" title="Books" />
       <HeaderNavLink to="/stores" title="Stores" />
       {#if isAuthenticated}
-        <HeaderNavLink on:click={logout} title="Logout" />
+        <HeaderNavLink onclick={logout} title="Logout" />
       {:else}
         <HeaderNavLink to="/login" title="Login" />
       {/if}

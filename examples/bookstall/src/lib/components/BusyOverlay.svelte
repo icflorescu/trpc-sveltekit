@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
 
-  export let visible: boolean;
+  let { visible }: { visible: boolean } = $props();
 </script>
 
 {#if visible}

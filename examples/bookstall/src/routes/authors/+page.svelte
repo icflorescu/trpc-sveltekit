@@ -8,14 +8,13 @@
   import { trpc } from '#lib/trpc/client.ts';
   import type { RouterInputs } from '#lib/trpc/router.ts';
   import { TRPCClientError } from '@trpc/client';
-  import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data } = $props();
 
-  let busy = false;
-  let item: RouterInputs['authors']['save'] | null; // 👈 we're using a helper type
-  let errors: { message: string; path: string[] }[] | null = null;
-  let needsAuthorization = false;
+  let busy = $state(false);
+  let item: RouterInputs['authors']['save'] | null = $state(null); // 👈 we're using a helper type
+  let errors: { message: string; path: string[] }[] | null = $state(null);
+  let needsAuthorization = $state(false);
 
   const handleAdd = async () => {
     if (!data.isAuthenticated) {
@@ -26,25 +25,25 @@
     item = { id: null, firstName: '', lastName: '', bio: '' };
   };
 
-  const handleEdit = async (e: CustomEvent<string>) => {
+  const handleEdit = async (id: string) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
     }
 
     busy = true;
-    item = await trpc().authors.load.query(e.detail);
+    item = await trpc().authors.load.query(id);
     busy = false;
   };
 
-  const handleDelete = async (e: CustomEvent<string>) => {
+  const handleDelete = async (id: string) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
     }
 
     busy = true;
-    await trpc().authors.delete.mutate(e.detail);
+    await trpc().authors.delete.mutate(id);
     await refreshAll();
     busy = false;
   };
@@ -54,7 +53,7 @@
     errors = null;
   };
 
-  const handleSave = async (e: CustomEvent<RouterInputs['authors']['save']>) => {
+  const handleSave = async (input: RouterInputs['authors']['save']) => {
     if (!data.isAuthenticated) {
       needsAuthorization = true;
       return;
@@ -62,7 +61,7 @@
 
     busy = true;
     try {
-      await trpc().authors.save.mutate(e.detail);
+      await trpc().authors.save.mutate(input);
       item = null;
       await refreshAll();
     } catch (err) {
@@ -97,12 +96,12 @@
       accessor: (author) => author._count.books
     }
   ]}
-  on:add={handleAdd}
-  on:edit={handleEdit}
-  on:delete={handleDelete}
+  onadd={handleAdd}
+  onedit={handleEdit}
+  ondelete={handleDelete}
 />
 
-<ModalEditor {item} itemName="author" on:cancel={handleCancel} on:save={handleSave}>
+<ModalEditor {item} itemName="author" oncancel={handleCancel} onsave={handleSave}>
   <div class="grid">
     <TextInput name="firstName" label="First name" required {errors} {item} />
     <TextInput name="lastName" label="Last name" required {errors} {item} />
@@ -110,4 +109,4 @@
   <TextareaInput name="bio" label="Bio" {errors} {item} />
 </ModalEditor>
 
-<AuthorizationAlert visible={needsAuthorization} on:close={() => (needsAuthorization = false)} />
+<AuthorizationAlert visible={needsAuthorization} onclose={() => (needsAuthorization = false)} />

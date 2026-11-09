@@ -1,32 +1,33 @@
 <script lang="ts">
-  import { browser } from '$app/env';
   import LabelAsterisk from './LabelAsterisk.svelte';
 
-  let textarea: HTMLTextAreaElement;
-
-  export let name: string;
-  export let label: string;
-  export let required = false;
-  export let placeholder = '';
-  export let item: Record<string, unknown> | null;
-  export let errors: { message: string; path: string[] }[] | null = null;
-
-  $: error = errors?.find((e) => e.path.includes(name));
-
-  // `_value` is only there so that the reactive statement below re-runs when the value changes
-  const autosize = (_value?: unknown) => {
-    if (browser) {
-      requestAnimationFrame(() => {
-        if (textarea) {
-          textarea.style.height = '0';
-          textarea.style.height = `${textarea.scrollHeight + 2}px`;
-        }
-      });
-    }
+  type Props = {
+    name: string;
+    label: string;
+    required?: boolean;
+    placeholder?: string;
+    item: Record<string, unknown> | null;
+    errors?: { message: string; path: string[] }[] | null;
   };
 
-  $: autosize(item?.[name]);
-  $: value = item?.[name] as string;
+  let { name, label, required = false, placeholder = '', item, errors = null }: Props = $props();
+
+  let textarea: HTMLTextAreaElement | undefined = $state();
+
+  const value = $derived(item?.[name] as string | undefined);
+  const error = $derived(errors?.find((e) => e.path.includes(name)));
+
+  const autosize = () => {
+    if (!textarea) return;
+    textarea.style.height = '0';
+    textarea.style.height = `${textarea.scrollHeight + 2}px`;
+  };
+
+  // Resize whenever the edited value changes
+  $effect(() => {
+    void value;
+    requestAnimationFrame(autosize);
+  });
 </script>
 
 <label>
@@ -37,7 +38,7 @@
     {placeholder}
     {required}
     {value}
-    on:input={autosize}
+    oninput={autosize}
     aria-invalid={error ? 'true' : undefined}></textarea>
   {#if error}
     <small>{error.message}</small>

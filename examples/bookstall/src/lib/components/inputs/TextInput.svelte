@@ -1,16 +1,28 @@
 <script lang="ts">
   import LabelAsterisk from './LabelAsterisk.svelte';
 
-  export let price = false;
-  export let name: string;
-  export let label: string;
-  export let required = false;
-  export let placeholder = '';
-  export let item: Record<string, unknown> | null;
-  export let errors: { message: string; path: string[] }[] | null = null;
+  type Props = {
+    price?: boolean;
+    name: string;
+    label: string;
+    required?: boolean;
+    placeholder?: string;
+    item: Record<string, unknown> | null;
+    errors?: { message: string; path: string[] }[] | null;
+  };
 
-  $: value = item?.[name];
-  $: error = errors?.find((e) => e.path.includes(name));
+  let {
+    price = false,
+    name,
+    label,
+    required = false,
+    placeholder = '',
+    item,
+    errors = null
+  }: Props = $props();
+
+  const value = $derived(item?.[name]);
+  const error = $derived(errors?.find((e) => e.path.includes(name)));
 </script>
 
 <label>

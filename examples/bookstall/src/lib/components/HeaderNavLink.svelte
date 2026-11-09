@@ -1,22 +1,20 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { createEventDispatcher } from 'svelte';
 
-  export let to: string | undefined = undefined;
-  export let title: string;
+  type Props = { to?: string; title: string; onclick?: () => void };
 
-  const dispatch = createEventDispatcher();
+  let { to, title, onclick }: Props = $props();
 
   const handleClick = (e: MouseEvent) => {
     if (!to) {
       e.preventDefault();
-      dispatch('click');
+      onclick?.();
     }
   };
 </script>
 
 <li>
-  <a class:active={page.url.pathname === to} href={to || '#'} on:click={handleClick}>{title}</a>
+  <a class:active={page.url.pathname === to} href={to || '#'} onclick={handleClick}>{title}</a>
 </li>
 
 <style lang="scss">

@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" generics="T extends { id: string; updatedAt: Date }">
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import dayjs from '#lib/dayjs.ts';
@@ -8,34 +8,32 @@
   import IconTrash from '#lib/icons/IconTrash.svelte';
   import IconVerticalDots from '#lib/icons/IconVerticalDots.svelte';
   import debounce from 'debounce';
-  import { createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import BusyOverlay from './BusyOverlay.svelte';
 
-  type T = $$Generic<{ id: string; updatedAt: Date }>;
-
-  export let busy = false;
-  export let title: string;
-  export let items: T[];
-  export let columns: {
+  type Props = {
+    busy?: boolean;
     title: string;
-    grow?: true;
-    nowrap?: true;
-    align?: 'center' | 'right';
-    accessor: ((record: T) => string | number) | keyof T;
-  }[];
+    items: T[];
+    columns: {
+      title: string;
+      grow?: true;
+      nowrap?: true;
+      align?: 'center' | 'right';
+      accessor: ((record: T) => string | number) | keyof T;
+    }[];
+    onadd: () => void;
+    onedit: (id: string) => void;
+    ondelete: (id: string) => void;
+  };
 
-  const dispatch = createEventDispatcher<{
-    add?: never;
-    edit: string;
-    delete: string;
-  }>();
+  let { busy = false, title, items, columns, onadd, onedit, ondelete }: Props = $props();
 
   const filter = debounce((q: string) => {
     goto(`${location.pathname}${q ? `?q=${q}` : ''}`, { reset: false });
   }, 500);
 
-  onDestroy(() => filter.clear());
+  $effect(() => () => filter.clear());
 </script>
 
 <article>
@@ -47,19 +45,19 @@
         type="search"
         placeholder="filter..."
         value={page.url.searchParams.get('q')}
-        on:input={(e) => filter(e.currentTarget.value)}
+        oninput={(e) => filter(e.currentTarget.value)}
       />
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class="clear-filter"
         title="Clear filter"
-        on:click={() => goto(location.pathname, { reset: false })}
+        onclick={() => goto(location.pathname, { reset: false })}
       ></div>
     </div>
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="icon-button" title="Add" on:click={() => dispatch('add')}>
+    <div class="icon-button" title="Add" onclick={onadd}>
       <IconAdd />
     </div>
   </div>
@@ -68,13 +66,13 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          {#each columns as { title, grow, nowrap, align } (title)}
+          {#each columns as column (column.title)}
             <th
               scope="col"
-              style:width={grow ? '100%' : undefined}
-              class:nowrap
-              class:align-center={align === 'center'}
-              class:align-right={align === 'right'}>{title}</th
+              style:width={column.grow ? '100%' : undefined}
+              class:nowrap={column.nowrap}
+              class:align-center={column.align === 'center'}
+              class:align-right={column.align === 'right'}>{column.title}</th
             >
           {/each}
           <th scope="col" class="align-right nowrap">Last updated</th>
@@ -88,24 +86,22 @@
           {#each items as item, index (item.id)}
             <tr>
               <td>{index + 1}</td>
-              {#each columns as { title, nowrap, align, accessor } (title)}
+              {#each columns as column (column.title)}
                 <td
-                  class:nowrap
-                  class:align-center={align === 'center'}
-                  class:align-right={align === 'right'}
+                  class:nowrap={column.nowrap}
+                  class:align-center={column.align === 'center'}
+                  class:align-right={column.align === 'right'}
                 >
-                  {typeof accessor === 'function' ? accessor(item) : item[accessor]}
+                  {typeof column.accessor === 'function'
+                    ? column.accessor(item)
+                    : item[column.accessor]}
                 </td>
               {/each}
               <td class="align-right nowrap">{dayjs(item.updatedAt).fromNow()}</td>
               <td class="align-right nowrap">
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <div
-                  class="icon-button row"
-                  title="Edit"
-                  on:click={() => dispatch('edit', item.id)}
-                >
+                <div class="icon-button row" title="Edit" onclick={() => onedit(item.id)}>
                   <IconPencil />
                 </div>
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -113,7 +109,7 @@
                 <div
                   class="icon-button row delete"
                   title="Delete"
-                  on:click={() => dispatch('delete', item.id)}
+                  onclick={() => ondelete(item.id)}
                 >
                   <IconTrash />
                 </div>
