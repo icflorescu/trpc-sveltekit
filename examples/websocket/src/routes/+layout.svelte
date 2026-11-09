@@ -1,9 +1,11 @@
 <script lang="ts">
-  import '@picocss/pico';
+  import '@picocss/pico/css/pico.min.css';
+
+  let { children } = $props();
 </script>
 
 <main class="container">
-  <slot />
+  {@render children()}
 </main>
 
 <style>

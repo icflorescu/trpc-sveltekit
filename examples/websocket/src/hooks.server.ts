@@ -1,7 +1,6 @@
-import { createContext } from '$lib/trpc/context';
-import { router } from '$lib/trpc/router';
+import { building } from '$app/env';
+import { createContext } from '#lib/trpc/context.ts';
+import { router } from '#lib/trpc/router.ts';
 import { createTRPCWebSocketServer } from 'trpc-sveltekit/websocket';
-
-import { building } from '$app/environment';
 
 if (!building) createTRPCWebSocketServer({ router, createContext });
