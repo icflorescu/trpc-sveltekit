@@ -50,7 +50,9 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && cp ../README.md ../LICENSE .",
+    "build": "tsc -p tsconfig.build.json && cp ../README.md ../LICENSE .",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "clean": "rm -rf dist",
     "check": "tsc --noEmit",
     "test": "vitest run"
   },
