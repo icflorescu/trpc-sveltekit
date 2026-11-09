@@ -53,15 +53,19 @@
         > footer {
           display: flex;
           gap: 1em;
+          align-items: center;
           justify-content: center;
           margin-top: 1em;
           padding-top: 1em;
           padding-bottom: 1em;
           border-top: 1px solid var(--pico-muted-border-color);
-          > button {
+          > :is(button, [role='button']),
+          > button[type='submit'] {
             display: inline-block;
-            margin-bottom: 0;
+            width: auto;
+            min-width: 100px;
             max-width: 160px;
+            margin: 0;
           }
         }
       }
