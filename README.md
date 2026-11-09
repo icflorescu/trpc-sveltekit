@@ -304,7 +304,7 @@ All the code related to the WebSocket implementation is located in `package/src/
 
 ## Contributors
 
-[![Contributors list](https://contrib.rocks/image?repo=icflorescu/trpc-sveltekit)](https://github.com/icflorescu/trpc-sveltekit/graphs/contributors)
+[![Contributors list](https://contrib.rocks/image?repo=icflorescu/trpc-sveltekit)](https://github.com/icflorescu/trpc-sveltekit/graphs/contributors?all=1)
 
 ## Acknowledgements
 
