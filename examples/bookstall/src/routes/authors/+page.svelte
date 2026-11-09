@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation';
-  import AuthorizationAlert from '$lib/components/AuthorizationAlert.svelte';
-  import DataTable from '$lib/components/DataTable.svelte';
-  import ModalEditor from '$lib/components/ModalEditor.svelte';
-  import TextInput from '$lib/components/inputs/TextInput.svelte';
-  import TextareaInput from '$lib/components/inputs/TextareaInput.svelte';
-  import { trpc } from '$lib/trpc/client';
-  import type { RouterInputs } from '$lib/trpc/router';
+  import { refreshAll } from '$app/navigation';
+  import AuthorizationAlert from '#lib/components/AuthorizationAlert.svelte';
+  import DataTable from '#lib/components/DataTable.svelte';
+  import ModalEditor from '#lib/components/ModalEditor.svelte';
+  import TextInput from '#lib/components/inputs/TextInput.svelte';
+  import TextareaInput from '#lib/components/inputs/TextareaInput.svelte';
+  import { trpc } from '#lib/trpc/client.ts';
+  import type { RouterInputs } from '#lib/trpc/router.ts';
   import { TRPCClientError } from '@trpc/client';
   import type { PageData } from './$types';
 
@@ -45,7 +45,7 @@
 
     busy = true;
     await trpc().authors.delete.mutate(e.detail);
-    await invalidateAll();
+    await refreshAll();
     busy = false;
   };
 
@@ -64,7 +64,7 @@
     try {
       await trpc().authors.save.mutate(e.detail);
       item = null;
-      await invalidateAll();
+      await refreshAll();
     } catch (err) {
       if (err instanceof TRPCClientError) {
         errors = JSON.parse(err.message);

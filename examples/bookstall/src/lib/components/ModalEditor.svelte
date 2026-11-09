@@ -1,6 +1,6 @@
 <script lang="ts">
-  import dayjs from '$lib/dayjs';
-  import IconClock from '$lib/icons/IconClock.svelte';
+  import dayjs from '#lib/dayjs.ts';
+  import IconClock from '#lib/icons/IconClock.svelte';
   import { createEventDispatcher } from 'svelte';
   import BusyOverlay from './BusyOverlay.svelte';
 
@@ -51,13 +51,12 @@
     <article>
       <BusyOverlay visible={busy} />
       <header>
-        <!-- svelte-ignore a11y-missing-content -->
+        <!-- svelte-ignore a11y_missing_content -->
         <a
           href="#cancel"
           aria-label="Cancel"
           class="close"
-          on:click|preventDefault={handleCancel}
-        />
+          on:click|preventDefault={handleCancel}></a>
         {item?.id ? 'Edit' : 'Add'}
         {itemName}
       </header>
@@ -83,7 +82,7 @@
     display: block;
     margin-left: 1.5em;
     text-indent: -1.5em;
-    color: var(--muted-color);
+    color: var(--pico-muted-color);
   }
 
   .clock-icon {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { createEventDispatcher } from 'svelte';
 
   export let to: string | undefined = undefined;
@@ -16,7 +16,7 @@
 </script>
 
 <li>
-  <a class:active={$page.url.pathname === to} href={to || '#'} on:click={handleClick}>{title}</a>
+  <a class:active={page.url.pathname === to} href={to || '#'} on:click={handleClick}>{title}</a>
 </li>
 
 <style lang="scss">
@@ -37,11 +37,11 @@
     &::after {
       content: '';
       position: absolute;
-      bottom: calc(var(--spacing) * 0.75);
-      left: calc(var(--spacing) * 0.5);
-      right: calc(var(--spacing) * 0.5);
+      bottom: calc(var(--pico-spacing) * 0.75);
+      left: calc(var(--pico-spacing) * 0.5);
+      right: calc(var(--pico-spacing) * 0.5);
       height: 2px;
-      background: var(--color);
+      background: var(--pico-color);
       transform: scaleX(0);
       transition: transform 0.2s;
     }

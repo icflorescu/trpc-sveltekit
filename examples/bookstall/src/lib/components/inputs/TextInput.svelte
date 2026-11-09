@@ -35,6 +35,6 @@
   }
 
   small {
-    color: var(--form-element-invalid-active-border-color);
+    color: var(--pico-form-element-invalid-active-border-color);
   }
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
+  import { browser } from '$app/env';
   import LabelAsterisk from './LabelAsterisk.svelte';
 
   let textarea: HTMLTextAreaElement;
@@ -37,8 +37,7 @@
     {required}
     {value}
     on:input={autosize}
-    aria-invalid={error ? 'true' : undefined}
-  />
+    aria-invalid={error ? 'true' : undefined}></textarea>
   {#if error}
     <small>{error.message}</small>
   {/if}
@@ -48,14 +47,14 @@
   textarea {
     resize: none;
     min-height: calc(
-      var(--line-height) * var(--font-size) +
-        (var(--border-width) + var(--form-element-spacing-vertical)) * 2
+      var(--line-height) * var(--pico-font-size) +
+        (var(--border-width) + var(--pico-form-element-spacing-vertical)) * 2
     );
     max-height: 200px;
     margin-bottom: 0.5em;
   }
 
   small {
-    color: var(--form-element-invalid-active-border-color);
+    color: var(--pico-form-element-invalid-active-border-color);
   }
 </style>

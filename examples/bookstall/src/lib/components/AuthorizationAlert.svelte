@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { createEventDispatcher } from 'svelte';
 
   export let visible = false;
@@ -14,8 +14,8 @@
 <dialog open={visible}>
   <article>
     <header>
-      <!-- svelte-ignore a11y-missing-content -->
-      <a href="#cancel" aria-label="Cancel" class="close" on:click={handleClose} />
+      <!-- svelte-ignore a11y_missing_content -->
+      <a href="#cancel" aria-label="Cancel" class="close" on:click={handleClose}></a>
       Unauthorized!
     </header>
     <p>You need to login before trying to perform this action.</p>
@@ -25,7 +25,7 @@
         role="button"
         class="primary"
         on:click={handleClose}
-        href={`/login?returnTo=${$page.url.pathname}`}>Login</a
+        href={`/login?returnTo=${page.url.pathname}`}>Login</a
       >
     </footer>
   </article>

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { invalidateAll } from '$app/navigation';
+  import { refreshAll } from '$app/navigation';
   import HeaderNavLink from './HeaderNavLink.svelte';
 
   export let isAuthenticated: boolean;
 
   const logout = async () => {
     await fetch('/logout', { method: 'POST' });
-    invalidateAll();
+    refreshAll();
   };
 </script>
 
@@ -32,8 +32,8 @@
 
 <style lang="scss">
   header {
-    background: var(--card-background-color);
-    border-bottom: 1px solid var(--muted-border-color);
+    background: var(--pico-card-background-color);
+    border-bottom: 1px solid var(--pico-muted-border-color);
     padding: 1em 1em 0;
     text-align: center;
     text-transform: uppercase;

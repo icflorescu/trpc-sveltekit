@@ -1,7 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  import { goto, invalidateAll } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { goto, refreshAll } from '$app/navigation';
+  import { page } from '$app/state';
   import type { ActionData } from './$types';
 
   export let form: ActionData;
@@ -10,12 +10,10 @@
   let emailInput: HTMLInputElement;
   let passwordInput: HTMLInputElement;
 
-  $: returnTo = $page.url.searchParams.get('returnTo');
-
   $: (async () => {
     if (form?.success) {
-      await invalidateAll();
-      await goto(returnTo || '/');
+      await refreshAll();
+      await goto(page.url.searchParams.get('returnTo') || '/');
     } else if (form?.error) {
       error = true;
     }
@@ -38,7 +36,7 @@
 <form method="POST" use:enhance>
   <article>
     <header>Login</header>
-    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <!-- svelte-ignore a11y_label_has_associated_control -->
     <label>Autofill</label>
     <div class="grid">
       <button class="secondary" on:click|preventDefault={autofill('john')}>John</button>
@@ -53,8 +51,8 @@
       <input name="password" type="password" required bind:this={passwordInput} />
     </label>
     <footer>
-      {#if returnTo}
-        <a role="button" class="secondary" href={returnTo}>Cancel</a>
+      {#if page.url.searchParams.get('returnTo')}
+        <a role="button" class="secondary" href={page.url.searchParams.get('returnTo')}>Cancel</a>
       {/if}
       <button type="submit">Login</button>
     </footer>

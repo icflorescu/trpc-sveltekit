@@ -1,12 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import dayjs from '$lib/dayjs';
-  import IconAdd from '$lib/icons/IconAdd.svelte';
-  import IconEmpty from '$lib/icons/IconEmpty.svelte';
-  import IconPencil from '$lib/icons/IconPencil.svelte';
-  import IconTrash from '$lib/icons/IconTrash.svelte';
-  import IconVerticalDots from '$lib/icons/IconVerticalDots.svelte';
+  import { page } from '$app/state';
+  import dayjs from '#lib/dayjs.ts';
+  import IconAdd from '#lib/icons/IconAdd.svelte';
+  import IconEmpty from '#lib/icons/IconEmpty.svelte';
+  import IconPencil from '#lib/icons/IconPencil.svelte';
+  import IconTrash from '#lib/icons/IconTrash.svelte';
+  import IconVerticalDots from '#lib/icons/IconVerticalDots.svelte';
   import debounce from 'debounce';
   import { createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
@@ -32,7 +32,7 @@
   }>();
 
   const filter = debounce((q: string) => {
-    goto(`${location.pathname}${q ? `?q=${q}` : ''}`, { keepFocus: true });
+    goto(`${location.pathname}${q ? `?q=${q}` : ''}`, { reset: false });
   }, 500);
 
   onDestroy(() => filter.clear());
@@ -46,19 +46,19 @@
       <input
         type="search"
         placeholder="filter..."
-        value={$page.url.searchParams.get('q')}
+        value={page.url.searchParams.get('q')}
         on:input={(e) => filter(e.currentTarget.value)}
       />
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div
         class="clear-filter"
         title="Clear filter"
-        on:click={() => goto(location.pathname, { keepFocus: true })}
-      />
+        on:click={() => goto(location.pathname, { reset: false })}
+      ></div>
     </div>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="icon-button" title="Add" on:click={() => dispatch('add')}>
       <IconAdd />
     </div>
@@ -99,8 +99,8 @@
               {/each}
               <td class="align-right nowrap">{dayjs(item.updatedAt).fromNow()}</td>
               <td class="align-right nowrap">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <div
                   class="icon-button row"
                   title="Edit"
@@ -108,8 +108,8 @@
                 >
                   <IconPencil />
                 </div>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <div
                   class="icon-button row delete"
                   title="Delete"
@@ -143,7 +143,7 @@
   article {
     position: relative;
     padding: 0;
-    border: 1px solid var(--muted-border-color);
+    border: 1px solid var(--pico-muted-border-color);
   }
 
   .header {
@@ -202,7 +202,7 @@
   }
 
   .empty {
-    color: var(--muted-color);
+    color: var(--pico-muted-color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -232,7 +232,7 @@
     cursor: pointer;
     padding: 0.25em;
     margin: -0.25em;
-    color: var(--primary);
+    color: var(--pico-primary);
     transition: filter 0.2s;
     &:hover {
       filter: brightness(1.5);
@@ -242,7 +242,7 @@
         margin-left: 0.25em;
       }
       &.delete {
-        color: var(--del-color);
+        color: var(--pico-del-color);
       }
     }
   }

@@ -1,4 +1,4 @@
-import type { Router } from '$lib/trpc/router';
+import type { Router } from '#lib/trpc/router.ts';
 import { createTRPCClient, type TRPCClientInit } from 'trpc-sveltekit';
 import transformer from 'trpc-transformer';
 

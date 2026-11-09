@@ -8,44 +8,44 @@
   },
   "private": true,
   "scripts": {
-    "dev": "vite --port 3002 --clearScreen false",
+    "dev": "vite dev --port 3002",
     "build": "vite build",
     "preview": "vite preview --port 3002",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "check": "svelte-kit sync && prisma generate && svelte-check",
+    "db:generate": "prisma generate",
+    "db:seed": "prisma db seed",
+    "postinstall": "svelte-kit sync && prisma generate"
   },
   "devDependencies": {
-    "@picocss/pico": "^1.5.12",
-    "@prisma/client": "^5.15.0",
-    "@sveltejs/adapter-auto": "^3.2.2",
-    "@sveltejs/kit": "^2.18.0",
-    "@types/debounce": "^1.2.4",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^22.13.9",
-    "sass": "^1.85.1",
-    "svelte": "^4.2.18",
-    "svelte-check": "^3.8.0",
-    "svelte-preprocess": "^6.0.3",
-    "ts-node": "^10.9.2",
-    "tslib": "^2.8.1",
-    "typescript": "^5.8.2",
-    "vite": "^4.5.2"
+    "@picocss/pico": "^2.1.1",
+    "@sveltejs/adapter-auto": "^8.0.0",
+    "@sveltejs/kit": "^3.1.1",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.10.1",
+    "prisma": "^7.10.1",
+    "sass": "^1.108.1",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.0"
   },
   "type": "module",
   "dependencies": {
-    "@trpc/client": "^10.45.2",
-    "@trpc/server": "^10.45.2",
-    "dayjs": "^1.11.13",
-    "debounce": "^2.2.0",
-    "hash-wasm": "^4.12.0",
-    "jsonwebtoken": "^9.0.2",
-    "prisma": "^5.15.0",
+    "@prisma/adapter-better-sqlite3": "^7.10.1",
+    "@prisma/client": "^7.10.1",
+    "@trpc/client": "^11.25.2",
+    "@trpc/server": "^11.25.2",
+    "dayjs": "^1.11.23",
+    "debounce": "^3.0.0",
+    "hash-wasm": "^4.13.0",
+    "jsonwebtoken": "^9.0.3",
+    "trpc-sveltekit": "workspace:*",
     "trpc-transformer": "^3.2.2",
-    "zod": "^3.24.2"
+    "zod": "^4.6.0"
   },
-  "prisma": {
-    "seed": "node --loader ts-node/esm prisma/seed.ts"
+  "imports": {
+    "#lib": "./src/lib",
+    "#lib/*": "./src/lib/*"
   }
 }
