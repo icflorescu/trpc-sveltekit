@@ -1,15 +1,22 @@
 import {
+  createTRPCClient as createClient,
   httpBatchLink,
-  createTRPCProxyClient as internalCreateTRPCClient,
-  type HTTPHeaders,
+  type TRPCClient,
   type TRPCLink
 } from '@trpc/client';
-import type { AnyRouter } from '@trpc/server';
+import type { AnyTRPCRouter } from '@trpc/server';
 
-export type TRPCClientInit = { fetch?: typeof window.fetch; url: { origin: string } };
+/**
+ * A SvelteKit load event, or anything with a `url` and (optionally) a `fetch` function.
+ */
+export type TRPCClientInit = { fetch?: typeof globalThis.fetch; url: { origin: string } };
 
-type CreateTRPCClientOptions<Router extends AnyRouter> = (
-  | {
+type HTTPBatchLinkOptions<Router extends AnyTRPCRouter> = Parameters<
+  typeof httpBatchLink<Router>
+>[0];
+
+export type CreateTRPCClientOptions<Router extends AnyTRPCRouter> =
+  | ({
       links?: never;
 
       /**
@@ -19,63 +26,53 @@ type CreateTRPCClientOptions<Router extends AnyRouter> = (
       url?: `/${string}`;
 
       /**
-       * A page store or SvelteKit load event.
-       * @see https://kit.svelte.dev/docs/modules#$app-stores
-       * @see https://kit.svelte.dev/docs/load
+       * A SvelteKit load event (or anything with `url` and `fetch`).
+       * Required when calling `createTRPCClient()` on the server.
+       * @see https://svelte.dev/docs/kit/load
        */
       init?: TRPCClientInit;
-
-      /**
-       * Additional headers to send with the request. Can be a function that returns headers.
-       * @see https://developer.mozilla.org/en-US/docs/Web/API/Headers
-       */
-      headers?: HTTPHeaders | (() => HTTPHeaders | Promise<HTTPHeaders>);
-    }
+    } & Omit<HTTPBatchLinkOptions<Router>, 'url' | 'fetch'>)
   | {
       /**
-       * A custom list of links to use for the tRPC Client instead of the default one.
-       * @see https://trpc.io/docs/links
+       * A custom list of links to use for the tRPC client instead of the default
+       * `httpBatchLink`.
+       * @see https://trpc.io/docs/client/links
        */
       links: TRPCLink<Router>[];
 
       url?: never;
       init?: never;
-      headers?: never;
-    }
-) & {
-  /**
-   * A function that transforms the data before transferring it.
-   * @see https://trpc.io/docs/data-transformers
-   */
-  transformer?: Router['_def']['_config']['transformer'];
-};
+    };
 
 /**
  * Create a tRPC client.
- * @see https://trpc.io/docs/vanilla
+ *
+ * By default, it uses an `httpBatchLink` pointed at `url` on the current origin.
+ * Any other `httpBatchLink` option (`transformer`, `headers`, `maxURLLength`, …)
+ * is passed through.
+ * @see https://trpc.io/docs/client/vanilla
  */
-export function createTRPCClient<Router extends AnyRouter>(
-  { links, url = '/trpc', transformer, init, headers }: CreateTRPCClientOptions<Router> = {
-    url: '/trpc'
-  }
-) {
-  if (links) return internalCreateTRPCClient<Router>({ transformer, links });
+export function createTRPCClient<Router extends AnyTRPCRouter>(
+  options: CreateTRPCClientOptions<Router> = {} as CreateTRPCClientOptions<Router>
+): TRPCClient<Router> {
+  if (options.links) return createClient<Router>({ links: options.links });
 
-  if (typeof window === 'undefined' && !init) {
+  const { url = '/trpc', init, ...linkOptions } = options;
+  const isBrowser = typeof window !== 'undefined';
+
+  if (!isBrowser && !init) {
     throw new Error(
       'Calling createTRPCClient() on the server requires passing a valid LoadEvent argument'
     );
   }
 
-  return internalCreateTRPCClient<Router>({
-    transformer,
+  return createClient<Router>({
     links: [
-      httpBatchLink({
-        url:
-          typeof window === 'undefined' ? `${init.url.origin}${url}` : `${location.origin}${url}`,
-        fetch: typeof window === 'undefined' ? init.fetch : init?.fetch ?? window.fetch,
-        headers
-      })
+      httpBatchLink<Router>({
+        ...(linkOptions as Omit<HTTPBatchLinkOptions<Router>, 'url' | 'fetch'>),
+        url: `${isBrowser ? location.origin : init!.url.origin}${url}`,
+        fetch: init?.fetch ?? (isBrowser ? window.fetch.bind(window) : undefined)
+      } as HTTPBatchLinkOptions<Router>)
     ]
   });
 }
