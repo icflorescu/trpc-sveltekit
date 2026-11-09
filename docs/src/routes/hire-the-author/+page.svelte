@@ -1,4 +1,5 @@
 <script lang="ts">
+  import swappDashboard from '#lib/assets/swapp-dashboard.webp';
   import { AUTHOR_URL, BADGE_COLOR_CODE } from '#lib/constants.ts';
 </script>
 
@@ -29,15 +30,43 @@
   >, and a contributor to tRPC and Mantine.
 </p>
 
-<p class="swapp">
-  These days I'm managing
-  <strong><a href="https://swapp.ro" target="_blank" rel="noreferrer">swapp.ro</a></strong>, an
-  invoicing and accounting product for Romanian freelancers, which I've built with TanStack Start,
-  tRPC, Drizzle and PostgreSQL.
-  <br />
-  Are you a Romanian freelancer?
-  <a href="https://swapp.ro/inregistrare" target="_blank" rel="noreferrer">Give it a try</a>!
-</p>
+<div class="swapp">
+  <div>
+    <p>
+      These days I'm managing
+      <strong><a href="https://swapp.ro" target="_blank" rel="noreferrer">swapp.ro</a></strong>, an
+      invoicing and single-entry accounting product for Romanian freelancers (PFA, ÎI and PFI) who
+      aren't VAT-registered, which I've built with TanStack Start, tRPC, Drizzle and PostgreSQL.
+    </p>
+    <p>
+      It's fully compliant with ANAF's <span class="nowrap">e-Factura</span> system, and it's built and
+      maintained in accordance with the current legislation:
+    </p>
+    <ul>
+      <li>
+        invoices in RON or foreign currencies, sent through <span class="nowrap">e-Factura</span>,
+        with supplier invoices collected automatically;
+      </li>
+      <li>the mandatory accounting registers, generated and always up to date;</li>
+      <li>the figures for the D212, D390 and D301 tax returns, and when each one is due.</li>
+    </ul>
+    <p>
+      Are you a Romanian freelancer?
+      <strong
+        ><a href="https://swapp.ro/inregistrare" target="_blank" rel="noreferrer">Give it a try</a
+        ></strong
+      >!
+    </p>
+  </div>
+  <a class="swapp-screenshot" href="https://swapp.ro" target="_blank" rel="noreferrer">
+    <img
+      src={swappDashboard}
+      width="960"
+      height="540"
+      alt="The swapp.ro dashboard: deadlines, overdue invoices and money owed, at a glance"
+    />
+  </a>
+</div>
 
 <h3>How I can help</h3>
 
@@ -115,12 +144,35 @@
 
   .swapp {
     clear: both;
-    position: relative;
-    top: var(--pico-spacing);
-    margin-bottom: calc(var(--pico-spacing) * 2);
+    display: grid;
+    gap: var(--pico-spacing);
+    align-items: center;
+    margin: calc(var(--pico-spacing) * 2) 0;
     padding: var(--pico-spacing);
     border-left: 0.25em solid var(--pico-primary);
     border-radius: var(--pico-border-radius);
     background: var(--pico-card-sectioning-background-color);
+    @media (min-width: 1280px) {
+      grid-template-columns: 1fr 45%;
+    }
+    p,
+    ul {
+      margin-bottom: calc(var(--pico-spacing) * 0.5);
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .swapp-screenshot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--pico-border-radius);
+    box-shadow: var(--pico-card-box-shadow);
   }
 </style>
