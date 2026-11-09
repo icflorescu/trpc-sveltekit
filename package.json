@@ -10,26 +10,21 @@
   "license": "ISC",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "package",
-    "docs",
-    "examples/*"
-  ],
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=22.17"
+  },
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "start": "turbo preview",
-    "lint": "turbo lint",
-    "format": "turbo format"
+    "build": "pnpm -r build",
+    "build:package": "pnpm --filter trpc-sveltekit build",
+    "dev": "pnpm build:package && pnpm -r --parallel dev",
+    "check": "pnpm build:package && pnpm -r check",
+    "test": "pnpm -r test"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte3": "^4.0.0",
-    "prettier": "^3.3.2",
-    "prettier-plugin-svelte": "^3.2.4",
-    "turbo": "^1.12.4"
+    "prettier": "^3.9.10",
+    "prettier-plugin-svelte": "^4.1.1",
+    "svelte": "^5.57.3",
+    "typescript": "~6.0.3"
   }
 }
