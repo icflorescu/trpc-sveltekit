@@ -1,9 +1,8 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import Highlight from '#lib/components/Highlight.svelte';
-  import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data } = $props();
 </script>
 
 <h2>Page data</h2>
