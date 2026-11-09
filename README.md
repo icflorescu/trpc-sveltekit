@@ -101,9 +101,11 @@ If you have your own logic to place in the server hook, use the [`sequence`](htt
 import type { Router } from '#lib/trpc/router.ts';
 import { createTRPCClient, type TRPCClientInit } from 'trpc-sveltekit';
 
-let browserClient: ReturnType<typeof createTRPCClient<Router>>;
+type TRPCClient = ReturnType<typeof createTRPCClient<Router>>;
 
-export function trpc(init?: TRPCClientInit) {
+let browserClient: TRPCClient;
+
+export function trpc(init?: TRPCClientInit): TRPCClient {
   const isBrowser = typeof window !== 'undefined';
   if (isBrowser && browserClient) return browserClient;
   const client = createTRPCClient<Router>({ init });
