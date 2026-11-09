@@ -1,4 +1,32 @@
 {
+  // Use the workspace TypeScript version
   "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.workingDirectories": ["./package", "./docs", "./examples/*"]
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Formatting: Prettier (with prettier-plugin-svelte)
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[svelte]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "prettier.documentSelectors": ["**/*.svelte"],
+
+  // Linting: Oxlint (configured in .oxlintrc.json)
+  "oxc.enable": true,
+  "editor.codeActionsOnSave": { "source.fixAll.oxc": "explicit" },
+
+  // This repo does not use ESLint or Biome
+  "eslint.enable": false,
+  "biome.enabled": false,
+
+  "files.exclude": {
+    "**/.svelte-kit": true
+  },
+  "search.exclude": {
+    "**/dist": true,
+    "**/build": true,
+    "pnpm-lock.yaml": true
+  }
 }
