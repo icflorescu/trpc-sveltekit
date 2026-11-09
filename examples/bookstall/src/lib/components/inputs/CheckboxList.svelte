@@ -4,7 +4,8 @@
   export let item: Record<string, unknown> | null;
   export let options: { value: string; label: string }[];
 
-  const isChecked = (value: string) => (item?.[name] as string[]).includes(value);
+  const isChecked = (value: string) =>
+    ((item?.[name] as string[] | undefined) ?? []).includes(value);
 </script>
 
 <legend>{label}</legend>
