@@ -7,28 +7,31 @@
 
 <h3>Hi there!</h3>
 
-<a href={AUTHOR_URL} target="_blank" rel="noreferrer"
-  ><img class="author" src="https://avatars.githubusercontent.com/u/581999" alt="@icflorescu" /></a
->
-
-<p>
-  I'm Ionut-Cristian Florescu, a hands-on fractional CTO, product builder and open-source author
-  from Bucharest, Romania, EU, building for the web since 1998.
-  <br />
-  I take software products from a blank repo to production, and stay to run them for years. I still write
-  production code.
-</p>
-
-<p>
-  tRPC-SvelteKit is one of my dearest open-source projects. I'm also the author of
-  <a href="https://icflorescu.github.io/mantine-datatable/" target="_blank" rel="noreferrer"
-    >Mantine DataTable</a
+<div class="intro">
+  <a class="author" href={AUTHOR_URL} target="_blank" rel="noreferrer"
+    ><img src="https://avatars.githubusercontent.com/u/581999" alt="@icflorescu" /></a
   >
-  (600k+ npm downloads a month, used by companies such as Microsoft and Namecheap) and
-  <a href="https://icflorescu.github.io/mantine-contextmenu/" target="_blank" rel="noreferrer"
-    >Mantine ContextMenu</a
-  >, and a contributor to tRPC and Mantine.
-</p>
+  <div>
+    <p>
+      I'm Ionut-Cristian Florescu, a hands-on fractional CTO, product builder and open-source author
+      from Bucharest, Romania, EU, building for the web since 1998.
+      <br />
+      I take software products from a blank repo to production, and stay to run them for years. I still
+      write production code.
+    </p>
+
+    <p>
+      tRPC-SvelteKit is one of my dearest open-source projects. I'm also the author of
+      <a href="https://icflorescu.github.io/mantine-datatable/" target="_blank" rel="noreferrer"
+        >Mantine DataTable</a
+      >
+      (600k+ npm downloads a month, used by companies such as Microsoft and Namecheap) and
+      <a href="https://icflorescu.github.io/mantine-contextmenu/" target="_blank" rel="noreferrer"
+        >Mantine ContextMenu</a
+      >, and a contributor to tRPC and Mantine.
+    </p>
+  </div>
+</div>
 
 <div class="swapp">
   <div>
@@ -127,16 +130,24 @@
     margin-bottom: 0.75em;
   }
 
+  .intro {
+    display: grid;
+    gap: calc(var(--pico-spacing) * 1.5);
+    align-items: center;
+    margin-bottom: calc(var(--pico-spacing) * 2);
+    @media (min-width: 576px) {
+      grid-template-columns: 140px 1fr;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   .author {
-    border-radius: var(--pico-border-radius);
-    margin-bottom: 1.5em;
-    @media (min-width: 400px) {
-      float: left;
-      width: 30%;
-      max-width: 200px;
-      // The bottom margin keeps elements that clear the float (e.g. the swapp.ro box) from
-      // touching it, since a clearing element's own top margin is ignored in that case
-      margin: 0.4em 1.5em calc(var(--pico-spacing) * 2) 0;
+    width: 140px;
+    img {
+      display: block;
+      border-radius: var(--pico-border-radius);
     }
   }
 
@@ -145,7 +156,6 @@
   }
 
   .swapp {
-    clear: both;
     display: grid;
     gap: var(--pico-spacing);
     align-items: center;
