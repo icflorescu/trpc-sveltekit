@@ -26,10 +26,17 @@
   (600k+ npm downloads a month, used by companies such as Microsoft and Namecheap) and
   <a href="https://icflorescu.github.io/mantine-contextmenu/" target="_blank" rel="noreferrer"
     >Mantine ContextMenu</a
-  >, and a contributor to tRPC and Mantine. These days I'm managing
-  <a href="https://swapp.ro" target="_blank" rel="noreferrer">swapp.ro</a>, an invoicing and
-  accounting product for Romanian freelancers, which I've built with TanStack Start, tRPC, Drizzle
-  and PostgreSQL.
+  >, and a contributor to tRPC and Mantine.
+</p>
+
+<p class="swapp">
+  These days I'm managing
+  <strong><a href="https://swapp.ro" target="_blank" rel="noreferrer">swapp.ro</a></strong>, an
+  invoicing and accounting product for Romanian freelancers, which I've built with TanStack Start,
+  tRPC, Drizzle and PostgreSQL.
+  <br />
+  Are you a Romanian freelancer?
+  <a href="https://swapp.ro/inregistrare" target="_blank" rel="noreferrer">Give it a try</a>!
 </p>
 
 <h3>How I can help</h3>
@@ -104,5 +111,16 @@
 
   .badge {
     margin-top: -0.25em;
+  }
+
+  .swapp {
+    clear: both;
+    position: relative;
+    top: var(--pico-spacing);
+    margin-bottom: calc(var(--pico-spacing) * 2);
+    padding: var(--pico-spacing);
+    border-left: 0.25em solid var(--pico-primary);
+    border-radius: var(--pico-border-radius);
+    background: var(--pico-card-sectioning-background-color);
   }
 </style>
