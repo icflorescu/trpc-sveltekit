@@ -13,12 +13,20 @@ export default async function loadCodeBlocks<T extends Record<string, 'example' 
       path,
       {
         code: await readFile(join(type === 'example' ? examplesFolder : miscFolder, path), 'utf-8'),
-        language: path.endsWith('.ts')
+        language: /\.[jt]s$/.test(path)
           ? 'typescript'
           : path.endsWith('.txt')
             ? 'plaintext'
             : undefined,
-        title: type === 'example' ? path.split('/').slice(2).join('/') : path
+        // `simple/src/lib/trpc/router.ts` -> `lib/trpc/router.ts`, `websocket/wsServer.js` -> `wsServer.js`
+        title:
+          type === 'example'
+            ? path
+                .split('/')
+                .slice(1)
+                .join('/')
+                .replace(/^src\//, '')
+            : path
       }
     ])
   );
