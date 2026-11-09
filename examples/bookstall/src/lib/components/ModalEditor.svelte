@@ -52,11 +52,8 @@
       <BusyOverlay visible={busy} />
       <header>
         <!-- svelte-ignore a11y_missing_content -->
-        <a
-          href="#cancel"
-          aria-label="Cancel"
-          class="close"
-          on:click|preventDefault={handleCancel}></a>
+        <a href="#cancel" aria-label="Cancel" class="close" on:click|preventDefault={handleCancel}
+        ></a>
         {item?.id ? 'Edit' : 'Add'}
         {itemName}
       </header>

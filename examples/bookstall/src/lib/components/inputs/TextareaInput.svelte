@@ -13,7 +13,8 @@
 
   $: error = errors?.find((e) => e.path.includes(name));
 
-  const autosize = () => {
+  // `_value` is only there so that the reactive statement below re-runs when the value changes
+  const autosize = (_value?: unknown) => {
     if (browser) {
       requestAnimationFrame(() => {
         if (textarea) {
@@ -24,7 +25,7 @@
     }
   };
 
-  $: item?.[name], autosize();
+  $: autosize(item?.[name]);
   $: value = item?.[name] as string;
 </script>
 
