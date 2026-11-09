@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AUTHOR_URL, BADGE_COLOR_CODE } from '$lib/constants';
+  import { AUTHOR_URL, BADGE_COLOR_CODE } from '#lib/constants.ts';
 </script>
 
 <h2>Hire the author</h2>

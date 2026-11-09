@@ -1,4 +1,4 @@
-import { GITHUB_PAGES_ROOT } from '$lib/constants';
+import { GITHUB_PAGES_ROOT } from '#lib/constants.ts';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import { base } from '$app/paths';
-  import Logo from '$lib/components/Logo.svelte';
-  import { PAGES } from '$lib/constants';
-  import { menuVisible } from '$lib/menuStore';
+  import { browser } from '$app/env';
+  import { resolve } from '$app/paths';
+  import Logo from '#lib/components/Logo.svelte';
+  import { PAGES } from '#lib/constants.ts';
+  import { menuVisible } from '#lib/menuStore.ts';
   import MenuLink from './MenuLink.svelte';
 
   $: {
@@ -22,17 +22,17 @@
 </script>
 
 <svelte:window on:resize={hide} />
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-<div class="backdrop" class:visible={$menuVisible} on:click={hide} />
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+<div class="backdrop" class:visible={$menuVisible} on:click={hide}></div>
+<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
 <aside class:visible={$menuVisible} on:click={hide}>
   <header>
     <div class="title"><span class="logo"><Logo /></span>tRPC-SvelteKit</div>
-    <div class="hide-button" aria-label="Hide menu" />
+    <div class="hide-button" aria-label="Hide menu"></div>
   </header>
   <nav>
     {#each PAGES as { path, title, icon: Icon } (path)}
-      <MenuLink to="{base}{path}" {title}><Icon slot="icon" /></MenuLink>
+      <MenuLink to={resolve(path)} {title}><Icon slot="icon" /></MenuLink>
     {/each}
   </nav>
 </aside>

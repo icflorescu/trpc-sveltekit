@@ -1,5 +1,5 @@
 <script lang="ts">
-  import IconInfoCircle from '$lib/icons/IconInfoCircle.svelte';
+  import IconInfoCircle from '#lib/icons/IconInfoCircle.svelte';
 </script>
 
 <div class="root">

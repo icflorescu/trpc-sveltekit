@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from '$app/paths';
-  import { PAGES } from '$lib/constants';
-  import IconArrowLeft from '$lib/icons/IconArrowLeft.svelte';
-  import IconArrowRight from '$lib/icons/IconArrowRight.svelte';
+  import { resolve } from '$app/paths';
+  import { PAGES } from '#lib/constants.ts';
+  import IconArrowLeft from '#lib/icons/IconArrowLeft.svelte';
+  import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
 
   export let currentPageIndex: number;
 
@@ -11,7 +11,7 @@
 </script>
 
 <div class="root">
-  <a class="prev" class:without-next={!nextPage} href="{base}{previousPage.path}">
+  <a class="prev" class:without-next={!nextPage} href={resolve(previousPage.path)}>
     <IconArrowLeft size="1.25em" />
     <div>
       <div class="dir">Go back</div>
@@ -19,7 +19,7 @@
     </div>
   </a>
   {#if nextPage}
-    <a href="{base}{nextPage.path}">
+    <a href={resolve(nextPage.path)}>
       <div>
         <div class="dir">Up next</div>
         <div>{nextPage.title}</div>

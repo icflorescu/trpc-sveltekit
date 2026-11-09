@@ -1,4 +1,3 @@
-import fromPairs from 'lodash/fp/fromPairs';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
@@ -17,13 +16,13 @@ export default async function loadCodeBlocks<T extends Record<string, 'example' 
         language: path.endsWith('.ts')
           ? 'typescript'
           : path.endsWith('.txt')
-          ? 'plaintext'
-          : undefined,
+            ? 'plaintext'
+            : undefined,
         title: type === 'example' ? path.split('/').slice(2).join('/') : path
       }
     ])
   );
-  return fromPairs(blocks) as Record<
+  return Object.fromEntries(blocks) as Record<
     keyof T,
     { code: string; language?: 'typescript' | 'plaintext'; title: string }
   >;

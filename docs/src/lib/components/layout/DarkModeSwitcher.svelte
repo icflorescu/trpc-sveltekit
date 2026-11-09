@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import IconMoon from '$lib/icons/IconMoon.svelte';
-  import IconSun from '$lib/icons/IconSun.svelte';
+  import { browser } from '$app/env';
+  import IconMoon from '#lib/icons/IconMoon.svelte';
+  import IconSun from '#lib/icons/IconSun.svelte';
   import atomOneDark from 'svelte-highlight/styles/atom-one-dark';
   import atomOneLight from 'svelte-highlight/styles/atom-one-light';
 
@@ -32,7 +32,7 @@
   {/if}
 </svelte:head>
 
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
 <span class="switch" title="Switch to {darkMode ? 'light' : 'dark'} mode" on:click={toggleDarkMode}>
   <span class="sun"><IconSun {size} /></span>
   <span class="moon"><IconMoon {size} /></span>

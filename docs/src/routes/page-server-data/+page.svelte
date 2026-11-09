@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Highlight from '$lib/components/Highlight.svelte';
+  import Highlight from '#lib/components/Highlight.svelte';
   import type { PageData } from './$types';
 
   export let data: PageData;

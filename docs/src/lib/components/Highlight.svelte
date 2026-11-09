@@ -1,5 +1,5 @@
 <script lang="ts">
-  import IconClipboard from '$lib/icons/IconClipboard.svelte';
+  import IconClipboard from '#lib/icons/IconClipboard.svelte';
   import { onDestroy } from 'svelte';
   import { Highlight, HighlightSvelte } from 'svelte-highlight';
   import plaintext from 'svelte-highlight/languages/plaintext';
@@ -61,7 +61,7 @@
 <div class="tabs">
   {#if tabs}
     {#each tabs as tab, i (tab.title)}
-      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
       <div
         class="tab"
         class:current={i === tabIndex}
@@ -86,15 +86,15 @@
       Code copied...
     </div>
   {/if}
-  <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="copy" on:click={copy}><IconClipboard /></div>
   {#if currentContentLanguage}
     <Highlight
       language={currentContentLanguage === 'shell'
         ? shell
         : currentContentLanguage === 'plaintext'
-        ? plaintext
-        : typescript}
+          ? plaintext
+          : typescript}
       code={currentContentCode}
     />
   {:else}

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   export let to: string;
   export let title: string | string[];
 </script>
 
-<a class:current={$page.url.pathname === to} href={to}>
+<a class:current={page.url.pathname === to} href={to}>
   <slot name="icon" />
   {#if typeof title === 'string'}
     {title}

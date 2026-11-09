@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
-  import { base } from '$app/paths';
-  import { page } from '$app/stores';
-  import Logo from '$lib/components/Logo.svelte';
-  import { REPO_URL } from '$lib/constants';
-  import IconGitHub from '$lib/icons/IconGitHub.svelte';
-  import IconMenu from '$lib/icons/IconMenu.svelte';
-  import { menuVisible } from '$lib/menuStore';
-  import throttle from 'lodash/fp/throttle';
+  import { browser } from '$app/env';
+  import { resolve } from '$app/paths';
+  import { page } from '$app/state';
+  import Logo from '#lib/components/Logo.svelte';
+  import { REPO_URL } from '#lib/constants.ts';
+  import IconGitHub from '#lib/icons/IconGitHub.svelte';
+  import IconMenu from '#lib/icons/IconMenu.svelte';
+  import { menuVisible } from '#lib/menuStore.ts';
   import DarkModeSwitcher from './DarkModeSwitcher.svelte';
 
   let scrolled = browser ? window.scrollY > 0 : false;
@@ -16,27 +15,30 @@
     menuVisible.set(true);
   };
 
-  const handleScroll = throttle(250, () => {
-    scrolled = window.scrollY > 0;
-  });
+  let scrollFrame = 0;
+  const handleScroll = () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(() => {
+      scrolled = window.scrollY > 0;
+    });
+  };
 </script>
 
 <svelte:window on:scroll={handleScroll} />
 <div class="root" class:scrolled>
-  <div class="background" />
-  <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+  <div class="background"></div>
+  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div class="menu-button" aria-label="Show menu" on:click={showMenu}>
     <IconMenu size="1.25em" />
   </div>
-  <a href={base} class="home-link" class:hidden={$menuVisible}>
+  <a href={resolve('/')} class="home-link" class:hidden={$menuVisible}>
     <h1>
       <span class="logo"><Logo /></span>tRPC-SvelteKit
-      <code class="version">v{$page.data.version}</code>
+      <code class="version">v{page.data.version}</code>
     </h1>
   </a>
   <div class="tagline">End-to-end typesafe APIs for your SvelteKit applications</div>
   <div>
-    <!-- svelte-ignore security-anchor-rel-noreferrer -->
     <a class="repo-link" href={REPO_URL} target="_blank" title="Source code">
       <IconGitHub size="1.25em" />
     </a>

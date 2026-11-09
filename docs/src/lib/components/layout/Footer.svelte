@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AUTHOR_URL, BADGE_COLOR_CODE, REPO_URL } from '$lib/constants';
+  import { AUTHOR_URL, BADGE_COLOR_CODE, REPO_URL } from '#lib/constants.ts';
 </script>
 
 <footer>
@@ -19,14 +19,12 @@
     >.
   </div>
   <div class="repo-metrics">
-    <!-- svelte-ignore security-anchor-rel-noreferrer -->
     <a class="image-link" href={REPO_URL} target="_blank">
       <img
         src="https://img.shields.io/github/stars/icflorescu/trpc-sveltekit?style=flat&color={BADGE_COLOR_CODE}"
         alt="GitHub Stars"
       />
     </a>
-    <!-- svelte-ignore security-anchor-rel-noreferrer -->
     <a class="image-link" href="https://www.npmjs.com/package/trpc-sveltekit" target="_blank">
       <img
         src="https://img.shields.io/npm/dm/trpc-sveltekit.svg?style=flat&color={BADGE_COLOR_CODE}"

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Highlight from '$lib/components/Highlight.svelte';
+  import Highlight from '#lib/components/Highlight.svelte';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -18,8 +18,8 @@
 
 <p>
   To change the headers of the response, you want to use the <code>event</code> provided in
-  <code>getContext</code>. You may also pass the <code>event</code> into the context, so that it can
-  be accessed in your procedures.
+  <code>getContext</code>. You may also pass the <code>event</code> into the context, so that it can be
+  accessed in your procedures.
 </p>
 
 <p>

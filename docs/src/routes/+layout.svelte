@@ -1,27 +1,34 @@
 <script lang="ts">
-  import { dev } from '$app/environment';
-  import { base } from '$app/paths';
-  import { page } from '$app/stores';
-  import Footer from '$lib/components/layout/Footer.svelte';
-  import Header from '$lib/components/layout/Header.svelte';
-  import Menu from '$lib/components/layout/Menu.svelte';
-  import PageNavigation from '$lib/components/layout/PageNavigation.svelte';
-  import { PAGES } from '$lib/constants';
+  import { dev } from '$app/env';
+  import { resolve } from '$app/paths';
+  import { page } from '$app/state';
+  import Footer from '#lib/components/layout/Footer.svelte';
+  import Header from '#lib/components/layout/Header.svelte';
+  import Menu from '#lib/components/layout/Menu.svelte';
+  import PageNavigation from '#lib/components/layout/PageNavigation.svelte';
+  import { PAGES } from '#lib/constants.ts';
   import '../app.scss';
+
+  let { children } = $props();
 
   const image = 'https://icflorescu.github.io/trpc-sveltekit/trpc-sveltekit.png';
 
-  $: currentPageIndex =
-    $page.url.pathname === base
-      ? 0
-      : PAGES.findIndex((p) => `${base}${p.path}` === $page.url.pathname);
-  $: currentPage = PAGES[currentPageIndex];
+  const normalize = (path: string) => path.replace(/\/$/, '');
 
-  $: title =
+  const currentPageIndex = $derived(
+    Math.max(
+      0,
+      PAGES.findIndex((p) => normalize(resolve(p.path)) === normalize(page.url.pathname))
+    )
+  );
+  const currentPage = $derived(PAGES[currentPageIndex]);
+
+  const title = $derived(
     currentPage.customPageTitle ||
-    `${
-      typeof currentPage.title === 'string' ? currentPage.title : currentPage.title.join(' ')
-    } | tRPC-SvelteKit`;
+      `${
+        typeof currentPage.title === 'string' ? currentPage.title : currentPage.title.join(' ')
+      } | tRPC-SvelteKit`
+  );
 </script>
 
 <svelte:head>
@@ -52,7 +59,7 @@
 <Header />
 <div>
   <main>
-    <slot />
+    {@render children()}
     {#if currentPageIndex > 0}<PageNavigation {currentPageIndex} />{/if}
   </main>
 </div>

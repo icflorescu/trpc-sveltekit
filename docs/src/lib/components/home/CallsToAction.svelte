@@ -1,18 +1,17 @@
 <script lang="ts">
-  import { base } from '$app/paths';
-  import { PAGES, REPO_URL } from '$lib/constants';
-  import IconGitHub from '$lib/icons/IconGitHub.svelte';
+  import { resolve } from '$app/paths';
+  import { PAGES, REPO_URL } from '#lib/constants.ts';
+  import IconGitHub from '#lib/icons/IconGitHub.svelte';
 
   const gettingStartedPage = PAGES[1];
   const GettingStartedPageIcon = gettingStartedPage.icon;
 </script>
 
 <div>
-  <a role="button" href="{base}{gettingStartedPage.path}">
+  <a role="button" href={resolve(gettingStartedPage.path)}>
     <GettingStartedPageIcon size="1.25em" />
     Get started
   </a>
-  <!-- svelte-ignore security-anchor-rel-noreferrer -->
   <a role="button" class="secondary" href={REPO_URL} target="_blank">
     <IconGitHub size="1.25em" />
     View code

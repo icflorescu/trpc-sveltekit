@@ -1,4 +1,4 @@
-import loadCodeBlocks from '$lib/loadCodeBlocks';
+import loadCodeBlocks from '#lib/loadCodeBlocks.ts';
 import type { PageServerLoad } from './$types';
 
 export const prerender = true;

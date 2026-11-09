@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from '$app/paths';
-  import Info from '$lib/components/Info.svelte';
-  import { AUTHOR_URL, REPO_URL } from '$lib/constants';
-  import { useMediaQuery } from '$lib/useMediaQuery';
+  import { resolve } from '$app/paths';
+  import Info from '#lib/components/Info.svelte';
+  import { AUTHOR_URL, REPO_URL } from '#lib/constants.ts';
+  import { useMediaQuery } from '#lib/useMediaQuery.ts';
 
   let md = useMediaQuery('(min-width: 1024px)');
   let lg = useMediaQuery('(min-width: 1280px)');
@@ -32,12 +32,10 @@
 <h3>Raising issues and asking for features</h3>
 
 <p>
-  <!-- svelte-ignore security-anchor-rel-noreferrer -->
   If you find a bug, please don't hesitate to
   <a href="{REPO_URL}/issues" target="_blank">raise an issue</a>.
   <br />
   If you have an idea about a new or missing feature, let's
-  <!-- svelte-ignore security-anchor-rel-noreferrer -->
   <a href="{REPO_URL}/discussions" target="_blank">discuss it here</a>.
 </p>
 
@@ -72,8 +70,8 @@
     src="https://contrib.rocks/image?repo=icflorescu/trpc-sveltekit&columns={$lg
       ? '12'
       : $md
-      ? '8'
-      : '4'}"
+        ? '8'
+        : '4'}"
     alt="tRPC-SvelteKit contributors"
   />
 </a>
@@ -81,7 +79,6 @@
 <h3>Supporting the project</h3>
 
 <p>
-  <!-- svelte-ignore security-anchor-rel-noreferrer -->
   If you find this project useful, it would help a lot if you could 🙏<a
     href={REPO_URL}
     target="_blank">star the repository</a
@@ -93,7 +90,7 @@
     >endorse me on LinkedIn</a
   >, 💗<a href="https://github.com/sponsors/icflorescu" target="_blank" rel="noreferrer"
     >sponsor this project</a
-  >, or — better yet — <a href="{base}/hire-the-author">hire my services</a>.
+  >, or — better yet — <a href={resolve('/hire-the-author')}>hire my services</a>.
 </p>
 
 <h3>Sponsoring the project</h3>

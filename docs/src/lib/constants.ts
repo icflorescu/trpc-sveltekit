@@ -1,10 +1,10 @@
-import IconFileCode from '$lib/icons/IconFileCode.svelte';
-import IconFileDatabase from '$lib/icons/IconFileDatabase.svelte';
-import IconFolder from '$lib/icons/IconFolder.svelte';
-import IconHome from '$lib/icons/IconHome.svelte';
-import IconLock from '$lib/icons/IconLock.svelte';
-import IconRocket from '$lib/icons/IconRocket.svelte';
-import IconTools from '$lib/icons/IconTools.svelte';
+import IconFileCode from '#lib/icons/IconFileCode.svelte';
+import IconFileDatabase from '#lib/icons/IconFileDatabase.svelte';
+import IconFolder from '#lib/icons/IconFolder.svelte';
+import IconHome from '#lib/icons/IconHome.svelte';
+import IconLock from '#lib/icons/IconLock.svelte';
+import IconRocket from '#lib/icons/IconRocket.svelte';
+import IconTools from '#lib/icons/IconTools.svelte';
 import IconBulb from './icons/IconBulb.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
@@ -17,9 +17,11 @@ export const AUTHOR_URL = 'https://github.com/icflorescu';
 export const REPO_URL = `${AUTHOR_URL}/trpc-sveltekit`;
 export const BADGE_COLOR_CODE = '1095c1';
 
+import type { RouteId } from '$app/types';
+
 export const PAGES: {
   title: string | string[];
-  path: string;
+  path: RouteId;
   icon: typeof IconHome;
   customPageTitle?: string;
   pageDescription: string;

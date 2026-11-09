@@ -1,8 +1,8 @@
 <script lang="ts">
-  import CallsToAction from '$lib/components/home/CallsToAction.svelte';
-  import LogosBlend from '$lib/components/home/LogosBlend.svelte';
-  import Mantra from '$lib/components/home/Mantra.svelte';
-  import SupportedAdapters from '$lib/components/home/SupportedAdapters.svelte';
+  import CallsToAction from '#lib/components/home/CallsToAction.svelte';
+  import LogosBlend from '#lib/components/home/LogosBlend.svelte';
+  import Mantra from '#lib/components/home/Mantra.svelte';
+  import SupportedAdapters from '#lib/components/home/SupportedAdapters.svelte';
 </script>
 
 <div class="root">

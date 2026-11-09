@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Highlight from '$lib/components/Highlight.svelte';
-  import IconInfoCircle from '$lib/icons/IconInfoCircle.svelte';
+  import Highlight from '#lib/components/Highlight.svelte';
+  import IconInfoCircle from '#lib/icons/IconInfoCircle.svelte';
   import type { PageData } from './$types';
 
   export let data: PageData;
