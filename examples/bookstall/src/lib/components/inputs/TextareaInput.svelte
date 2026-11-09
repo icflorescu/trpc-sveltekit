@@ -49,8 +49,8 @@
   textarea {
     resize: none;
     min-height: calc(
-      var(--line-height) * var(--pico-font-size) +
-        (var(--border-width) + var(--pico-form-element-spacing-vertical)) * 2
+      var(--pico-line-height) * var(--pico-font-size) +
+        (var(--pico-border-width) + var(--pico-form-element-spacing-vertical)) * 2
     );
     max-height: 200px;
     margin-bottom: 0.5em;

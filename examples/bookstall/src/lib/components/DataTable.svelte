@@ -152,7 +152,7 @@
   h2 {
     font-size: 1.25em;
     font-weight: 500;
-    color: var(--h6-color);
+    color: var(--pico-h6-color);
     margin: -0.1em 0 0;
   }
 
@@ -168,7 +168,7 @@
     right: 1em;
     width: 1em;
     height: 1em;
-    background: var(--icon-close) center/auto 1rem no-repeat;
+    background: var(--pico-icon-close) center/auto 1rem no-repeat;
     &:hover {
       filter: brightness(1.5);
     }
@@ -184,7 +184,7 @@
   }
 
   th {
-    --border-width: 1px;
+    --pico-border-width: 1px;
   }
 
   .row-actions-header > {

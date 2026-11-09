@@ -72,6 +72,6 @@
 <style>
   form {
     max-width: 500px;
-    margin: var(--block-spacing-vertical) auto;
+    margin: var(--pico-block-spacing-vertical) auto;
   }
 </style>

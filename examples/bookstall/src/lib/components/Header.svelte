@@ -46,7 +46,7 @@
 
   h1,
   p {
-    color: var(--h6-color);
+    color: var(--pico-h6-color);
     font-family: Cormorant, serif;
     line-height: 1;
     margin: 0;
