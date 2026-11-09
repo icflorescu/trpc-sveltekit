@@ -5,6 +5,7 @@ import IconHome from '#lib/icons/IconHome.svelte';
 import IconLock from '#lib/icons/IconLock.svelte';
 import IconRocket from '#lib/icons/IconRocket.svelte';
 import IconTools from '#lib/icons/IconTools.svelte';
+import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
 import IconBulb from './icons/IconBulb.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
@@ -39,6 +40,12 @@ export const PAGES: {
     path: '/getting-started',
     icon: IconRocket,
     pageDescription: 'Get started with tRPC-SvelteKit'
+  },
+  {
+    title: 'Upgrading to v4',
+    path: '/upgrading-to-v4',
+    icon: IconArrowRight,
+    pageDescription: 'How to upgrade to tRPC-SvelteKit v4 and tRPC v11'
   },
   {
     title: 'Page data',
@@ -104,6 +111,6 @@ export const PAGES: {
     title: 'Hire the author',
     path: '/hire-the-author',
     icon: IconHeartHandshake,
-    pageDescription: 'Hire the author of tRPC-SvleteKit'
+    pageDescription: 'Hire the author of tRPC-SvelteKit'
   }
 ];
