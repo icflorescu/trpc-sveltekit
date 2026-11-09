@@ -1,7 +1,5 @@
 import type { IncomingMessage, Server as HttpServer } from 'node:http';
-import { resolve } from 'node:path';
 import type { Duplex } from 'node:stream';
-import { fileURLToPath, pathToFileURL } from 'node:url';
 import { WebSocketServer } from 'ws';
 
 export const GlobalThisWSS = Symbol.for('trpc.sveltekit.wss');
@@ -61,6 +59,10 @@ export async function SvelteKitTRPCWSServer(
   { path = '/trpc', buildDir = 'build' }: { path?: string; buildDir?: string } = {}
 ) {
   createWSSGlobalInstance();
+
+  // Imported lazily, so that importing this module in the browser doesn't fail
+  const { resolve } = await import('node:path');
+  const { fileURLToPath, pathToFileURL } = await import('node:url');
 
   const entry = resolve(fileURLToPath(new URL('.', importMetaUrl)), buildDir, 'index.js');
   const { server } = (await import(/* @vite-ignore */ pathToFileURL(entry).href)) as {

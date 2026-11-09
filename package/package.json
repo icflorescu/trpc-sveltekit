@@ -45,6 +45,7 @@
     },
     "./websocket": {
       "types": "./dist/websocket/index.d.ts",
+      "browser": "./dist/websocket/index.browser.js",
       "default": "./dist/websocket/index.js"
     },
     "./package.json": "./package.json"
