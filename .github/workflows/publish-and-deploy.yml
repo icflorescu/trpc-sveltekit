@@ -102,13 +102,13 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: npm install -g npm@latest
 
-      # Uses npm Trusted Publishing (OIDC); configure it at
-      # https://www.npmjs.com/package/trpc-sveltekit/access
-      # (workflow: publish-and-deploy.yml, environment: npm-registry).
-      # Provenance is generated automatically.
-      - name: Publish to npm
+      # Stages the release via npm Trusted Publishing (OIDC; provenance is generated automatically).
+      # A maintainer must approve it with 2FA before it goes public: find the stage id in this
+      # step's log (`staged with id <uuid>`) or via `npm stage list trpc-sveltekit`, then run
+      # `npm stage approve <uuid>`.
+      - name: Stage npm release
         if: steps.check.outputs.skip != 'true'
-        run: npm publish --access public --tag "${{ steps.check.outputs.tag }}"
+        run: npm stage publish --access public --tag "${{ steps.check.outputs.tag }}"
 
   # Deploys the docs independently of publishing, so docs-only changes are never blocked
   deploy:
