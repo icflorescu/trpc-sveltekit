@@ -26,9 +26,10 @@
   (600k+ npm downloads a month, used by companies such as Microsoft and Namecheap) and
   <a href="https://icflorescu.github.io/mantine-contextmenu/" target="_blank" rel="noreferrer"
     >Mantine ContextMenu</a
-  >, and a contributor to tRPC and Mantine. These days I'm building
+  >, and a contributor to tRPC and Mantine. These days I'm managing
   <a href="https://swapp.ro" target="_blank" rel="noreferrer">swapp.ro</a>, an invoicing and
-  accounting product for Romanian freelancers, on TanStack Start, tRPC, Drizzle and PostgreSQL.
+  accounting product for Romanian freelancers, which I've built with TanStack Start, tRPC, Drizzle
+  and PostgreSQL.
 </p>
 
 <h3>How I can help</h3>
