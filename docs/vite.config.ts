@@ -13,9 +13,7 @@ export default defineConfig({
     })
   ],
   css: {
-    preprocessorOptions: {
-      // Pico CSS v1 still uses Sass @import
-      scss: { silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function'] }
-    }
+    // Pico CSS uses the Sass if() function, which is deprecated
+    preprocessorOptions: { scss: { silenceDeprecations: ['if-function'] } }
   }
 });

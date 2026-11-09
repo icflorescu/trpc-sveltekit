@@ -66,8 +66,8 @@
     left: 0;
     bottom: 0;
     width: var(--navbar-width);
-    background: var(--card-background-color);
-    border-right: 1px solid var(--muted-border-color);
+    background: var(--pico-card-background-color);
+    border-right: 1px solid var(--pico-muted-border-color);
     display: flex;
     flex-direction: column;
     transform: translate3d(-100%, 0, 0);
@@ -76,7 +76,7 @@
     pointer-events: all;
     &.visible {
       transform: translate3d(0, 0, 0);
-      box-shadow: var(--card-box-shadow);
+      box-shadow: var(--pico-card-box-shadow);
     }
     @media (min-width: 1024px) {
       top: var(--header-height);
@@ -87,11 +87,11 @@
   header {
     flex-shrink: 0;
     height: var(--header-height);
-    border-bottom: 1px solid var(--muted-border-color);
+    border-bottom: 1px solid var(--pico-muted-border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--spacing);
+    padding: 0 var(--pico-spacing);
     @media (min-width: 1024px) {
       display: none;
     }
@@ -109,7 +109,7 @@
   .hide-button {
     width: 1rem;
     height: 1rem;
-    background: var(--icon-close) center/auto 1rem no-repeat;
+    background: var(--pico-icon-close) center/auto 1rem no-repeat;
   }
 
   nav {

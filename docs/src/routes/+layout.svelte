@@ -82,9 +82,9 @@
   }
 
   div {
-    background: var(--background-color);
-    border-bottom: 1px solid var(--muted-border-color);
-    box-shadow: var(--card-box-shadow);
+    background: var(--pico-background-color);
+    border-bottom: 1px solid var(--pico-muted-border-color);
+    box-shadow: var(--pico-card-box-shadow);
     margin-bottom: calc(var(--footer-height) - 1px);
     @media (min-width: 1024px) {
       margin-left: var(--navbar-width);
@@ -92,11 +92,11 @@
   }
 
   main {
-    padding: var(--spacing);
+    padding: var(--pico-spacing);
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
     max-width: 1024px;
     @media (min-width: 1024px) {
-      padding: var(--spacing) calc(var(--spacing) * 2);
+      padding: var(--pico-spacing) calc(var(--pico-spacing) * 2);
       margin: 0 auto;
     }
     @media (min-width: 1600px) {

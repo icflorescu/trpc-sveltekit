@@ -61,7 +61,7 @@
   }
 
   .author {
-    border-radius: var(--border-radius);
+    border-radius: var(--pico-border-radius);
     margin-bottom: 1.5em;
     @media (min-width: 400px) {
       float: left;

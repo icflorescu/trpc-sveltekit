@@ -113,11 +113,11 @@
   .tab {
     font-size: 0.8em;
     font-weight: 500;
-    color: var(--muted-color);
+    color: var(--pico-muted-color);
     width: auto;
     padding: 0.75em 1em 1em;
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
+    border-top-left-radius: var(--pico-border-radius);
+    border-top-right-radius: var(--pico-border-radius);
     border: 1px solid transparent;
     margin-left: 0.25em;
     cursor: pointer;
@@ -126,25 +126,25 @@
       margin-left: 0.75em;
     }
     &:hover {
-      background: var(--primary-focus);
-      border-bottom-color: var(--muted-border-color);
+      background: var(--pico-primary-focus);
+      border-bottom-color: var(--pico-muted-border-color);
     }
     &.current {
       cursor: default;
-      color: var(--contrast);
-      background: var(--code-background-color);
-      border-color: var(--muted-border-color);
-      border-bottom-color: var(--code-background-color);
+      color: var(--pico-contrast);
+      background: var(--pico-code-background-color);
+      border-color: var(--pico-muted-border-color);
+      border-bottom-color: var(--pico-code-background-color);
     }
   }
 
   .code {
     position: relative;
-    margin-bottom: var(--typography-spacing-vertical);
+    margin-bottom: var(--pico-typography-spacing-vertical);
 
     :global(code) {
-      border: 1px solid var(--muted-border-color);
-      background: var(--code-background-color);
+      border: 1px solid var(--pico-muted-border-color);
+      background: var(--pico-code-background-color);
     }
   }
 
@@ -153,11 +153,11 @@
     top: 0.75em;
     right: 3em;
     font-size: 0.9em;
-    color: var(--muted-color);
-    background: var(--background-color);
+    color: var(--pico-muted-color);
+    background: var(--pico-background-color);
     padding: 0.2em 0.5em;
-    border: 1px solid var(--muted-border-color);
-    border-radius: var(--border-radius);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
   }
 
   .copy {
@@ -170,7 +170,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--code-background-color);
+    background: var(--pico-code-background-color);
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.2s;

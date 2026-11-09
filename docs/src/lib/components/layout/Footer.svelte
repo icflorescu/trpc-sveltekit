@@ -46,13 +46,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: calc(var(--spacing) / 2);
-    padding: var(--spacing);
+    gap: calc(var(--pico-spacing) / 2);
+    padding: var(--pico-spacing);
     @media (min-width: 1024px) {
       margin-left: var(--navbar-width);
     }
     @media (min-width: 1280px) {
-      padding: var(--spacing) calc(var(--spacing) * 2);
+      padding: var(--pico-spacing) calc(var(--pico-spacing) * 2);
       flex-direction: row;
       justify-content: space-between;
     }
@@ -80,6 +80,6 @@
 
   .repo-metrics {
     display: flex;
-    gap: calc(var(--spacing) / 2);
+    gap: calc(var(--pico-spacing) / 2);
   }
 </style>

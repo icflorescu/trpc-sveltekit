@@ -34,10 +34,10 @@
     margin: 2em 0 1em;
     display: flex;
     flex-direction: column-reverse;
-    row-gap: var(--spacing);
+    row-gap: var(--pico-spacing);
     @media (min-width: 512px) {
       flex-direction: row;
-      column-gap: calc(var(--spacing) * 1.5);
+      column-gap: calc(var(--pico-spacing) * 1.5);
     }
   }
 
@@ -47,23 +47,23 @@
     justify-content: space-between;
     padding: 0.5em 1em;
     text-decoration: none;
-    color: var(--muted-color);
-    background: var(--card-background-color);
-    border: 1px solid var(--muted-border-color);
-    border-radius: var(--border-radius);
+    color: var(--pico-muted-color);
+    background: var(--pico-card-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--pico-border-radius);
     @media (pointer: fine) {
       &:hover {
-        background: var(--muted-border-color);
+        background: var(--pico-muted-border-color);
       }
     }
     &:active {
-      background: var(--primary-focus);
+      background: var(--pico-primary-focus);
     }
     &.prev {
       text-align: right;
     }
     @media (min-width: 512px) {
-      width: calc(50% - (var(--spacing) * 0.75));
+      width: calc(50% - (var(--pico-spacing) * 0.75));
       &.without-next {
         width: 100%;
       }

@@ -55,11 +55,11 @@
     align-items: center;
     justify-content: space-between;
     height: var(--header-height);
-    padding: 0 var(--spacing);
-    border-bottom: 1px solid var(--muted-border-color);
+    padding: 0 var(--pico-spacing);
+    border-bottom: 1px solid var(--pico-muted-border-color);
     backdrop-filter: blur(3px);
     &.scrolled {
-      box-shadow: var(--card-box-shadow);
+      box-shadow: var(--pico-card-box-shadow);
     }
   }
 
@@ -70,7 +70,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--card-background-color);
+    background: var(--pico-card-background-color);
     opacity: 0.85;
   }
 
@@ -109,7 +109,7 @@
   .version {
     font-size: 1rem;
     vertical-align: text-top;
-    border: 1px solid var(--muted-border-color);
+    border: 1px solid var(--pico-muted-border-color);
     padding: 0.2rem 0.5rem;
     display: none;
     @media (min-width: 400px) {
@@ -122,14 +122,14 @@
     @media (min-width: 1024px) {
       display: block;
       font-size: 1.25em;
-      color: var(--muted-color);
+      color: var(--pico-muted-color);
       margin-bottom: -0.25em;
     }
   }
 
   .repo-link {
     color: inherit;
-    margin-right: var(--spacing);
+    margin-right: var(--pico-spacing);
     &:focus {
       background: none;
     }

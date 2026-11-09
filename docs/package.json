@@ -14,7 +14,7 @@
     "check": "svelte-kit sync && svelte-check"
   },
   "devDependencies": {
-    "@picocss/pico": "^1.5.13",
+    "@picocss/pico": "^2.1.1",
     "@sveltejs/adapter-static": "^4.0.1",
     "@sveltejs/kit": "^3.1.1",
     "@sveltejs/vite-plugin-svelte": "^7.3.1",

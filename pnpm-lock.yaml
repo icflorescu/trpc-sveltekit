@@ -185,8 +185,8 @@ importers:
   docs:
     devDependencies:
       '@picocss/pico':
-        specifier: ^1.5.13
-        version: 1.5.13
+        specifier: ^2.1.1
+        version: 2.1.1
       '@sveltejs/adapter-static':
         specifier: ^4.0.1
         version: 4.0.1(@sveltejs/kit@3.1.1(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3)(vite@8.3.6(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.1)))(svelte@5.57.3)(typescript@6.0.3)(vite@8.3.6(@types/node@24.19.2)(jiti@2.7.0)(sass@1.108.1)))
@@ -642,9 +642,6 @@ packages:
   '@parcel/watcher@2.6.0':
     resolution: {integrity: sha512-7FNeNl8NCE7aINx7WXiKQrPYZWC/hvrTsmk6zmxbI7LTXE7hVek/n8AfVgpe2y82zl3w0HvCHN0bVKMBoJcC0w==}
     engines: {node: '>= 10.0.0'}
-
-  '@picocss/pico@1.5.13':
-    resolution: {integrity: sha512-BPTeE4JC95+7/vsG9r+6hDR1qUkV4YZ1blI/TI6peOmM94XubjmUDE3jUi4f6DBV6WmCL76ueTct/NerJ33E8A==}
 
   '@picocss/pico@2.1.1':
     resolution: {integrity: sha512-kIDugA7Ps4U+2BHxiNHmvgPIQDWPDU4IeU6TNRdvXQM1uZX+FibqDQT2xUOnnO2yq/LUHcwnGlu1hvf4KfXnMg==}
@@ -2164,8 +2161,6 @@ snapshots:
       '@parcel/watcher-win32-arm64': 2.6.0
       '@parcel/watcher-win32-x64': 2.6.0
     optional: true
-
-  '@picocss/pico@1.5.13': {}
 
   '@picocss/pico@2.1.1': {}
 

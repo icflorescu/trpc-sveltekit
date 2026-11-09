@@ -9,9 +9,9 @@
 
 <style lang="scss">
   div {
-    background: var(--code-background-color);
-    border: 1px solid var(--muted-border-color);
-    border-radius: calc(var(--border-radius));
+    background: var(--pico-code-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: calc(var(--pico-border-radius));
     padding: 0.5em;
     display: flex;
     gap: 1em;

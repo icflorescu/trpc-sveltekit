@@ -96,7 +96,7 @@
     height: 1.5em;
     justify-content: center;
     align-items: center;
-    border: 2px solid var(--color);
+    border: 2px solid var(--pico-color);
     border-radius: 50%;
     font-size: 0.75em;
     vertical-align: 0.12em;
