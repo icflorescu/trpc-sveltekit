@@ -1,5 +1,8 @@
 <script lang="ts">
   import IconInfoCircle from '#lib/icons/IconInfoCircle.svelte';
+  import type { Snippet } from 'svelte';
+
+  let { children }: { children: Snippet } = $props();
 </script>
 
 <div class="root">
@@ -7,7 +10,7 @@
     <IconInfoCircle />
   </div>
   <p>
-    <slot />
+    {@render children()}
   </p>
 </div>
 
