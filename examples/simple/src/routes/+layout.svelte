@@ -9,7 +9,8 @@
   const routes = [
     { to: '/', title: 'Simple usage' },
     { to: '/page-data', title: 'Page data' },
-    { to: '/page-server-data', title: 'Page server data' }
+    { to: '/page-server-data', title: 'Page server data' },
+    { to: '/svelte-query', title: 'Svelte Query' }
   ];
 </script>
 
