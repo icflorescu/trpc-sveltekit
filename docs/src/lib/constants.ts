@@ -16,6 +16,7 @@ import IconWebSocket from './icons/IconWebSocket.svelte';
 export const GITHUB_PAGES_ROOT = 'https://icflorescu.github.io/trpc-sveltekit';
 export const AUTHOR_URL = 'https://github.com/icflorescu';
 export const REPO_URL = `${AUTHOR_URL}/trpc-sveltekit`;
+export const CHANGELOG_URL = `${REPO_URL}/blob/main/CHANGELOG.md`;
 export const BADGE_COLOR_CODE = '1095c1';
 
 import type { RouteId } from '$app/types';

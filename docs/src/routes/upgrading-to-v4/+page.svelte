@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { CHANGELOG_URL } from '#lib/constants.ts';
+</script>
+
 <h2>Upgrading to v4</h2>
 
 <p>
@@ -36,3 +40,8 @@
     <code>cookie</code> package.
   </li>
 </ul>
+
+<p>
+  See the <a href={CHANGELOG_URL} target="_blank" rel="noreferrer">changelog</a> for the notable changes
+  in each version.
+</p>

@@ -35,6 +35,7 @@ Documentation available at [icflorescu.github.io/trpc-sveltekit](https://icflore
 | v2.x.x         | v9   | v1        |
 
 Upgrading from v3? Have a look at the [upgrade guide](https://icflorescu.github.io/trpc-sveltekit/upgrading-to-v4).
+See the [changelog](https://github.com/icflorescu/trpc-sveltekit/blob/main/CHANGELOG.md) for the notable changes in each version.
 
 ## Quickstart
 

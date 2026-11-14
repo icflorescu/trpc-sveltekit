@@ -1,7 +1,8 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import Logo from '#lib/components/Logo.svelte';
-  import { PAGES } from '#lib/constants.ts';
+  import { CHANGELOG_URL, PAGES } from '#lib/constants.ts';
+  import IconHistory from '#lib/icons/IconHistory.svelte';
   import { menu } from '#lib/menu.svelte.ts';
   import MenuLink from './MenuLink.svelte';
 
@@ -26,6 +27,9 @@
   <nav>
     {#each PAGES as { path, title, icon } (path)}
       <MenuLink to={resolve(path)} {title} {icon} />
+      {#if path === '/upgrading-to-v4'}
+        <MenuLink to={CHANGELOG_URL} title="Changelog" icon={IconHistory} external />
+      {/if}
     {/each}
   </nav>
 </aside>
