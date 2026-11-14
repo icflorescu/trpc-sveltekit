@@ -22,6 +22,27 @@ export function createWSSGlobalInstance(): WebSocketServer {
 }
 
 /**
+ * Close the global WebSocket server: stop accepting new connections and close the open ones
+ * with code 1001 ("going away"), so that tRPC clients reconnect (to another instance, or to this
+ * one once it's restarted). Connections that aren't closed within `timeout` milliseconds are
+ * terminated.
+ *
+ * Open WebSocket connections keep the HTTP server from closing, so this has to be called for the
+ * process to shut down gracefully. `SvelteKitTRPCWSServer` does it on `SIGTERM` and `SIGINT`.
+ */
+export function closeWSSGlobalInstance({ timeout = 1000 }: { timeout?: number } = {}) {
+  const wss = getWSSGlobalInstance();
+  if (!wss) return;
+
+  // New upgrade requests are rejected with a 503 from now on
+  wss.close();
+  for (const ws of wss.clients) ws.close(1001, 'Server shutting down');
+  setTimeout(() => {
+    for (const ws of wss.clients) ws.terminate();
+  }, timeout).unref();
+}
+
+/**
  * Create a listener for the HTTP server `upgrade` event that hands requests made to `path`
  * over to the global WebSocket server. Other upgrade requests (such as Vite HMR) are ignored.
  */
@@ -72,4 +93,10 @@ export async function SvelteKitTRPCWSServer(
   // adapter-node >= 6 exports the `http.Server`; older versions export a polka instance.
   const httpServer = 'server' in server ? server.server : server;
   httpServer.on('upgrade', createUpgradeHandler(path));
+
+  // adapter-node closes the HTTP server on these signals, which only completes
+  // once the WebSocket connections are closed too
+  const shutdown = () => closeWSSGlobalInstance();
+  process.once('SIGTERM', shutdown);
+  process.once('SIGINT', shutdown);
 }
