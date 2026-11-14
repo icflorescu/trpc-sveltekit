@@ -5,13 +5,13 @@ import IconHome from '#lib/icons/IconHome.svelte';
 import IconLock from '#lib/icons/IconLock.svelte';
 import IconRocket from '#lib/icons/IconRocket.svelte';
 import IconTools from '#lib/icons/IconTools.svelte';
-import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
 import IconRobot from './icons/IconRobot.svelte';
 import IconSpeakerphone from './icons/IconSpeakerphone.svelte';
 import IconTanStack from './icons/IconTanStack.svelte';
+import IconUpgrade from './icons/IconUpgrade.svelte';
 import IconWebSocket from './icons/IconWebSocket.svelte';
 
 export const GITHUB_PAGES_ROOT = 'https://icflorescu.github.io/trpc-sveltekit';
@@ -42,12 +42,6 @@ export const PAGES: {
     path: '/getting-started',
     icon: IconRocket,
     pageDescription: 'Get started with tRPC-SvelteKit'
-  },
-  {
-    title: 'Upgrading to v4',
-    path: '/upgrading-to-v4',
-    icon: IconArrowRight,
-    pageDescription: 'How to upgrade to tRPC-SvelteKit v4 and tRPC v11'
   },
   {
     title: 'Page data',
@@ -103,6 +97,12 @@ export const PAGES: {
     path: '/llms-txt',
     icon: IconRobot,
     pageDescription: 'LLM-friendly tRPC-SvelteKit documentation for AI assistants and coding agents'
+  },
+  {
+    title: 'Upgrading to v4',
+    path: '/upgrading-to-v4',
+    icon: IconUpgrade,
+    pageDescription: 'How to upgrade to tRPC-SvelteKit v4 and tRPC v11'
   },
   {
     title: 'Contribute and support',
