@@ -43,8 +43,19 @@ export function closeWSSGlobalInstance({ timeout = 1000 }: { timeout?: number } 
 }
 
 /**
+ * Reject an upgrade request, so that the client retries later
+ */
+function rejectUpgrade(socket: Duplex) {
+  socket.end('HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\nContent-Length: 0\r\n\r\n');
+}
+
+/**
  * Create a listener for the HTTP server `upgrade` event that hands requests made to `path`
  * over to the global WebSocket server. Other upgrade requests (such as Vite HMR) are ignored.
+ *
+ * Requests made before a router is attached (with `createTRPCWebSocketServer`) are rejected,
+ * so that the client retries instead of waiting on a connection nobody handles. This happens
+ * in development, where SvelteKit only loads your server hooks on the first HTTP request.
  */
 export function createUpgradeHandler(path = '/trpc') {
   return (req: IncomingMessage, socket: Duplex, head: Buffer) => {
@@ -52,7 +63,7 @@ export function createUpgradeHandler(path = '/trpc') {
     if (pathname !== path) return;
 
     const wss = getWSSGlobalInstance();
-    if (!wss) return;
+    if (!wss || wss.listenerCount('connection') === 0) return rejectUpgrade(socket);
 
     wss.handleUpgrade(req, socket, head, (ws) => {
       wss.emit('connection', ws, req);
