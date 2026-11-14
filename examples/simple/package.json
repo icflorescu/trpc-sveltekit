@@ -26,6 +26,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@tanstack/svelte-query": "^6.4.1",
     "@trpc/client": "^11.25.2",
     "@trpc/server": "^11.25.2",
     "trpc-sveltekit": "workspace:*"

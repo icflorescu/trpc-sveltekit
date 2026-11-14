@@ -86,6 +86,21 @@
 
 <Highlight {...data.codeBlocks['websocket/src/lib/trpc/context.ts']} />
 
+<h3>Authentication</h3>
+
+<p>
+  Since there's no SvelteKit request event, read the credentials from the upgrade request yourself.
+  Browsers send your site's cookies with it, so you can parse <code>req.headers.cookie</code> (for
+  instance with the <code>cookie</code> package). Alternatively, pass a token with the
+  <code>connectionParams</code> option of <code>createTRPCWebSocketClient</code> and read it from
+  <code>info.connectionParams</code>:
+</p>
+
+<Highlight
+  code={data.codeBlocks['websocket-auth.ts'].code}
+  language={data.codeBlocks['websocket-auth.ts'].language}
+/>
+
 <h3>Usage</h3>
 
 <p>Define your router as usual; subscriptions can be written as async generators:</p>
@@ -117,8 +132,20 @@
     reached from your SvelteKit server hooks.
   </li>
   <li>
+    Connections are refused until your hooks attach a router with
+    <code>createTRPCWebSocketServer</code>, and the client keeps retrying. In development, SvelteKit
+    only loads your server hooks on the first HTTP request, so a client that reconnects after a
+    restart of the dev server connects once a page is loaded.
+  </li>
+  <li>
     In production, <code>SvelteKitTRPCWSServer</code> imports the <code>adapter-node</code> build output
     and attaches the same upgrade handler to its HTTP server.
+  </li>
+  <li>
+    On <code>SIGTERM</code> and <code>SIGINT</code>, <code>SvelteKitTRPCWSServer</code> closes the
+    WebSocket connections (with code 1001, so clients reconnect), letting <code>adapter-node</code>
+    shut down gracefully. If you start the server yourself, call
+    <code>closeWSSGlobalInstance()</code> when shutting down.
   </li>
   <li>
     In the browser, <code>trpc-sveltekit/websocket</code> resolves to a client-only entry point, so no

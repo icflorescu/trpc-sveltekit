@@ -1,7 +1,7 @@
 {
   "name": "trpc-sveltekit",
-  "version": "4.0.2",
-  "description": "SvelteKit adapter for tRPC.io, working with any SvelteKit adapter",
+  "version": "4.1.0",
+  "description": "SvelteKit adapter for tRPC.io, working with any SvelteKit adapter, with TanStack Svelte Query support",
   "keywords": [
     "trpc",
     "svelte",
@@ -10,7 +10,10 @@
     "adapter",
     "handle",
     "typescript",
-    "rpc"
+    "rpc",
+    "tanstack-query",
+    "svelte-query",
+    "bun"
   ],
   "repository": {
     "type": "git",
@@ -55,10 +58,12 @@
     "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
     "clean": "rm -rf dist",
     "check": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run --exclude 'test/**/*.integration.test.ts'",
+    "test:integration": "vitest run test/websocket.integration.test.ts"
   },
   "devDependencies": {
     "@sveltejs/kit": "^3.1.1",
+    "@tanstack/query-core": "^5.107.1",
     "@trpc/client": "^11.25.2",
     "@trpc/server": "^11.25.2",
     "@types/node": "^24.10.1",

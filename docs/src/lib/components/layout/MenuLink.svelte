@@ -3,12 +3,23 @@
   import type { IconProps } from '#lib/icons/types.ts';
   import type { Component } from 'svelte';
 
-  type Props = { to: string; title: string | string[]; icon: Component<IconProps> };
+  type Props = {
+    to: string;
+    title: string | string[];
+    icon: Component<IconProps>;
+    /** Open the link in a new tab (for links outside the docs website) */
+    external?: boolean;
+  };
 
-  let { to, title, icon: Icon }: Props = $props();
+  let { to, title, icon: Icon, external = false }: Props = $props();
 </script>
 
-<a class:current={page.url.pathname === to} href={to}>
+<a
+  class:current={page.url.pathname === to}
+  href={to}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noreferrer' : undefined}
+>
   <Icon />
   {#if typeof title === 'string'}
     {title}

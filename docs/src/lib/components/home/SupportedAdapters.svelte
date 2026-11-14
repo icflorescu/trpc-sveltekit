@@ -1,4 +1,5 @@
 <script lang="ts">
+  import LogoBun from './LogoBun.svelte';
   import LogoCloud from './LogoCloud.svelte';
   import LogoNetlify from './LogoNetlify.svelte';
   import LogoNode from './LogoNode.svelte';
@@ -10,6 +11,7 @@
   <h3>tRPC-SvelteKit works with any SvelteKit adapter, such as:</h3>
   <div class="list">
     <SupportedAdapter name="node"><LogoNode height="1.5em" /></SupportedAdapter>
+    <SupportedAdapter name="bun"><LogoBun height="1.5em" /></SupportedAdapter>
     <SupportedAdapter name="vercel"><LogoVercel height="1.5em" /></SupportedAdapter>
     <SupportedAdapter name="netlify"><LogoNetlify height="1.5em" /></SupportedAdapter>
     <SupportedAdapter name="cloudflare"><LogoCloud height="1.5em" /></SupportedAdapter>
@@ -35,8 +37,9 @@
     flex-direction: column;
     gap: 1em;
     @media (min-width: 768px) {
-      display: inline-flex;
       flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
     }
   }
 </style>

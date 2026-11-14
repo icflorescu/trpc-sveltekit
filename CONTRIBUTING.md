@@ -8,12 +8,13 @@ This is a [pnpm](https://pnpm.io) workspace containing the library (`package`), 
 pnpm install
 pnpm dev     # builds the library, then runs it in watch mode alongside the docs and examples
 pnpm test    # runs the library tests
+pnpm test:integration  # runs the WebSocket integration tests (slower; local only, not run in CI)
 pnpm check   # type-checks everything
 pnpm lint    # Prettier + Oxlint
 pnpm format  # fixes formatting and lint issues where possible
 ```
 
-Before opening a pull request, please make sure `pnpm lint`, `pnpm check` and `pnpm test` pass. If you're adding a feature, please update the documentation as well.
+Before opening a pull request, please make sure `pnpm lint`, `pnpm check` and `pnpm test` pass (and `pnpm test:integration`, if you've changed the WebSocket support). If you're adding a feature, please update the documentation as well.
 
 ## Releasing
 

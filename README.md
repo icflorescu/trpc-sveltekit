@@ -21,7 +21,8 @@ Documentation available at [icflorescu.github.io/trpc-sveltekit](https://icflore
 ## Features
 
 - 🔒 End-to-end typesafe APIs for SvelteKit, powered by [tRPC](https://trpc.io)
-- 🧩 A single SvelteKit `handle` hook, compatible with every adapter (Node, Vercel, Netlify, Cloudflare, …)
+- 🧩 A single SvelteKit `handle` hook, compatible with every adapter (Node, Bun, Vercel, Netlify, Cloudflare, …)
+- 🔁 Typed [TanStack Svelte Query](https://icflorescu.github.io/trpc-sveltekit/using-with-svelte-query) options and query keys with `createTRPCQueryOptions`
 - 🍪 Procedures can set cookies and headers through the SvelteKit request event
 - 🌊 Streaming responses and subscriptions over server-sent events
 - 🧪 Experimental WebSocket support for `@sveltejs/adapter-node`
@@ -35,6 +36,7 @@ Documentation available at [icflorescu.github.io/trpc-sveltekit](https://icflore
 | v2.x.x         | v9   | v1        |
 
 Upgrading from v3? Have a look at the [upgrade guide](https://icflorescu.github.io/trpc-sveltekit/upgrading-to-v4).
+See the [changelog](https://github.com/icflorescu/trpc-sveltekit/blob/main/CHANGELOG.md) for the notable changes in each version.
 
 ## Quickstart
 
@@ -105,19 +107,54 @@ tRPC context and the `trpc()` client helper used above.
 
 > The examples use SvelteKit 3, which replaced `$lib` with the [`#lib` subpath import](https://svelte.dev/docs/kit/$lib). With SvelteKit 2, import from `$lib/...` instead.
 
+## TanStack Svelte Query
+
+`createTRPCQueryOptions` turns your tRPC client into typed [TanStack Svelte Query](https://tanstack.com/query/latest/docs/framework/svelte/overview) options and query keys, so you don't have to write query keys or query functions yourself:
+
+```ts
+// src/lib/trpc/query.ts
+import { trpc } from '#lib/trpc/client.ts';
+import { createTRPCQueryOptions, type TRPCClientInit } from 'trpc-sveltekit';
+
+export const api = (init?: TRPCClientInit) => createTRPCQueryOptions(trpc(init));
+```
+
+```svelte
+<script lang="ts">
+  import { page } from '$app/state';
+  import { api } from '#lib/trpc/query.ts';
+  import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
+
+  const queryClient = useQueryClient();
+
+  const authors = createQuery(() => api(page).authors.list.queryOptions('smith'));
+
+  const save = createMutation(() =>
+    api(page).authors.save.mutationOptions({
+      // 👇 refetch every `authors` query once the mutation succeeds
+      onSuccess: () => queryClient.invalidateQueries({ queryKey: api(page).authors.pathKey() })
+    })
+  );
+</script>
+```
+
+The [Svelte Query guide](https://icflorescu.github.io/trpc-sveltekit/using-with-svelte-query) shows how to set it up, including prefetching queries on the server in `load` functions.
+
 ## Documentation
 
 The [documentation website](https://icflorescu.github.io/trpc-sveltekit/) covers everything else:
 
 - loading data in [`+page.ts`](https://icflorescu.github.io/trpc-sveltekit/page-data) and [`+page.server.ts`](https://icflorescu.github.io/trpc-sveltekit/page-server-data) files
+- [using it with TanStack Svelte Query](https://icflorescu.github.io/trpc-sveltekit/using-with-svelte-query): queries, mutations, invalidation and server-side prefetching
 - [authentication](https://icflorescu.github.io/trpc-sveltekit/authentication) and [error handling](https://icflorescu.github.io/trpc-sveltekit/handling-errors)
 - [recipes](https://icflorescu.github.io/trpc-sveltekit/recipes-and-caveats): client options, custom links, subscriptions, response caching, data transformers
-- [using it with Svelte Query](https://icflorescu.github.io/trpc-sveltekit/using-with-svelte-query)
 - [experimental WebSocket support](https://icflorescu.github.io/trpc-sveltekit/experimental-websocket-support)
+
+🤖 Using an AI assistant or coding agent? Point it to [`llms.txt`](https://icflorescu.github.io/trpc-sveltekit/llms.txt) or [`llms-full.txt`](https://icflorescu.github.io/trpc-sveltekit/llms-full.txt) for LLM-friendly documentation (see [how to use them](https://icflorescu.github.io/trpc-sveltekit/llms-txt)).
 
 ## Examples
 
-- [simple](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/simple) — the basics
+- [simple](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/simple) — the basics, and TanStack Svelte Query
 - [bookstall](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/bookstall) — authentication, CRUD, Prisma
 - [websocket](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/websocket) — subscriptions over WebSockets
 

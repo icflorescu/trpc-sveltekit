@@ -22,6 +22,10 @@
       padding: 1em;
       flex-direction: column;
     }
+    // slightly narrower, so that all adapters fit on a single line in the widest layout
+    @media (min-width: 1600px) {
+      padding: 1em 0.75em;
+    }
   }
 
   pre {
