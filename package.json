@@ -20,6 +20,7 @@
     "dev": "pnpm build:package && pnpm -r --parallel dev",
     "check": "pnpm build:package && pnpm -r check",
     "test": "pnpm -r test",
+    "test:integration": "pnpm --filter trpc-sveltekit test:integration",
     "lint": "prettier --check . && oxlint",
     "format": "prettier --write . && oxlint --fix"
   },

@@ -55,7 +55,8 @@
     "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
     "clean": "rm -rf dist",
     "check": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run --exclude 'test/**/*.integration.test.ts'",
+    "test:integration": "vitest run test/websocket.integration.test.ts"
   },
   "devDependencies": {
     "@sveltejs/kit": "^3.1.1",
