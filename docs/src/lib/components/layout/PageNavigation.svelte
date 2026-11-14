@@ -8,6 +8,10 @@
 
   const previousPage = $derived(PAGES[currentPageIndex - 1]);
   const nextPage = $derived(PAGES[currentPageIndex + 1]);
+
+  // titles split into lines for the menu are shown on a single line here
+  const titleText = (title: string | string[]) =>
+    typeof title === 'string' ? title : title.join(' ');
 </script>
 
 <div class="root">
@@ -15,14 +19,14 @@
     <IconArrowLeft size="1.25em" />
     <div>
       <div class="dir">Go back</div>
-      <div>{previousPage.title}</div>
+      <div>{titleText(previousPage.title)}</div>
     </div>
   </a>
   {#if nextPage}
     <a href={resolve(nextPage.path)}>
       <div>
         <div class="dir">Up next</div>
-        <div>{nextPage.title}</div>
+        <div>{titleText(nextPage.title)}</div>
       </div>
       <IconArrowRight size="1.25em" />
     </a>
