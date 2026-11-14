@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "^3.1.1",
+    "@tanstack/query-core": "^5.107.1",
     "@trpc/client": "^11.25.2",
     "@trpc/server": "^11.25.2",
     "@types/node": "^24.10.1",
