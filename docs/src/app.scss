@@ -48,3 +48,9 @@ h4 {
 h5 {
   --pico-typography-spacing-vertical: 1.6875rem;
 }
+
+// Let long inline code (identifiers, URLs) wrap instead of making the page wider than small screens;
+// code blocks (`pre > code`) scroll horizontally instead
+:not(pre) > code {
+  overflow-wrap: anywhere;
+}
