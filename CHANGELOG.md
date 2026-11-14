@@ -3,6 +3,21 @@
 The following is a list of notable changes to tRPC-SvelteKit, starting with v4.  
 For older versions, see the [commit history](https://github.com/icflorescu/trpc-sveltekit/commits/main/).
 
+## 4.1.0 (2026-11-14)
+
+- Add `createTRPCQueryOptions`, to use tRPC procedures with TanStack Svelte Query (v6): typed query and mutation options (`queryOptions`, `mutationOptions`) and query keys (`queryKey`, `pathKey`) for invalidation, in the format of tRPC's own TanStack Query integration, with no dependency on any TanStack Query package. See the [Svelte Query section](https://icflorescu.github.io/trpc-sveltekit/using-with-svelte-query) of the docs and the new Svelte Query page in the `simple` example
+- WebSocket support: fix the production server (`SvelteKitTRPCWSServer`) never shutting down on `SIGTERM` or `SIGINT` while WebSocket clients are connected; it now closes the connections (with code 1001, so clients reconnect) and lets `adapter-node` shut down gracefully
+- WebSocket support: add `closeWSSGlobalInstance()`, to close the WebSocket server and its connections when starting the server yourself
+- WebSocket support: refuse connections until a router is attached with `createTRPCWebSocketServer`, instead of accepting connections that are never answered; clients now retry and connect once SvelteKit has loaded the server hooks (in development, on the first HTTP request)
+- Add WebSocket integration tests, run locally with `pnpm test:integration`
+- Docs: document authentication with WebSockets (cookies from the upgrade request, or `connectionParams`)
+- Publish LLM-friendly documentation ([`llms.txt`](https://icflorescu.github.io/trpc-sveltekit/llms.txt) and [`llms-full.txt`](https://icflorescu.github.io/trpc-sveltekit/llms-full.txt)), generated from the docs website content at build time, and add a corresponding [docs page](https://icflorescu.github.io/trpc-sveltekit/llms-txt) explaining how to use them with AI assistants and coding agents
+- Docs: fix the service worker never serving precached files from its cache (the manifest paths are relative to the base path, so they never matched the requested URLs); `llms.txt` and `llms-full.txt` are always fetched from the network
+- Docs: fix long inline code making pages wider than the screen on mobile devices
+- Promote TanStack Svelte Query support throughout the docs (moved up in the menu, mentioned in Getting started, Page data, Page server data and the upgrade guide), the README and the npm package description and keywords
+- Docs: fix the home page being wider than the screen on medium-sized screens, and list `@sveltejs/adapter-bun` among the supported adapters (verified with Bun 1.4: queries, streamed batches, subscriptions over server-sent events, cookies and headers set by procedures)
+- Add this changelog, and link to it from the README and the docs website
+
 ## 4.0.2 (2026-11-10)
 
 - Shorten the README to an overview and a quickstart, and add an About the author section
