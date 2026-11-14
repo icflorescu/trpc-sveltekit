@@ -6,7 +6,12 @@ import { self } from '$app/service-worker';
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;
 
-const ASSETS = [...immutable, ...assets, ...prerendered].map(({ path }) => path);
+const ASSETS = [...immutable, ...assets, ...prerendered]
+  .map(({ path }) => path)
+  // The manifest paths are relative to the base path (e.g. `internal/immutable/...`, or `''` for the
+  // home page), so resolve them against the service worker scope (the base path) to get the absolute
+  // pathnames that requests are matched against
+  .map((path) => new URL(path, self.registration.scope).pathname);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
