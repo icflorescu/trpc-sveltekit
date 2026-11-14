@@ -74,6 +74,23 @@
 
 <Highlight {...data.codeBlocks['simple/src/routes/+page.svelte']} />
 
+<h3>
+  <span class="step">7</span>
+  Optionally, use TanStack Svelte Query:
+</h3>
+
+<p>
+  If you want caching, background refetching and invalidation, use
+  <code>createTRPCQueryOptions</code> to turn your client into typed
+  <a
+    href="https://tanstack.com/query/latest/docs/framework/svelte/overview"
+    target="_blank"
+    rel="noreferrer">TanStack Svelte Query</a
+  >
+  options and query keys: see
+  <a href={resolve('/using-with-svelte-query')}>Using with Svelte Query</a>.
+</p>
+
 <hr class="summary-divider" />
 
 <h3 class="summary-header">
@@ -81,12 +98,16 @@
   Remember
 </h3>
 
-<p>
-  The <code>trpc-sveltekit</code> package exports two functions: <code>createTRPCHandle</code> and
-  <code>createTRPCClient</code>.
-  <br />
-  The former is used in your SvelteKit app hooks, the latter is used in your pages.
-</p>
+<p>The <code>trpc-sveltekit</code> package exports three functions:</p>
+
+<ul>
+  <li><code>createTRPCHandle</code>, used in your SvelteKit server hooks;</li>
+  <li><code>createTRPCClient</code>, used in your pages and <code>load</code> functions;</li>
+  <li>
+    <code>createTRPCQueryOptions</code>, which turns your client into typed
+    <a href={resolve('/using-with-svelte-query')}>TanStack Svelte Query</a> options and query keys.
+  </li>
+</ul>
 
 <style>
   .step {

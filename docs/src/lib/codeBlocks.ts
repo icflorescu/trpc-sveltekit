@@ -45,7 +45,12 @@ export const CODE_BLOCKS = {
     'bookstall/src/routes/authors/+page.svelte': 'example'
   },
   '/using-with-svelte-query': {
-    'svelte-query.svelte': 'misc'
+    'simple/src/lib/trpc/query.ts': 'example',
+    'simple/src/routes/svelte-query/+layout.ts': 'example',
+    'simple/src/routes/svelte-query/+layout.svelte': 'example',
+    'simple/src/routes/svelte-query/+page.ts': 'example',
+    'simple/src/routes/svelte-query/+page.svelte': 'example',
+    'svelte-query-mutation.svelte': 'misc'
   },
   '/experimental-websocket-support': {
     'websocket/vite.config.ts': 'example',

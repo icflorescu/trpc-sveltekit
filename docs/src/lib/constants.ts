@@ -6,11 +6,11 @@ import IconLock from '#lib/icons/IconLock.svelte';
 import IconRocket from '#lib/icons/IconRocket.svelte';
 import IconTools from '#lib/icons/IconTools.svelte';
 import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
-import IconBulb from './icons/IconBulb.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
 import IconSpeakerphone from './icons/IconSpeakerphone.svelte';
+import IconTanStack from './icons/IconTanStack.svelte';
 import IconWebSocket from './icons/IconWebSocket.svelte';
 
 export const GITHUB_PAGES_ROOT = 'https://icflorescu.github.io/trpc-sveltekit';
@@ -61,6 +61,13 @@ export const PAGES: {
     pageDescription: 'How to load SvelteKit server data with tRPC'
   },
   {
+    title: 'Using with Svelte Query',
+    path: '/using-with-svelte-query',
+    icon: IconTanStack,
+    pageDescription:
+      'Typed TanStack Svelte Query options and query keys for your tRPC procedures, with createTRPCQueryOptions'
+  },
+  {
     title: 'Suggested structure',
     path: '/suggested-structure',
     icon: IconFolder,
@@ -83,12 +90,6 @@ export const PAGES: {
     path: '/recipes-and-caveats',
     icon: IconTools,
     pageDescription: 'Recipes and caveats for tRPC-SvelteKit'
-  },
-  {
-    title: 'Using with Svelte Query',
-    path: '/using-with-svelte-query',
-    icon: IconBulb,
-    pageDescription: 'How to use tRPC-SvelteKit with Svelte Query'
   },
   {
     title: ['WebSocket support', '(experimental)'],

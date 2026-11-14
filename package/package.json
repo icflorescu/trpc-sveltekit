@@ -1,7 +1,7 @@
 {
   "name": "trpc-sveltekit",
   "version": "4.0.2",
-  "description": "SvelteKit adapter for tRPC.io, working with any SvelteKit adapter",
+  "description": "SvelteKit adapter for tRPC.io, working with any SvelteKit adapter, with TanStack Svelte Query support",
   "keywords": [
     "trpc",
     "svelte",
@@ -10,7 +10,10 @@
     "adapter",
     "handle",
     "typescript",
-    "rpc"
+    "rpc",
+    "tanstack-query",
+    "svelte-query",
+    "bun"
   ],
   "repository": {
     "type": "git",

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { resolve } from '$app/paths';
   import { CHANGELOG_URL } from '#lib/constants.ts';
 </script>
 
@@ -38,6 +39,11 @@
     <code>@sveltejs/adapter-node</code> is no longer a peer dependency, <code>ws</code> is only
     needed for WebSocket support, and <code>trpc-sveltekit</code> no longer depends on the
     <code>cookie</code> package.
+  </li>
+  <li>
+    If you used the <code>trpc-svelte-query-adapter</code> package, which only supports tRPC v10,
+    switch to <code>createTRPCQueryOptions</code> (available since v4.1.0): see
+    <a href={resolve('/using-with-svelte-query')}>Using with Svelte Query</a>.
   </li>
 </ul>
 

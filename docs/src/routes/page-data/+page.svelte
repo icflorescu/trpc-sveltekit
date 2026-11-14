@@ -1,6 +1,7 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import Highlight from '#lib/components/Highlight.svelte';
+  import Info from '#lib/components/Info.svelte';
 
   let { data } = $props();
 </script>
@@ -34,3 +35,9 @@
     rel="noreferrer">SvelteKit documentation section</a
   > to learn the difference between shared vs. server data loading.
 </p>
+
+<Info>
+  Using TanStack Svelte Query? Prefetch your queries in <code>+page.ts</code> load functions, with
+  the same typed options your pages use: see
+  <a href={resolve('/using-with-svelte-query')}>Using with Svelte Query</a>.
+</Info>

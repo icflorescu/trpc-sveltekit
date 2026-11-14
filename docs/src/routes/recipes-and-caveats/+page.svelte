@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { resolve } from '$app/paths';
   import Highlight from '#lib/components/Highlight.svelte';
+  import Info from '#lib/components/Info.svelte';
 
   let { data } = $props();
 </script>
@@ -36,6 +38,13 @@
   code={data.codeBlocks['custom-links.ts'].code}
   language={data.codeBlocks['custom-links.ts'].language}
 />
+
+<p>
+  <code>createTRPCQueryOptions</code> accepts any tRPC client, including one created with custom
+  links, so you can use it with
+  <a href={resolve('/using-with-svelte-query')}>TanStack Svelte Query</a> as well (subscriptions excepted,
+  since TanStack Query doesn't handle them).
+</p>
 
 <h3>Setting response headers and cookies</h3>
 
@@ -122,6 +131,12 @@
 <p>Then, you could use the helper types in your pages code like so:</p>
 
 <Highlight {...data.codeBlocks['bookstall/src/routes/authors/+page.svelte']} />
+
+<Info>
+  Using TanStack Svelte Query? <code>createTRPCQueryOptions</code> infers the input and output types
+  of your query and mutation options from your router, so you don't need these helper types there:
+  see <a href={resolve('/using-with-svelte-query')}>Using with Svelte Query</a>.
+</Info>
 
 <h3>Reserved path prefix</h3>
 

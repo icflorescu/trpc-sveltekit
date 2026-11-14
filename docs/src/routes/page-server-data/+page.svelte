@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { resolve } from '$app/paths';
   import Highlight from '#lib/components/Highlight.svelte';
+  import Info from '#lib/components/Info.svelte';
 
   let { data } = $props();
 </script>
@@ -30,3 +32,8 @@
     rel="noreferrer">SvelteKit documentation section</a
   > to learn the difference between shared vs. server data loading.
 </p>
+
+<Info>
+  If you need to cache, refetch or invalidate data in the browser, consider TanStack Svelte Query:
+  see <a href={resolve('/using-with-svelte-query')}>Using with Svelte Query</a>.
+</Info>
