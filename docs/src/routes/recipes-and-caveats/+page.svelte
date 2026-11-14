@@ -17,12 +17,8 @@
 </p>
 
 <Highlight
-  code={`createTRPCClient<Router>({
-  init,
-  headers: () => ({ authorization: getToken() }),
-  maxURLLength: 2083
-});`}
-  language="typescript"
+  code={data.codeBlocks['client-options.ts'].code}
+  language={data.codeBlocks['client-options.ts'].language}
 />
 
 <h3>Custom links</h3>
@@ -37,20 +33,8 @@
 </p>
 
 <Highlight
-  code={`import { httpBatchStreamLink, httpSubscriptionLink, splitLink } from '@trpc/client';
-
-const url = \`\${location.origin}/trpc\`;
-
-createTRPCClient<Router>({
-  links: [
-    splitLink({
-      condition: (op) => op.type === 'subscription',
-      true: httpSubscriptionLink({ url }),
-      false: httpBatchStreamLink({ url })
-    })
-  ]
-});`}
-  language="typescript"
+  code={data.codeBlocks['custom-links.ts'].code}
+  language={data.codeBlocks['custom-links.ts'].language}
 />
 
 <h3>Setting response headers and cookies</h3>
