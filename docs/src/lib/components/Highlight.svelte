@@ -2,12 +2,15 @@
   import IconClipboard from '#lib/icons/IconClipboard.svelte';
   import { onDestroy } from 'svelte';
   import { Highlight, HighlightSvelte } from 'svelte-highlight';
+  import markdown from 'svelte-highlight/languages/markdown';
   import plaintext from 'svelte-highlight/languages/plaintext';
   import shell from 'svelte-highlight/languages/shell';
   import typescript from 'svelte-highlight/languages/typescript';
   import { fly } from 'svelte/transition';
 
-  type Language = 'shell' | 'typescript' | 'plaintext';
+  const LANGUAGES = { shell, typescript, plaintext, markdown };
+
+  type Language = keyof typeof LANGUAGES;
   type Tab = { code: string; title: string; language?: Language };
 
   type Props =
@@ -57,14 +60,7 @@
   <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
   <div class="copy" onclick={copy}><IconClipboard /></div>
   {#if currentContent.language}
-    <Highlight
-      language={currentContent.language === 'shell'
-        ? shell
-        : currentContent.language === 'plaintext'
-          ? plaintext
-          : typescript}
-      code={currentContent.code}
-    />
+    <Highlight language={LANGUAGES[currentContent.language]} code={currentContent.code} />
   {:else}
     <HighlightSvelte code={currentContent.code} />
   {/if}

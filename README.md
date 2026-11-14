@@ -150,6 +150,8 @@ The [documentation website](https://icflorescu.github.io/trpc-sveltekit/) covers
 - [recipes](https://icflorescu.github.io/trpc-sveltekit/recipes-and-caveats): client options, custom links, subscriptions, response caching, data transformers
 - [experimental WebSocket support](https://icflorescu.github.io/trpc-sveltekit/experimental-websocket-support)
 
+🤖 Using an AI assistant or coding agent? Point it to [`llms.txt`](https://icflorescu.github.io/trpc-sveltekit/llms.txt) or [`llms-full.txt`](https://icflorescu.github.io/trpc-sveltekit/llms-full.txt) for LLM-friendly documentation (see [how to use them](https://icflorescu.github.io/trpc-sveltekit/llms-txt)).
+
 ## Examples
 
 - [simple](https://github.com/icflorescu/trpc-sveltekit/tree/main/examples/simple) — the basics, and TanStack Svelte Query

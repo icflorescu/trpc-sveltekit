@@ -8,6 +8,9 @@ const CACHE = `cache-${version}`;
 
 const ASSETS = [...immutable, ...assets, ...prerendered]
   .map(({ path }) => path)
+  // LLM-friendly docs (`llms.txt`, `llms-full.txt`) are meant to be fetched fresh, so they're left out
+  // of the precache; they're still served network-first, with the cache only as an offline fallback
+  .filter((path) => !/(^|\/)llms(-full)?\.txt$/.test(path))
   // The manifest paths are relative to the base path (e.g. `internal/immutable/...`, or `''` for the
   // home page), so resolve them against the service worker scope (the base path) to get the absolute
   // pathnames that requests are matched against

@@ -9,6 +9,7 @@ import IconArrowRight from '#lib/icons/IconArrowRight.svelte';
 import IconErrorHandling from './icons/IconErrorHandling.svelte';
 import IconHeartHandshake from './icons/IconHeartHandshake.svelte';
 import IconLifeBuoy from './icons/IconLifeBuoy.svelte';
+import IconRobot from './icons/IconRobot.svelte';
 import IconSpeakerphone from './icons/IconSpeakerphone.svelte';
 import IconTanStack from './icons/IconTanStack.svelte';
 import IconWebSocket from './icons/IconWebSocket.svelte';
@@ -96,6 +97,12 @@ export const PAGES: {
     path: '/experimental-websocket-support',
     icon: IconWebSocket,
     pageDescription: 'Experimental WebSocket support in tRPC-SvelteKit'
+  },
+  {
+    title: 'LLMs.txt',
+    path: '/llms-txt',
+    icon: IconRobot,
+    pageDescription: 'LLM-friendly tRPC-SvelteKit documentation for AI assistants and coding agents'
   },
   {
     title: 'Contribute and support',
