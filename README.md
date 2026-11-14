@@ -21,7 +21,7 @@ Documentation available at [icflorescu.github.io/trpc-sveltekit](https://icflore
 ## Features
 
 - 🔒 End-to-end typesafe APIs for SvelteKit, powered by [tRPC](https://trpc.io)
-- 🧩 A single SvelteKit `handle` hook, compatible with every adapter (Node, Vercel, Netlify, Cloudflare, …)
+- 🧩 A single SvelteKit `handle` hook, compatible with every adapter (Node, Bun, Vercel, Netlify, Cloudflare, …)
 - 🍪 Procedures can set cookies and headers through the SvelteKit request event
 - 🌊 Streaming responses and subscriptions over server-sent events
 - 🧪 Experimental WebSocket support for `@sveltejs/adapter-node`
