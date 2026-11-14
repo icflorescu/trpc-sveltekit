@@ -15,6 +15,7 @@
 <style>
   .root {
     width: fit-content;
+    max-width: 100%;
     margin: 0 auto;
   }
 </style>

@@ -35,8 +35,9 @@
     flex-direction: column;
     gap: 1em;
     @media (min-width: 768px) {
-      display: inline-flex;
       flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
     }
   }
 </style>
